@@ -1,32 +1,47 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from "react";
-import { Video, PhoneOff, Mic, MicOff, VideoOff, PhoneCall, PhoneIcon } from "lucide-react";
+import {
+  Video,
+  PhoneOff,
+  Mic,
+  MicOff,
+  VideoOff,
+  PhoneIcon
+} from "lucide-react";
 import updateTimeUsage from "@/app/service/interview/updateTimeUsage";
 import { useRouter } from "next/navigation";
 import generateReport from "@/app/service/interview/generateReport";
-import { extractJsonBlock } from "@/lib/utils/cleanCodeBlock";
 import submitInteviewAttempt from "@/app/service/interview/submitInteviewAttempt";
 import saveInterviewReport from "@/app/service/interview/saveInterviewReport";
 import { deriveStatus, extractScoreAndRecommendation, parseGeneratedReport } from "@/lib/utils/helper";
+import { toast } from "sonner";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
-export default function VideoCallUI({ interviewId, interviewData, startCall, stopCall, assistantSpeaking, chatMessages, conversationsRef }) {
+export default function VideoCallUI({
+  interviewId,
+  interviewData,
+  startCall,
+  stopCall,
+  assistantSpeaking,
+  chatMessages,
+  conversationsRef
+}) {
   const [callTime, setCallTime] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoOff, setIsVideoOff] = useState(false);
   const [callStatus, setCallStatus] = useState(false);
   const [callStartTime, setCallStartTime] = useState();
-  const [error, setError] = useState("")
-
-  const router = useRouter()
+  const [loading, setLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("");
+  const [buttonStatus, setButtonStatus] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     if (!callStatus) return;
-
     const timer = setInterval(() => {
       setCallTime((prev) => prev + 1);
     }, 1000);
-
     return () => clearInterval(timer);
   }, [callStatus]);
 
@@ -39,110 +54,106 @@ export default function VideoCallUI({ interviewId, interviewData, startCall, sto
   const handleStartCall = () => {
     startCall();
     setCallStatus(true);
-    setCallStartTime(new Date().toISOString())
+    setCallStartTime(new Date().toISOString());
+    toast.success("Call started");
   };
 
- const handleEndCall = async () => {
-  try {
-    stopCall();
-    setCallStatus(false);
+  const handleEndCall = async () => {
+    try {
+      stopCall();
+      setCallStatus(false);
+      toast.info("Call ended");
+      setButtonStatus(false);
+      setLoading(true);
 
-    console.log("chatMessages: ", chatMessages);
-    console.log("conversationsRef: ", conversationsRef);
+      const updateResult = await handleUpdateUsage();
+      if (!updateResult) return;
 
-    const updateResult = await handleUpdateUsage();
-    if (!updateResult) {
-      console.error("❌ Failed to update usage");
-      return;
+      setCallTime(0);
+
+      const generatedReport = await handleGenerateReport();
+      if (!generatedReport?.status || !generatedReport?.data) {
+        return;
+      }
+
+      const status = deriveStatus(interviewData?.duration, callTime);
+      setLoadingMessage("Saving Report...");
+      const submitAttempt = await submitInteviewAttempt(
+        interviewId,
+        callStartTime,
+        status,
+        conversationsRef
+      );
+
+      if (!submitAttempt?.state || !submitAttempt?.data?.id) {
+        toast.error("❌ Failed to submit the attempt");
+        return;
+      }
+
+      const parsedResult = parseGeneratedReport(generatedReport.data);
+      if (!parsedResult) {
+        toast.error("❌ Failed to parse report");
+        return;
+      }
+
+      const { score, recommendation } = extractScoreAndRecommendation(parsedResult);
+
+      const saveReport = await saveInterviewReport(
+        interviewId,
+        submitAttempt.data.id,
+        score,
+        recommendation,
+        parsedResult,
+        callTime
+      );
+
+      if (!saveReport?.state) {
+        toast.error("❌ Failed to save report");
+        return;
+      }
+
+      toast.success("✅ Report submitted successfully");
+    } catch (err) {
+      console.error("💥 Unexpected error in handleEndCall:", err);
+      toast.error("Unexpected error occurred during end call");
+      setLoading(false)
+    } finally{
+      setLoading(false);
+      router.push("/dashboard/report")
     }
+  };
 
-    setCallTime(0);
-
-    const generatedReport = await handleGenerateReport();
-    if (!generatedReport || !generatedReport.status || !generatedReport.data) {
-      console.error("❌ Failed to generate the report or report data missing");
-      return;
-    }
-
-    const status = deriveStatus(interviewData?.duration, callTime);
-
-    const submitAttempt = await submitInteviewAttempt(
-      interviewId,
-      callStartTime,
-      status,
-      conversationsRef
-    );
-
-    if (!submitAttempt || !submitAttempt.state || !submitAttempt.data?.id) {
-      console.error("❌ Failed to submit the report or missing data");
-      return;
-    }
-
-    const parsedResult = parseGeneratedReport(generatedReport?.data);
-    if (!parsedResult) {
-      console.error("❌ Report parsing failed. Aborting save.");
-      return;
-    }
-
-    const { score, recommendation } = extractScoreAndRecommendation(parsedResult);
-
-    console.log("====== Report data =========");
-    console.log("Raw result:", generatedReport?.data);
-    console.log("Parsed result:", parsedResult);
-    console.log("Score:", score, typeof score);
-    console.log("Recommendation:", recommendation, typeof recommendation);
-
-    const saveReport = await saveInterviewReport(
-      interviewId,
-      submitAttempt.data.id,
-      score,
-      recommendation,
-      parsedResult,
-      callTime
-    );
-
-    if (!saveReport || !saveReport.state) {
-      console.error("❌ Failed to save report");
-      return;
-    }
-
-    console.log("✅ Report submitted successfully");
-  } catch (err) {
-    console.error("💥 Unexpected error in handleEndCall:", err);
-  } finally {
-    // router.push("/dashboard"); // Optional cleanup
-  }
-};
-
-  const handleUpdateUsage = async () =>{
+  const handleUpdateUsage = async () => {
+    setLoadingMessage("Saving Interview...");
     const result = await updateTimeUsage(callTime);
-    if(!result.state){
-      alert(result.error);
+    if (!result.state) {
+      toast.error(result.error);
       return false;
     }
-    if(result?.state){
-      console.log("successfully updated the usage with ", callTime, " min");
-    }
-
+    toast.success(`Usage updated (${callTime} seconds)`);
     return true;
-  }
+  };
 
-  const handleGenerateReport = async () =>{
+  const handleGenerateReport = async () => {
+    setLoadingMessage("Generating Report...");
     const result = await generateReport(conversationsRef);
-
-    console.log("result generate repprt", result)
-    if(!result.state){
-      alert(result.error);
+    if (!result.state) {
+      toast.error(result.error);
       return false;
     }
-    if(result?.state){
-      alert("successfully generated the report ");
-      console.log("Report: ", result?.data)
-    }
+    toast.success("Report generated");
     return {
       status: true,
-      data: result?.data
+      data: result.data
     };
+  };
+
+  if(loading){
+    return(
+      <>
+        <LoadingOverlay text={loadingMessage} />
+      </>
+    )
   }
 
   return (
@@ -163,7 +174,9 @@ export default function VideoCallUI({ interviewId, interviewData, startCall, sto
             className="w-full h-full object-cover"
           />
         </div>
-        {assistantSpeaking && <h2 className="text-lg font-semibold mt-2">Assistant Speaking...</h2>}
+        {assistantSpeaking && (
+          <h2 className="text-lg font-semibold mt-2">Assistant Speaking...</h2>
+        )}
       </div>
 
       <div className="absolute bottom-6 w-full flex justify-center gap-6">
@@ -172,7 +185,11 @@ export default function VideoCallUI({ interviewId, interviewData, startCall, sto
           onClick={() => setIsMuted(!isMuted)}
           title="Toggle Mute"
         >
-          {isMuted ? <MicOff className="text-white" /> : <Mic className="text-white" />}
+          {isMuted ? (
+            <MicOff className="text-white" />
+          ) : (
+            <Mic className="text-white" />
+          )}
         </button>
 
         <button
@@ -180,12 +197,19 @@ export default function VideoCallUI({ interviewId, interviewData, startCall, sto
           onClick={() => setIsVideoOff(!isVideoOff)}
           title="Toggle Video"
         >
-          {isVideoOff ? <VideoOff className="text-white" /> : <Video className="text-white" />}
+          {isVideoOff ? (
+            <VideoOff className="text-white" />
+          ) : (
+            <Video className="text-white" />
+          )}
         </button>
 
-                {callStatus ? (
+        {callStatus ? (
           <button
-            className="flex gap-1 items-center bg-red-600 hover:bg-red-500 rounded-full p-4"
+            disabled={!buttonStatus}
+            className={`flex gap-1 items-center rounded-full p-4 transition-colors
+              ${callStatus && buttonStatus ? 'bg-red-600 hover:bg-red-500' : 'bg-gray-500 cursor-not-allowed'}
+            `}            
             onClick={handleEndCall}
             title="End Call"
           >
@@ -194,7 +218,10 @@ export default function VideoCallUI({ interviewId, interviewData, startCall, sto
           </button>
         ) : (
           <button
-            className="flex gap-1 items-center bg-green-600 hover:bg-green-500 rounded-full p-4"
+            disabled={!buttonStatus}
+            className={`flex gap-1 items-center rounded-full p-4 transition-colors
+              ${buttonStatus ? 'bg-green-600 hover:bg-green-500' : 'bg-gray-500 cursor-not-allowed'}
+            `}            
             onClick={handleStartCall}
             title="Start Call"
           >
@@ -202,7 +229,6 @@ export default function VideoCallUI({ interviewId, interviewData, startCall, sto
             Start Call
           </button>
         )}
-
       </div>
     </div>
   );

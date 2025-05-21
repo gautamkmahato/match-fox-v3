@@ -1,8 +1,12 @@
+'use client';
+
 import { useEffect, useRef, useState } from "react";
 import VideoCallUI from "./VideoCallUI";
 import { useUser } from "@clerk/nextjs";
 import fetchInterviewDetails from "@/app/service/interview/fetchInteviewDetails";
 import Vapi from "@vapi-ai/web";
+import { toast } from 'sonner';
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 export default function CallComponent({ interviewId }) {
   const [interviewData, setInterviewData] = useState(null);
@@ -13,26 +17,30 @@ export default function CallComponent({ interviewId }) {
   const [chatMessages, setChatMessages] = useState([]);
   const [liveMessages, setLiveMessages] = useState('');
   const [vapiError, setVapiError] = useState('');
+  const [loadingMessage, setLoadingMessage] = useState("");
+
+
   const chatEndRef = useRef(null);
   const conversationsRef = useRef([]);
   const vapiRef = useRef(null);
 
-  const { isSignedIn, user, isLoaded } = useUser();
+  const { isSignedIn, user } = useUser();
 
-  // Scroll chat to bottom
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages]);
 
-  // Fetch interview details
   useEffect(() => {
     const getDetails = async () => {
       setLoading(true);
       try {
+        setLoadingMessage("Fetching Interview Details...");
         const result = await fetchInterviewDetails(interviewId);
         if (!result.state) throw new Error(result.error);
         setInterviewData(result.data);
+        toast.success("Interview details loaded");
       } catch (err) {
+        toast.error(err.message || 'Failed to load interview');
         setError(err.message || 'Failed to load interview');
       } finally {
         setLoading(false);
@@ -42,7 +50,6 @@ export default function CallComponent({ interviewId }) {
     if (interviewId) getDetails();
   }, [interviewId]);
 
-  // Initialize Vapi
   useEffect(() => {
     const vapiInstance = new Vapi(process.env.NEXT_PUBLIC_VAPI_KEY);
     vapiRef.current = vapiInstance;
@@ -97,23 +104,24 @@ export default function CallComponent({ interviewId }) {
     try {
       vapi.start(assistantOptions);
       setCallStarted(true);
+      toast.success("Call started with AI Recruiter");
     } catch (err) {
       console.error("Failed to start call:", err);
+      toast.error("Failed to start call");
       setVapiError("Failed to start call");
     }
 
-    // Prevent duplicate listeners
     vapi.removeAllListeners();
 
-    vapi.on("speech-start", () => {
-      setAssistantSpeaking(true);
+    vapi.on("speech-start", () => setAssistantSpeaking(true));
+    vapi.on("speech-end", () => setAssistantSpeaking(false));
+    vapi.on("call-end", () => {
+      setCallStarted(false);
+      toast("Call ended");
     });
-    vapi.on("speech-end", () => {
-      setAssistantSpeaking(false);
-    });
-    vapi.on("call-end", () => setCallStarted(false));
     vapi.on("error", (e) => {
       console.error(e);
+      toast.error("Call error occurred");
       setVapiError("Error during call");
     });
 
@@ -129,7 +137,7 @@ export default function CallComponent({ interviewId }) {
       if (message?.type === "transcript" && message.transcriptType === "final") {
         setChatMessages((prev) => {
           const lastMessage = prev[prev.length - 1];
-          if (lastMessage?.transcript === message.transcript) return prev; // Avoid duplicates
+          if (lastMessage?.transcript === message.transcript) return prev;
           return [...prev, message];
         });
       }
@@ -140,23 +148,42 @@ export default function CallComponent({ interviewId }) {
     if (vapiRef.current && callStarted) {
       vapiRef.current.stop();
       setCallStarted(false);
+      toast.info("Call stopped");
     }
   };
 
-  // Loading & Error UI
-  if (loading) return <div className="p-4 text-gray-700">Loading interview details...</div>;
-  if (error) return <div className="p-4 text-red-600 font-semibold">Error: {error}</div>;
+  if(loading){
+    return(
+      <>
+        <LoadingOverlay text={loadingMessage} />
+      </>
+    )
+  }
+  if(error){
+    return(
+      <>
+        {toast.info(`Error: ${error}`)}
+      </>
+    )
+  }
+  // if (error) return <div className="p-4 text-red-600 font-semibold">Error: {error}</div>;
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100 relative">
-      {/* Left: Video UI */}
       <div className="flex justify-center items-center w-full lg:w-2/3 p-4">
         <div className="w-full h-[86vh] max-w-3xl rounded-lg overflow-hidden shadow-lg bg-black">
-          <VideoCallUI interviewId={interviewId} interviewData={interviewData} startCall={startCall} stopCall={stopCall} assistantSpeaking={assistantSpeaking} chatMessages={chatMessages} conversationsRef={conversationsRef} />
+          <VideoCallUI
+            interviewId={interviewId}
+            interviewData={interviewData}
+            startCall={startCall}
+            stopCall={stopCall}
+            assistantSpeaking={assistantSpeaking}
+            chatMessages={chatMessages}
+            conversationsRef={conversationsRef}
+          />
         </div>
       </div>
 
-      {/* Right: Chat UI */}
       <div className="w-full lg:w-1/3 p-4 bg-white shadow-inner">
         <h1 className="text-xl font-bold text-gray-800 mb-4">Chat</h1>
 
@@ -189,6 +216,7 @@ export default function CallComponent({ interviewId }) {
             </div>
           </div>
         )}
+
         {vapiError && (
           <p className="mt-2 text-sm text-red-500">{vapiError}</p>
         )}
