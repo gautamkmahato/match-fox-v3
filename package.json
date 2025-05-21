@@ -9,9 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.19.4",
+    "@google/genai": "^0.15.0",
+    "@splinetool/react-spline": "^4.0.0",
+    "@supabase/supabase-js": "^2.49.5",
+    "@vapi-ai/web": "^2.3.0",
+    "axios": "^1.9.0",
+    "crypto": "^1.0.1",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.511.0",
+    "nanoid": "^5.1.5",
+    "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.2"
+    "sonner": "^2.0.3",
+    "stripe": "^18.1.0",
+    "svix": "^1.65.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.25.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

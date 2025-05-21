@@ -1,0 +1,107 @@
+'use client';
+
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import CallComponent from "./CallComponent";
+import InterviewJoinScreen from "./InterviewJoinScreen";
+
+export default function InterviewPage({ interviewId }) {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [interviewAccess, setInterviewAccess] = useState(false);
+  const [showCallComponent, setShowCallComponent] = useState(false);
+  const [interviewAttemptId, setinterviewAttemptId] = useState('');
+
+  const { isSignedIn, user, isLoaded } = useUser();
+
+
+  // Validate user & check if already attempted
+  useEffect(() => {
+    async function validateUser() {
+      if (!user?.id) return;
+
+      try {
+        const response = await fetch(`/api/interview/validate/${interviewId}`)
+        const result = await response.json();
+        console.log('Validation result:', result);
+
+        if (!result.state) {
+          if (result.error?.includes('Please create your interview')) {
+            setInterviewAccess(true);
+          } else {
+            setError(result.error || 'Validation failed');
+          }
+          return;
+        }
+
+        // If Valid user with correct owner interview
+        if (result.state) {
+          setInterviewAccess(true);
+        }
+
+      } catch (err) {
+        console.error(err);
+        setError('Something went wrong validating user');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    validateUser();
+  }, [user]);
+
+  // Handle Join Interview (form submit)
+  const handleJoinInterview = async () => {
+    /**
+     * Here you can check and validate for Camera, Mic, Internet speed
+     * For Now I am just validating the user and allowing for call
+     */
+    setShowCallComponent(true);
+  };
+
+  // --- Conditional UI ---
+
+  if (!isLoaded || loading) {
+    return <div className="text-center mt-20 text-gray-600">Loading...</div>;
+  }
+
+  if (!isSignedIn) {
+    return (
+      <div className="text-center mt-20">
+        <p className="text-red-600 font-semibold">Please sign in to continue</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center mt-20">
+        <h2 className="text-red-600 font-semibold text-lg mb-2">Error</h2>
+        <p className="text-gray-700">{error}</p>
+        <a href="/dashboard/report" className="text-blue-600 underline mt-4 block">
+          Go to Report Dashboard
+        </a>
+      </div>
+    ); 
+  }
+ 
+  if (showCallComponent) {
+    return <CallComponent interviewId={interviewId} />;
+  }  
+
+  if (!interviewAccess) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen text-center">
+        <h2 className="text-xl font-semibold text-red-600 mb-4">Dont have Interview access</h2>
+        <p className="text-gray-700">Please create new interview.</p>
+        <a href="/dashboard/interview/create" className="mt-4 text-blue-600 underline">Create Interview</a>
+      </div>
+    );
+  }
+
+  if (interviewAccess) {
+    return <InterviewJoinScreen onJoinInterview={handleJoinInterview} />;
+  }
+
+  return null; // Fallback state
+}

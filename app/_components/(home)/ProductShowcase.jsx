@@ -1,0 +1,50 @@
+import { PlayCircle } from 'lucide-react'; // Icon for the demo button
+
+const ProductShowcase = () => {
+  return (
+    <section className="bg-gray-50 pt-[-50px] pb-16 md:pb-24 lg:pb-32 relative z-0">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Replace this div with the actual Image component */}
+        <div className="bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-200 relative">
+           {/* --- START: Replace this div with next/image --- */}
+           <div className="aspect-video bg-gray-100 flex items-center justify-center text-gray-400">
+             {/* Placeholder content - remove when adding the image */}
+             <p className="text-xl font-medium">Product Screenshot Area</p>
+
+             {/* Example overlay button like in the image */}
+             <button className="absolute bottom-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-70 text-white px-6 py-3 rounded-full flex items-center space-x-3 hover:bg-opacity-80 transition duration-200">
+                <PlayCircle size={24} />
+                <div className="text-left">
+                    <span className="font-semibold block">Watch product demo</span>
+                    <span className="text-xs text-gray-300 block">See Geoff give a full tour</span>
+                </div>
+             </button>
+           </div>
+           {/* --- END: Replace this div --- */}
+
+          {/* Example using next/image (assuming you have dashboard.png in public/): */}
+          {/*
+          <Image
+            src="/dashboard.png" // Make sure this image exists in your `public` folder
+            alt="Outseta dashboard screenshot"
+            width={1920} // Provide intrinsic width
+            height={1080} // Provide intrinsic height
+            layout="responsive" // Makes image scale with container
+            priority // Load image sooner if it's LCP
+            className="w-full h-auto" // Basic styling
+          />
+           <button className="absolute bottom-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-70 text-white px-6 py-3 rounded-full flex items-center space-x-3 hover:bg-opacity-80 transition duration-200">
+                <PlayCircle size={24} />
+                <div className="text-left">
+                    <span className="font-semibold block">Watch product demo</span>
+                    <span className="text-xs text-gray-300 block">See Geoff give a full tour</span>
+                </div>
+           </button>
+          */}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ProductShowcase;
