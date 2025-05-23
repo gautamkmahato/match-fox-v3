@@ -4,7 +4,7 @@ import BuyCredits from './_components/BuyCredits'
 export default function page() {
     return (
         <>
-            <div>payment page</div>
+            <div>payment page updated</div>
             <BuyCredits />
         </>
     )
