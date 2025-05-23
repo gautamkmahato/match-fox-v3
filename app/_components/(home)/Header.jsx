@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, TriangleDashed, X } from 'lucide-react';
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
-import { currentUser } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import logo from '../../../public/match-fox-4.png'
 
