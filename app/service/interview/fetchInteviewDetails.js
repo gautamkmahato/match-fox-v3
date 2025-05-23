@@ -7,7 +7,7 @@ const fetchInterviewDetails = async (interviewId) => {
     };
   }
 
-  try {
+  try { 
     const response = await fetch(`/api/interview/validate/${interviewId}`, {
       method: 'GET',
       headers: {

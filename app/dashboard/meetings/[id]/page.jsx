@@ -8,7 +8,9 @@ export default async function page({ params }) {
 
     return (
         <>
-            <InterviewPage interviewId={interviewId} />
+            <div className="bg-gray-50">
+                <InterviewPage interviewId={interviewId} />
+            </div>
         </>
     );
 }

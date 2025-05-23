@@ -7,7 +7,7 @@ export async function fetchInterviewsFromAPI() {
     if (!res.ok || result.state === false) {
       throw new Error(result.message || 'Failed to fetch interviews.');
     }
-
+ 
     return {
       data: result.data || [],
       error: null,

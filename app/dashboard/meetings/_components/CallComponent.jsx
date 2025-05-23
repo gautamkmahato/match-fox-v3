@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import LoadingOverlay from "@/components/LoadingOverlay";
 import getRandomGreeting from "@/lib/utils/getRandomGreeting";
 import chatPrompt from "@/lib/utils/prompts/chatPrompt";
+import CameraComponent from "./CameraComponent";
 
 export default function CallComponent({ interviewId, interviewData }) {
   // const [interviewData, setInterviewData] = useState(null);
@@ -731,9 +732,10 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
   // if (error) return <div className="p-4 text-red-600 font-semibold">Error: {error}</div>;
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100 relative">
-      <div className="flex justify-center items-center w-full lg:w-2/3 p-4">
-        <div className="w-full h-[86vh] max-w-3xl rounded-lg overflow-hidden shadow-lg bg-black">
+    <>
+      <div className="flex flex-col lg:flex-row p-4 relative">
+      <div className="flex w-full lg:w-2/3 p-4">
+        <div className="w-full h-[450px] max-w-3xl mt-8 rounded-2xl overflow-hidden shadow-xl">
           <VideoCallUI 
             interviewId={interviewId}
             interviewData={interviewData}
@@ -748,7 +750,7 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
         </div>
       </div>
 
-      <div className="w-full lg:w-1/3 p-4 bg-white shadow-inner">
+      <div className="w-full h-[450px] lg:w-1/3 p-4 mt-12 rounded-xl bg-white shadow-lg">
         <h1 className="text-xl font-bold text-gray-800 mb-4">Chat</h1>
 
         {chatMessages.length === 0 ? (
@@ -786,5 +788,15 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
         )}
       </div>
     </div>
+    <div className="flex justify-center">
+  <div className="inline-block bg-gray-200 text-center px-4 py-2 border border-gray-200 shadow-md rounded">
+    <p className="text-md text-gray-700 whitespace-nowrap">
+      <span className="font-semibold">Live:</span>
+      {liveMessages}
+    </p>
+  </div>
+</div>
+
+    </>
   );
 }

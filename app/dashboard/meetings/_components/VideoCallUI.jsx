@@ -17,6 +17,9 @@ import saveInterviewReport from "@/app/service/interview/saveInterviewReport";
 import { deriveStatus, extractScoreAndRecommendation, parseGeneratedReport } from "@/lib/utils/helper";
 import { toast } from "sonner";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import avatar from '../../../../public/avatar.jpg'
+import CameraComponent from "./CameraComponent";
+import Image from "next/image";
 
 export default function VideoCallUI({
   interviewId,
@@ -187,79 +190,86 @@ export default function VideoCallUI({
   }
 
   return (
-    <div className="relative w-full h-full bg-black text-white flex items-center justify-center overflow-hidden">
-      <div className="absolute top-4 left-4 text-sm bg-gray-900/70 px-3 py-1 rounded-full">
-        {formatTime(callTime)}
-      </div>
+    <div className="relative w-full h-[450px] bg-gray-700 text-white flex items-center justify-center overflow-hidden">
+  <div className="absolute top-4 left-4 text-sm bg-gray-900/70 px-3 py-1 rounded-full">
+    {formatTime(callTime)}
+  </div>
 
-      <div className="absolute top-4 right-4 w-32 h-40 bg-gray-700 rounded-lg overflow-hidden">
-        <video autoPlay muted className="w-full h-full object-cover" />
-      </div>
+  {/* Camera Display */}
+  <div className="absolute top-4 right-4 w-40 h-28 shadow-2xl bg-gray-500 rounded-lg overflow-hidden">
+    <CameraComponent isVisible={!isVideoOff} />
+  </div>
 
-      <div className="flex flex-col items-center gap-2">
-        <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-white">
-          <img
-            src="/avatar.jpg"
-            alt="User Avatar"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        {assistantSpeaking && (
-          <h2 className="text-lg font-semibold mt-2">Assistant Speaking...</h2>
-        )}
-      </div>
-
-      <div className="absolute bottom-6 w-full flex justify-center gap-6">
-        <button
-          className="bg-gray-800 hover:bg-gray-700 rounded-full p-4"
-          onClick={() => setIsMuted(!isMuted)}
-          title="Toggle Mute"
-        >
-          {isMuted ? (
-            <MicOff className="text-white" />
-          ) : (
-            <Mic className="text-white" />
-          )}
-        </button>
-
-        <button
-          className="bg-gray-800 hover:bg-gray-700 rounded-full p-4"
-          onClick={() => setIsVideoOff(!isVideoOff)}
-          title="Toggle Video"
-        >
-          {isVideoOff ? (
-            <VideoOff className="text-white" />
-          ) : (
-            <Video className="text-white" />
-          )}
-        </button>
-
-        {callStatus ? (
-          <button
-            disabled={!buttonStatus}
-            className={`flex gap-1 items-center rounded-full p-4 transition-colors
-              ${callStatus && buttonStatus ? 'bg-red-600 hover:bg-red-500' : 'bg-gray-500 cursor-not-allowed'}
-            `}            
-            onClick={handleEndCall}
-            title="End Call"
-          >
-            <PhoneOff className="text-white h-5 w-5" />
-            End Call
-          </button>
-        ) : (
-          <button
-            disabled={!buttonStatus}
-            className={`flex gap-1 items-center rounded-full p-4 transition-colors
-              ${buttonStatus ? 'bg-green-600 hover:bg-green-500' : 'bg-gray-500 cursor-not-allowed'}
-            `}            
-            onClick={handleStartCall}
-            title="Start Call"
-          >
-            <PhoneIcon className="text-white h-5 w-5" />
-            Start Call
-          </button>
-        )}
-      </div>
+  {/* User Avatar + Assistant */}
+  <div className="flex flex-col items-center gap-2">
+    <div className="w-40 h-40 rounded-full overflow-hidden border-4 shadow-2xl border-gray-600">
+      <Image
+        src={avatar}
+        alt="User Avatar"
+        className="w-full h-full object-cover"
+      />
     </div>
+    {assistantSpeaking && (
+      <h2 className="text-lg font-semibold mt-2">Assistant Speaking...</h2>
+    )}
+  </div>
+
+  {/* Bottom Controls */}
+  <div className="absolute bottom-6 w-full flex justify-center gap-6">
+    {/* Mute Toggle */}
+    <button
+      className="bg-gray-800 hover:bg-gray-500 cursor-pointer rounded-full p-4"
+      onClick={() => setIsMuted(!isMuted)}
+      title="Toggle Mute"
+    >
+      {isMuted ? (
+        <MicOff className="text-white" />
+      ) : (
+        <Mic className="text-white" />
+      )}
+    </button>
+
+    {/* Video Toggle */}
+    <button
+      className="bg-gray-800 hover:bg-gray-500 cursor-pointer rounded-full p-4"
+      onClick={() => setIsVideoOff(!isVideoOff)}
+      title="Toggle Video"
+    >
+      {isVideoOff ? (
+        <VideoOff className="text-white" />
+      ) : (
+        <Video className="text-white" />
+      )}
+    </button>
+
+    {/* Call Controls */}
+    {callStatus ? (
+      <button
+        disabled={!buttonStatus}
+        className={`flex gap-1 items-center rounded-full cursor-pointer p-4 transition-colors
+          ${callStatus && buttonStatus ? 'bg-red-600 hover:bg-red-500' : 'bg-gray-500 cursor-not-allowed'}
+        `}            
+        onClick={handleEndCall}
+        title="End Call"
+      >
+        <PhoneOff className="text-white h-5 w-5" />
+        End Call
+      </button>
+    ) : (
+      <button
+        disabled={!buttonStatus}
+        className={`flex gap-1 items-center rounded-full cursor-pointer p-4 transition-colors
+          ${buttonStatus ? 'bg-green-600 hover:bg-green-500' : 'bg-gray-500 cursor-not-allowed'}
+        `}            
+        onClick={handleStartCall}
+        title="Start Call"
+      >
+        <PhoneIcon className="text-white h-5 w-5" />
+        Start Call
+      </button>
+    )}
+  </div>
+</div>
+
   );
 }
