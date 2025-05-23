@@ -2,8 +2,9 @@
 
 
 // app/api/openai/job/route.ts
+import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
 import { GoogleGenAI } from '@google/genai';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 
@@ -12,7 +13,13 @@ const ai = new GoogleGenAI({
 });
 
 export async function POST(req) {
-    console.log("inside")
+  const ip = req.headers.get('x-forwarded-for') || 'anonymous';
+      
+        const { success } = await ratelimit.limit(ip);
+      
+        if (!success) {
+          return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
+        }
   try {
     const body = await req.json();
     const { jobDescription } = body;
@@ -28,15 +35,19 @@ export async function POST(req) {
       });
     }
 
-    
+
     const prompt = `
           
           You are a smart AI assistant that extracts detailed interview metadata from a job description.
 Given the job description below, extract the following fields and return a JSON object with these exact keys:
 
-interview_name (string) — A suitable interview title
+Job Description: ${jobDescription}
+
+interview_name (string) — A suitable interview title or job title
 
 job_description (string) — The full job description text
+
+Role Overview (string): A short paragraph summarizing what the role is about.
 
 interview_time (ISO 8601 date string) — The interview date and time, or if not mentioned, use today's date in ISO format
 
@@ -50,17 +61,29 @@ interview_style (string) — Interview style (e.g., "panel", "one-on-one"), defa
 
 duration (number, minutes) — Duration in minutes, default to 30
 
-position (string) — Job position or title extracted, or "Unknown"
+Requirements (array/list) - provide the requirements in a list(array)
+
+Tech Stack (array) - If not mentioned understand the job description and provide these (Programming languages, Frameworks, Tools, DevOps )
 
 location (string) — Job location, default to "India"
 
-experience (string) — Required experience level, default to "Not specified"
+Tone / Cultural Fit (string) - Just provide the words in a string as comma (,) seperated
+
+Seniority Level (string) : Mid-level (inferred from "2+ years")
+
+Employment Type (string): Full-time (usually inferred if not mentioned)
+
+Location (string): Not explicitly mentioned, but should be a separate field
+
+Skills (array/list) - Extracted either from Requirements/Responsibilities or implicitly:
+
+experience (string) — Required experience level in years, default to "Not specified"
 
 difficulty_level (string) — Interview difficulty (e.g., "easy", "medium", "hard"), default to "medium"
 
-company (string) — Company name, default to "Google"
+company (string) — Company name if available in job description else default "matchfox"
 
-Job Description: ${jobDescription}
+
 
 Important:
 

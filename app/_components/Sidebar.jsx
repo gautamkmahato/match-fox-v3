@@ -1,17 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import { Menu, X, Home, Settings, Logs, LayoutDashboard, Book, Group, Star, Diamond } from 'lucide-react'
+import { Menu, X, Home, Settings, Logs, LayoutDashboard, Book, Group, Star, Diamond, ConeIcon } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
-import matchfox from '../../public/matchfox-logo.png'
+import matchfox from '../../public/match-fox-4.png'
 
 
 export default function Sidebar() {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
 
-    const toggleSidebar = () => setIsOpen(!isOpen)
+
+    const toggleSidebar = () => setIsOpen(!isOpen);
 
     return (
         <div className="bg-white text-white min-h-screen">
@@ -59,13 +60,6 @@ export default function Sidebar() {
 
                     {/* Other Nav Items */}
                     <Link
-                        href="/"
-                        className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
-                    >
-                        <Home className="w-5 h-5 text-zinc-800" />
-                        <span>Home</span>
-                    </Link>
-                    <Link
                         href="/dashboard"
                         className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
                     >
@@ -77,7 +71,7 @@ export default function Sidebar() {
                         className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
                     >
                         <Book className="w-5 h-5 text-zinc-800" />
-                        <span>Jobs</span>
+                        <span>Interviews</span>
                     </Link>
                     <Link
                         href="/dashboard/report"
@@ -87,10 +81,18 @@ export default function Sidebar() {
                         <span>Reports</span>
                     </Link>
                     <Link
+                        href="/payment"
+                        className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
+                    >
+                        <ConeIcon className="w-5 h-5 text-zinc-800" />
+                        <span>Billing</span>
+                    </Link>
+                    <Link
                         href="/settings"
                         className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
                     >
                         <Settings className="w-5 h-5 text-zinc-800" />
+
                         <span>Settings</span>
                     </Link>
                     {/* Clerk Auth Buttons - mobile only, fixed at bottom */}

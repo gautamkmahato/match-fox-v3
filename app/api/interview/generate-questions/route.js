@@ -1,5 +1,6 @@
+import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
 import { GoogleGenAI } from '@google/genai';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 
@@ -9,13 +10,25 @@ const ai = new GoogleGenAI({
  
  
 export async function POST(req) {
+
+  const ip = req.headers.get('x-forwarded-for') || 'anonymous';
+      
+        const { success } = await ratelimit.limit(ip);
+      
+        if (!success) {
+          return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
+        }
+
   const {
     job_description,
-    company,
+    company, 
     interview_style,
     position,
     difficulty_level,
-    experience
+    experience,
+    resume,
+    skills_required,
+    tech_stack
   } = await req.json();
 
   console.log(
@@ -23,7 +36,10 @@ export async function POST(req) {
     interview_style,
     position,
     difficulty_level,
-    experience)
+    experience,
+    resume,
+    skills_required,
+    tech_stack)
 
 
 
@@ -35,17 +51,34 @@ export async function POST(req) {
         parts: [
           {
             text: `
-You are an AI interview assistant. Based on the following input, generate **10 diverse technical interview questions** in JSON format.
+You are an AI interview assistant. Based on the following job input
+and candidate's resume, generate **10 diverse technical interview questions** in JSON format.
 
----
+## Follow the below steps to generate the questions
+** Note: ** If resume is not given then skip Step 1
 
-**Input:**
+### Step 1:
+First extract the following information from the given resume ${resume}
+
+- work experience (string)
+- skills (comma seperated string)
+- projects experience (string)
+
+Step 2:
+Now combine the data extracted from resume and given input job details,
+generate 10 questions, make sure the question should match the resume and job details
+
+** Note: ** If resume is not given then skip Step 1
+
+**Job Input Details:**
 - company: ${company}
 - interview style: ${interview_style}
 - difficulty level: ${difficulty_level}
 - position: ${position}
 - job description: ${job_description}
 - experience: ${experience}
+- skills_required: ${skills_required}
+- tech_stack: ${tech_stack}
 
 ---
 

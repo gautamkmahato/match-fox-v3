@@ -3,7 +3,7 @@
 const fetchInterviewReport = async () => {
 
   try {
-    const response = await fetch(`/api/interview/get-report`, {
+    const response = await fetch(`/api/interview/reports`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ const fetchInterviewReport = async () => {
     if (!response.ok) {
       return {
         state: false,
-        error: `${result?.error} || 'Failed to fetch Reoprt data'`,
+        error: `${result?.error} || 'Failed to fetch all Reoprts'`,
         message: 'Response Error fetchInterviewReport',
       }
     }
@@ -24,7 +24,7 @@ const fetchInterviewReport = async () => {
     if (!result?.data) {
       return {
         state: false,
-        error: 'No Report data found',
+        error: 'No Report list found',
         message: 'No data',
       };
     }

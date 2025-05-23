@@ -4,32 +4,44 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import CallComponent from "./CallComponent";
 import InterviewJoinScreen from "./InterviewJoinScreen";
+import fetchInterviewDetails from "@/app/service/interview/fetchInteviewDetails";
+import { toast } from "sonner";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 export default function InterviewPage({ interviewId }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [interviewAccess, setInterviewAccess] = useState(false);
   const [showCallComponent, setShowCallComponent] = useState(false);
-  const [interviewAttemptId, setinterviewAttemptId] = useState('');
+  const [interviewData, setInterviewData] = useState(null);
+  const [loadingMessage, setLoadingMessage] = useState("");
+
+
 
   const { isSignedIn, user, isLoaded } = useUser();
 
 
-  // Validate user & check if already attempted
+  // Validate user and get Interview details
   useEffect(() => {
     async function validateUser() {
       if (!user?.id) return;
 
       try {
+        setLoadingMessage("Fetching Interview Details...");
         const response = await fetch(`/api/interview/validate/${interviewId}`)
         const result = await response.json();
         console.log('Validation result:', result);
 
+                toast.success("Interview details loaded");
+
         if (!result.state) {
           if (result.error?.includes('Please create your interview')) {
             setInterviewAccess(true);
+                    toast.error(err.message || 'Please create your interview');
+
           } else {
             setError(result.error || 'Validation failed');
+            toast.error(err.message || 'Validation failed');
           }
           return;
         }
@@ -37,10 +49,11 @@ export default function InterviewPage({ interviewId }) {
         // If Valid user with correct owner interview
         if (result.state) {
           setInterviewAccess(true);
+          setInterviewData(result?.data)
         }
 
       } catch (err) {
-        console.error(err);
+        console.log(err);
         setError('Something went wrong validating user');
       } finally {
         setLoading(false);
@@ -48,7 +61,29 @@ export default function InterviewPage({ interviewId }) {
     }
 
     validateUser();
-  }, [user]);
+  }, [user, interviewId]);
+
+  // // fetch Interview Details
+  // useEffect(() => {
+  //   const getDetails = async () => {
+  //     setLoading(true);
+  //     try {
+  //       setLoadingMessage("Fetching Interview Details...");
+  //       const result = await fetchInterviewDetails(interviewId);
+  //       if (!result.state) throw new Error(result.error);
+  //       console.log("Interview Data: ", interviewData)
+  //       setInterviewData(result.data);
+  //       toast.success("Interview details loaded");
+  //     } catch (err) {
+  //       toast.error(err.message || 'Failed to load interview');
+  //       setError(err.message || 'Failed to load interview');
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   if (interviewId) getDetails();
+  // }, [interviewId]); 
 
   // Handle Join Interview (form submit)
   const handleJoinInterview = async () => {
@@ -84,13 +119,21 @@ export default function InterviewPage({ interviewId }) {
       </div>
     ); 
   }
+
+  if(loading){
+      return(
+        <>
+          <LoadingOverlay text={loadingMessage} />
+        </>
+      )
+    }
  
   if (showCallComponent) {
-    return <CallComponent interviewId={interviewId} />;
+    return <CallComponent interviewId={interviewId} interviewData={interviewData} />;
   }  
 
   if (!interviewAccess) {
-    return (
+    return ( 
       <div className="flex flex-col items-center justify-center min-h-screen text-center">
         <h2 className="text-xl font-semibold text-red-600 mb-4">Dont have Interview access</h2>
         <p className="text-gray-700">Please create new interview.</p>
@@ -100,7 +143,7 @@ export default function InterviewPage({ interviewId }) {
   }
 
   if (interviewAccess) {
-    return <InterviewJoinScreen onJoinInterview={handleJoinInterview} />;
+    return <InterviewJoinScreen onJoinInterview={handleJoinInterview} interviewData={interviewData} />;
   }
 
   return null; // Fallback state

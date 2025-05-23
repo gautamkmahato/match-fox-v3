@@ -11,7 +11,7 @@ export default function Modal({ isOpen, onClose, children }) {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl"
+          className="absolute top-3 right-3 cursor-pointer text-gray-400 hover:text-gray-700 text-2xl"
         >
           &times;
         </button>

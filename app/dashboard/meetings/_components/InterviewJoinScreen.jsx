@@ -1,9 +1,10 @@
 'use client';
 
-import { CalendarClock, Video, Settings, Computer, LucideOctagon, Info, SquareDot } from 'lucide-react';
-import { useState } from 'react';
+import { CalendarClock, Video, Settings, Computer, Info, SquareDot } from 'lucide-react';
+import Image from 'next/image';
+import logo from '../.../../../../../public/match-fox-4.png'
 
-export default function InterviewJoinScreen({ onJoinInterview }) {
+export default function InterviewJoinScreen({ onJoinInterview, interviewData }) {
 
   const handleJoin = () => {
     /**
@@ -18,9 +19,9 @@ export default function InterviewJoinScreen({ onJoinInterview }) {
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-6 space-y-6">
         {/* Title and Logo */}
         <div className="text-center space-y-1">
-          <h1 className="flex gap-2 items-center justify-center text-teal-600 font-bold text-xl">
-            <LucideOctagon className='w-5 h-5' />
-            Inview
+          <h1 className="flex gap-2 items-center justify-center text-[#462eb4] font-bold text-2xl">
+            <Image src={logo} className='w-8 h-8' alt='logo' />
+            MatchFox
           </h1>
           <p className="text-gray-500 text-sm">AI-Powered Interview Platform</p>
         </div>
@@ -36,21 +37,21 @@ export default function InterviewJoinScreen({ onJoinInterview }) {
 
         {/* Interview Title */}
         <div className="text-center space-y-1">
-          <h2 className="text-lg font-semibold text-gray-800">Full Stack Developer Interview</h2>
+          <h2 className="text-lg font-semibold text-gray-800">{interviewData?.interview_name || "MatchFox Interview"}</h2>
           <div className="flex justify-center items-center text-sm text-gray-500 gap-4">
             <span className="flex items-center gap-1">
               <Computer className="w-4 h-4" />
-              Google Inc.
+              {interviewData?.company}
             </span>
             <span className="flex items-center gap-1">
               <CalendarClock className="w-4 h-4" />
-              30 Minutes
+              {interviewData?.duration} Minutes
             </span>
           </div>
         </div>
 
         {/* Tips Box */}
-        <div className="bg-teal-50 border border-blue-100 p-4 rounded-lg text-sm text-teal-700 space-y-1">
+        <div className="bg-teal-50 border border-blue-100 p-4 rounded-lg text-sm text-[#462eb4] space-y-1">
           <p className="flex gap-1 items-center font-medium mb-2">
             <Info className='w-3 h-3' />
             <span className='font-semibold'>Before you begin</span>
@@ -72,7 +73,7 @@ export default function InterviewJoinScreen({ onJoinInterview }) {
         </div>
 
         {/* Join Button */}
-        <button onClick={handleJoin} className="w-full flex items-center justify-center gap-2 bg-teal-800 hover:bg-teal-950 text-white font-semibold py-2 rounded-md cursor-pointer">
+        <button onClick={handleJoin} className="w-full flex items-center justify-center gap-2 bg-[#462eb4] hover:bg-indigo-900 shadow-lg text-white font-semibold py-2 rounded-md cursor-pointer">
           <Video className="w-4 h-4" />
           Join Interview
         </button>

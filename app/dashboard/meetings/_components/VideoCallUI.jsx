@@ -25,7 +25,8 @@ export default function VideoCallUI({
   stopCall,
   assistantSpeaking,
   chatMessages,
-  conversationsRef
+  conversationsRef,
+  onErrorCall
 }) {
   const [callTime, setCallTime] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
@@ -108,13 +109,13 @@ export default function VideoCallUI({
       );
 
       if (!saveReport?.state) {
-        toast.error("❌ Failed to save report");
+        toast.error("Failed to save report");
         return;
       }
 
-      toast.success("✅ Report submitted successfully");
+      toast.success("Report submitted successfully");
     } catch (err) {
-      console.error("💥 Unexpected error in handleEndCall:", err);
+      console.error("Unexpected error in handleEndCall:", err);
       toast.error("Unexpected error occurred during end call");
       setLoading(false)
     } finally{
@@ -143,10 +144,23 @@ export default function VideoCallUI({
     }
     toast.success("Report generated");
     return {
-      status: true,
+      status: true, 
       data: result.data
     };
   };
+
+  /**
+   * Added this useEffect to call the handleEndCall function
+   * when due to long time silence from user Vapi Ends the call
+   * and we need to call handleEndCall to generate the report
+   * If the report is being generated multiple times maybe this is the reason
+   */
+  useEffect(() =>{
+    if(onErrorCall){
+      console.log("inside useEffect")
+      handleEndCall();
+    }
+  }, [onErrorCall]);
 
   if(loading){
     return(

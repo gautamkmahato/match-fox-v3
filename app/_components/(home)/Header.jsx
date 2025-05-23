@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <nav className="text-gray-700">
-      <div className="bg-purple-800 max-w-4xl mx-auto px-4 sm:px-6 lg:px-4 border-2 border-purple-800 rounded-full shadow">
+      <div className="bg-[#a1a1aa] max-w-4xl mx-auto px-4 sm:px-6 lg:px-4 border-2 border-[#a1a1aa] rounded-full shadow">
         <div className="flex items-center justify-between h-16">
           {/* Mobile Menu Button */}
           <div className="flex items-center sm:hidden">
@@ -58,7 +58,7 @@ const Header = () => {
 
           {/* Login Button (Right) */}
           <Link
-            className="block rounded-full bg-gradient-to-br bg-purple-50 px-6 py-3 text-xs font-semibold text-gray-800  hover:text-neutral-100 transition hover:bg-purple-900"
+            className="block rounded-full bg-gradient-to-br bg-gray-50 px-6 py-3 text-xs font-semibold text-gray-800  hover:text-neutral-100 transition hover:bg-purple-900"
             href="#"
           >
             Login

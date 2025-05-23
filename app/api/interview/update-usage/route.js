@@ -2,14 +2,22 @@ import { NextResponse } from 'next/server';
 import { currentUser } from '@clerk/nextjs/server';
 import supabase from '@/lib/supabase/client';
 import { isRateLimited } from '@/lib/utils/rateLimiter';
+import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
 
 
 
 export async function POST(req) {
   try {
+    const ip = req.headers.get('x-forwarded-for') || 'anonymous';
+        
+          const { success } = await ratelimit.limit(ip);
+        
+          if (!success) {
+            return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
+          }
     // 1. Rate limiting (basic IP-based)
-    const ip = req.headers.get('x-forwarded-for') || 'localhost';
-    if (isRateLimited(ip)) {
+    const ip_address = req.headers.get('x-forwarded-for') || 'localhost';
+    if (isRateLimited(ip_address)) {
       return NextResponse.json({ state: false, error: 'Too many requests', message: 'Rate limit exceeded' }, { status: 429 });
     }
 

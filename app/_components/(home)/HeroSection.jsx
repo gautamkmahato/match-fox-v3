@@ -7,7 +7,8 @@ const HeroSection = () => {
   return (
     // Add `relative` and `isolate` to manage stacking context
     <section
-      className="h-screen relative isolate bg-gradient-to-b from-purple-900 via-purple-500 to-gray-50 pb-24 text-center overflow-hidden" // Added overflow-hidden for tidiness
+      className="h-screen relative isolate bg-[radial-gradient(ellipse_at_center,_#0f0f0f,_#52525b,_#a1a1aa,_#e4e4e7)] pb-24 text-center overflow-hidden" // Added overflow-hidden for tidiness
+
     >
         <Header />
       {/* The Dot Pattern using ::before pseudo-element */}
@@ -16,7 +17,7 @@ const HeroSection = () => {
         aria-hidden="true" // Hide decorative element from screen readers
       >
         {/* Left Dots (20% width) */}
-        <div className="absolute top-0 left-0 w-[100%] h-full bg-[radial-gradient(theme(colors.gray.400)_1px,transparent_1px)] [background-size:26px_26px]"></div>
+        <div className="absolute top-0 left-0 w-[100%] h-full bg-[radial-gradient(theme(colors.gray.600)_1px,transparent_1px)] [background-size:26px_26px]"></div>
 
         {/* Right Dots (20% width) */}
         {/* <div className="absolute top-15 right-0 w-[25%] h-full bg-[radial-gradient(theme(colors.gray.400)_1px,transparent_1px)] [background-size:26px_26px]"></div> */}
@@ -35,7 +36,7 @@ const HeroSection = () => {
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
           <Link
             href="/signup"
-            className="flex gap-2 items-center px-5 py-3 text-sm font-semibold text-gray-50 bg-gradient-to-r from-purple-900 via-purple-700 to-purple-600 hover:bg-purple-800 rounded-md shadow-2xl hover:shadow w-full sm:w-auto"
+            className="flex gap-2 items-center px-5 py-3 text-sm font-semibold text-gray-50 bg-[#462eb4]  hover:bg-purple-800 rounded-md shadow-2xl hover:shadow w-full sm:w-auto"
           >
             Try Now
             <ArrowRight className='w-4 h-4' />

@@ -1,6 +1,7 @@
 
+import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
 import { GoogleGenAI } from '@google/genai';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 
@@ -10,6 +11,14 @@ const ai = new GoogleGenAI({
 
 
 export async function POST(req) {
+  const ip = req.headers.get('x-forwarded-for') || 'anonymous';
+      
+        const { success } = await ratelimit.limit(ip);
+      
+        if (!success) {
+          return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
+        }
+        
   const { conversations } = await req.json();
 
   console.log(conversations)
@@ -79,30 +88,45 @@ Give score out of 10 and give recommendation (YES or NO)
 
 Output Format Example: 
 {
-  "skill_evaluation": {
+  "Skill_Evaluation": {
     "technical_knowledge": {
       "rating": "",
       "notes": ""
     },
-    "communication": {
+    "Communication_Clarity": {
       "rating": "",
       "notes": ""
     },
-    "problem_solving_approach": {
+    "Problem_Solving_Approach": {
       "rating": "",
       "notes": ""
     },
-    "confidence_composure": {
+    "Collaboration_and_Team_Fit": {
       "rating": "",
       "notes": ""
     },
-    "best_practices_style": {
+    "Time_Management": {
       "rating": "",
       "notes": ""
     }
   },
   "overall_summary": "",
-  "reasons": [
+  "most_frequent_words_used_in_conversations": "",
+  "Question_Wise_Feedback": [
+      {
+      "question": "",
+      "score": "",
+      "feedback": ""
+    }
+  ],
+  "Key_Strengths": [], 
+  "Areas_for_Improvement": [],
+  "Topics_to_focus_on": [],
+  "Suggested_Learning_Resources": [
+  {
+      "name": "",
+      "url": "" // provide some youtube url for the related topics
+  }
   ],
   "final_verdict": {
     "recommendation": "",

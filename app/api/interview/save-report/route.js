@@ -1,11 +1,19 @@
 import { NextResponse } from 'next/server';
 import { currentUser } from '@clerk/nextjs/server';
 import supabase from '@/lib/supabase/client';
+import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
 
 
 
 export async function GET(req) {
   try {
+    const ip = req.headers.get('x-forwarded-for') || 'anonymous';
+    
+      const { success } = await ratelimit.limit(ip);
+    
+      if (!success) {
+        return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
+      }
     // Step 1: Get authenticated Clerk user
     const user = await currentUser();
     const userId = user?.id;
@@ -80,6 +88,14 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
+    const ip = req.headers.get('x-forwarded-for') || 'anonymous';
+        
+          const { success } = await ratelimit.limit(ip);
+        
+          if (!success) {
+            return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
+          }
+
     // Step 1: Get authenticated Clerk user
     const user = await currentUser();
     const userId = user?.id;
