@@ -5,10 +5,10 @@ export default function SiteFooter() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-6 w-6 rounded-full bg-purple-600 flex items-center justify-center">
-                <span className="text-white font-bold text-xs">I</span>
+              <div className="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center">
+                <span className="text-white font-bold text-xs">M</span>
               </div>
-              <span className="font-bold text-lg">Intervio</span>
+              <span className="font-bold text-lg">MatchFox</span>
             </div>
             <p className="text-gray-400 text-sm mb-4">
               An artificial intelligence Platform that can help company to choose the best talent to work with us.
@@ -54,7 +54,7 @@ export default function SiteFooter() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded text-sm transition duration-150"
+                  className="w-full bg-indigo-700 hover:bg-indigo-800 text-white py-2 px-4 rounded text-sm transition duration-150"
                 >
                   Subscribe Now
                 </button>

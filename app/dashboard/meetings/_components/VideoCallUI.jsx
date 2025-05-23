@@ -26,7 +26,7 @@ export default function VideoCallUI({
   assistantSpeaking,
   chatMessages,
   conversationsRef,
-  onErrorCall
+  onErrorCall 
 }) {
   const [callTime, setCallTime] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
@@ -56,14 +56,14 @@ export default function VideoCallUI({
     startCall();
     setCallStatus(true);
     setCallStartTime(new Date().toISOString());
-    toast.success("Call started");
+    toast("Call started");
   };
 
   const handleEndCall = async () => {
     try {
       stopCall();
       setCallStatus(false);
-      toast.info("Call ended");
+      toast("Call ended");
       setButtonStatus(false);
       setLoading(true);
 
@@ -131,7 +131,8 @@ export default function VideoCallUI({
       toast.error(result.error);
       return false;
     }
-    toast.success(`Usage updated (${callTime} seconds)`);
+    console.log(`Usage upadted for ${callTime} seconds in DB`)
+    toast(`interview completed after (${Math.floor(callTime / 60)} seconds)`);
     return true;
   };
 
@@ -142,7 +143,7 @@ export default function VideoCallUI({
       toast.error(result.error);
       return false;
     }
-    toast.success("Report generated");
+    toast.success("Report generated Successfully");
     return {
       status: true, 
       data: result.data
@@ -161,6 +162,21 @@ export default function VideoCallUI({
       handleEndCall();
     }
   }, [onErrorCall]);
+
+  /**
+   * This useEffect to end the call once the callTime reachs duration
+   */
+  useEffect(() => {
+    // Once the Call ends then call handleEndCall
+    if (callStatus && callTime === 30) {
+      handleEndCall();
+    }
+    // handle the warning message before 10 seconds of call ending
+    if(callStatus && callTime > 20){
+      toast.warning(`You have ${30 - callTime} seconds left`)
+    }
+  }, [callTime, callStatus]);
+
 
   if(loading){
     return(

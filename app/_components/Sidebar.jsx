@@ -1,16 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { Menu, X, Home, Settings, Logs, LayoutDashboard, Book, Group, Star, Diamond, ConeIcon } from 'lucide-react'
+import { Menu, X, Home, Settings, Logs, LayoutDashboard, Book, Group, Star, Diamond, CreditCard } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import matchfox from '../../public/match-fox-4.png'
 
-
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
-
 
     const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -54,7 +52,7 @@ export default function Sidebar() {
                         href="/"
                         className="hidden md:flex items-center mt-1.5 pb-6 space-x-2 p-2 rounded"
                     >
-                        <Image src={matchfox} width="24" height="24" alt='logo' className="w-7 h-7 text-blue-500" />
+                        <Image src={matchfox} width={24} height={24} alt='logo' className="w-7 h-7 text-blue-500" />
                         <span className='font-bold text-lg text-gray-700'>MatchFox</span>
                     </Link>
 
@@ -84,17 +82,17 @@ export default function Sidebar() {
                         href="/payment"
                         className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
                     >
-                        <ConeIcon className="w-5 h-5 text-zinc-800" />
+                        <CreditCard className="w-5 h-5 text-zinc-800" />
                         <span>Billing</span>
                     </Link>
                     <Link
-                        href="/settings"
+                        href="/"
                         className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
                     >
                         <Settings className="w-5 h-5 text-zinc-800" />
-
                         <span>Settings</span>
                     </Link>
+
                     {/* Clerk Auth Buttons - mobile only, fixed at bottom */}
                     {/* <div className="absolute bottom-4 w-full px-4 mr-[-10px] md:hidden">
                         <div className="flex justify-between">

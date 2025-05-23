@@ -17,9 +17,12 @@ export async function POST(request) {
 
         // ✅ Set the credits here
         const priceMap = {
-            100: process.env.BASIC_MONTHLY_PLAN, // ✅ Use correct env variables
-            500: process.env.PREMIUM_MONTHLY_PLAN,
-            1000: process.env.ADVANCE_MONTHLY_PLAN,
+            9000: process.env.BASIC_MONTHLY_PLAN, // ✅ Use correct env variables
+            27000: process.env.PROFESSIONAL_MONTHLY_PLAN,
+            120000: process.env.ENTERPRISE_MONTHLY_PLAN,
+            108000: process.env.BASIC_YEARLY_PLAN,
+            324000: process.env.PROFESSIONAL_YEARLY_PLAN,
+            1440000: process.env.ENTERPRISE_YEARLY_PLAN,
         };
 
         const selectedPriceId = priceMap[credits]; // Get correct Price ID
@@ -74,11 +77,11 @@ export async function POST(request) {
                     quantity: 1,
                 },
             ],
-            mode: "subscription",
+            mode: "payment",
             customer: customerId,           // Link the session to the customer ID
             metadata: {
                 clerkUserId: userId,       // 👈 Optional: store it in metadata too
-                plan: plan || 'BASIC_MONTHLY',                // get the correct plan name
+                plan: plan || 'FREE',                // get the correct plan name
                 credits: credits            // provide credits 
             },
             success_url: `${origin}/`,

@@ -130,7 +130,7 @@ export async function POST(req) {
   "company": formData?.company || 'Not Available',
   "status": formData?.status || 'Not Available',
   "interview_type": formData?.interview_type || 'Not Available',
-  "duration": formData?.duration || 'Not Available',
+  "duration": (formData?.duration * 60) || 'Not Available',
   "position": formData?.position || formData?.interview_name || 'Not Available',
   "location": formData?.location || 'Not Available',
   "interview_style": formData?.interview_style || 'Not Available',

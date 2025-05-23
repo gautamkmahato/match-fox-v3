@@ -8,19 +8,41 @@ export default function PricingPlans() {
 
   const plans = [
     {
-      name: "Basic Plan",
-      price: billingCycle === "monthly" ? 12 : 9.6,
-      description: "For startups and small businesses",
-      features: ["Resume screening", "Automated interview scheduling", "Virtual interviews", "AI Video Score Analysis"],
+      name: "Free Plan",
+      price: billingCycle === "monthly" ? 0 : 0,
+      description: "Give it a try",
+      features: [
+        "5 Min Mock Interview",
+        "Resume screening",
+        "Automated interview scheduling",
+        "AI Resume Creator",
+        "AI Video Score Analysis",
+      ],
       buttonText: "Choose Plan",
       buttonVariant: "outline",
       highlighted: false,
     },
     {
-      name: "Pro Plan",
-      price: billingCycle === "monthly" ? 50 : 40,
-      description: "For Growing Companies",
+      name: "Basic Plan",
+      price: billingCycle === "monthly" ? 10 : 99,
+      description: "Quickly prepare for Interview",
       features: [
+        "150 Min Mock Interview",
+        "Resume screening",
+        "Automated interview scheduling",
+        "AI Resume Creator",
+        "AI Video Score Analysis",
+      ],
+      buttonText: "Choose Plan",
+      buttonVariant: "outline",
+      highlighted: false,
+    },
+    {
+      name: "Professional Plan",
+      price: billingCycle === "monthly" ? 25 : 249,
+      description: "Best for interview preparation",
+      features: [
+        "450 Min Mock Interview",
         "Basic Plan Features",
         "Customizable assessments",
         "Comprehensive data analytics",
@@ -32,9 +54,15 @@ export default function PricingPlans() {
     },
     {
       name: "Enterprise Plan",
-      price: billingCycle === "monthly" ? 100 : 80,
+      price: billingCycle === "monthly" ? 99 : 999,
       description: "For Large Organizations",
-      features: ["Pro Plan Features", "Additional customization options", "Dedicated support", "Advanced integrations"],
+      features: [
+        "2000 Min Mock Interview",
+        "Pro Plan Features",
+        "Additional customization options",
+        "Dedicated support",
+        "Advanced integrations",
+      ],
       buttonText: "Choose Plan",
       buttonVariant: "outline",
       highlighted: false,
@@ -61,14 +89,20 @@ export default function PricingPlans() {
               className="relative inline-flex h-6 w-11 items-center rounded-full"
             >
               <span
-                className={`absolute h-5 w-5 rounded-full transition ${billingCycle === "yearly" ? "translate-x-6 bg-purple-600" : "translate-x-1 bg-purple-600"}`}
+                className={`absolute h-5 w-5 rounded-full transition ${
+                  billingCycle === "yearly"
+                    ? "translate-x-6 bg-indigo-600"
+                    : "translate-x-1 bg-indigo-600"
+                }`}
               />
               <span
-                className={`absolute inset-0 rounded-full ${billingCycle === "yearly" ? "bg-purple-200" : "bg-purple-200"}`}
+                className={`absolute inset-0 rounded-full ${
+                  billingCycle === "yearly" ? "bg-indigo-200" : "bg-indigo-200"
+                }`}
               />
             </button>
             <span className={`text-sm ${billingCycle === "yearly" ? "font-semibold" : ""}`}>
-              Yearly <span className="text-xs text-purple-600 font-medium">20% OFF</span>
+              Yearly <span className="text-xs text-indigo-600 font-medium">20% OFF</span>
             </span>
           </div>
         </div>
@@ -77,9 +111,15 @@ export default function PricingPlans() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`bg-white rounded-lg overflow-hidden shadow-md ${plan.highlighted ? "transform md:-translate-y-2" : ""}`}
+              className={`bg-white rounded-lg overflow-hidden shadow-md ${
+                plan.highlighted ? "transform md:-translate-y-2" : ""
+              }`}
             >
-              <div className={`p-6 ${plan.highlighted ? "bg-purple-600 text-white" : "bg-purple-800 text-white"}`}>
+              <div
+                className={`p-6 ${
+                  plan.highlighted ? "bg-indigo-600 text-white" : "bg-indigo-800 text-white"
+                }`}
+              >
                 <h3 className="text-xl font-bold">{plan.name}</h3>
               </div>
               <div className="p-6">
@@ -104,8 +144,8 @@ export default function PricingPlans() {
                 <button
                   className={`w-full py-2 px-4 rounded-md text-center ${
                     plan.buttonVariant === "primary"
-                      ? "bg-purple-600 text-white hover:bg-purple-700"
-                      : "border border-purple-600 text-purple-600 hover:bg-purple-50"
+                      ? "bg-indigo-600 text-white hover:bg-indigo-700"
+                      : "border border-indigo-600 text-indigo-600 hover:bg-indigo-50"
                   }`}
                 >
                   {plan.buttonText}

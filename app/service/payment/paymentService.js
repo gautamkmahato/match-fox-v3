@@ -1,11 +1,7 @@
-
-
 import supabase from '@/lib/supabase/client';
 import { PLAN_LIMITS } from '@/lib/utils/constants/plan';
 import crypto from 'crypto';
 import { addMonths } from 'date-fns';
-
-
 
 export async function checkPaymentExists(transactionId) {
   try {
@@ -17,25 +13,25 @@ export async function checkPaymentExists(transactionId) {
 
     if (checkError) {
       console.error('Supabase check error:', checkError.message);
-      throw checkError; // Re-throw for caller to handle
+      throw checkError;
     }
 
     return !!existingPayment;
   } catch (error) {
     console.error('Database checkPaymentExists error:', error);
-    throw error; // Re-throw for caller to handle
+    throw error;
   }
 }
 
 export function createPaymentData(session, userId, invoice, credits) {
   return {
     id: crypto.randomUUID(),
-    user_id: userId, // Ensure client_reference_id is set during checkout creation
+    user_id: userId,
     amount: (session.amount_total || 0) / 100,
     payment_provider: 'stripe',
     payment_status: session.payment_status,
     transaction_id: session.id,
-    credits: credits || 100, // Review this: Should be dynamic?
+    credits: credits || 100,
     remarks: session.metadata?.description || 'Stripe Purchase',
     customer_id: typeof session.customer === 'string' ? session.customer : null,
     invoice_id: typeof session.invoice === 'string' ? session.invoice : null,
@@ -46,13 +42,16 @@ export function createPaymentData(session, userId, invoice, credits) {
 
 export default async function savePayment(paymentData) {
   try {
-    const { error: insertError } = await supabase
+    const { data, error: insertError } = await supabase
       .from('payments')
-      .insert([paymentData]);
-
-    console.log("insertError: ", insertError)
+      .insert([paymentData])
+      .select();
 
     if (insertError) {
+      if (insertError.code === '23505') {
+        console.log('⚠️ Payment already exists (duplicate webhook)');
+        return;
+      }
       console.error('❌ Supabase insert error:', insertError.message);
       throw new Error('Failed to save payment record.');
     }
@@ -60,7 +59,7 @@ export default async function savePayment(paymentData) {
     console.log('✅ Payment record saved successfully.');
   } catch (error) {
     console.error('Database savePayment error:', error);
-    throw error; // Re-throw to be handled by the caller
+    throw error;
   }
 }
 
@@ -77,7 +76,7 @@ export async function upsertSubscription(userId, plan) {
       expires_at: expiresAt.toISOString(),
       status: 'active'
     }, {
-      onConflict: 'user_id' // ensures upsert by user_id
+      onConflict: 'user_id'
     });
 
   if (error) {
@@ -88,26 +87,47 @@ export async function upsertSubscription(userId, plan) {
   console.log('✅ Subscription upserted successfully');
 }
 
-
+// ADD minutes to existing usage (for ALL payment types)
 export async function upsertUsage(userId, credits) {
-  const limits = PLAN_LIMITS[credits] || PLAN_LIMITS[20];
+  const limits = PLAN_LIMITS[credits] || PLAN_LIMITS['20'];
 
-  const { error } = await supabase
-    .from('usage')
-    .upsert({
-      user_id: userId,
-      remaining_minutes: limits.minutes,
-      last_reset: new Date().toISOString(),
-    }, {
-      onConflict: 'user_id' // ensures upsert by user_id
+  console.log("============ ADDING USAGE =================");
+  console.log('Adding minutes:', limits.minutes);
+  console.log('User:', userId);
+
+  try {
+    const { data, error } = await supabase.rpc('increment_usage', {
+      p_user_id: userId,
+      p_minutes: limits.minutes,
+      p_reset_time: new Date().toISOString()
     });
 
-  
-
-  if (error) {
-    console.error('❌ Failed to upsert usage limits:', error);
-    throw new Error('Failed to upsert usage limits');
+    if (error) throw error;
+    console.log(`✅ Added ${limits.minutes} minutes to user's usage (old + new)`);
+  } catch (error) {
+    console.error('❌ Error updating usage:', error);
+    throw error;
   }
+}
 
-  console.log('✅ Usage minutes set for credits:', credits);
+// RESET usage to plan limits (keeping this for potential future use)
+export async function resetUsage(userId, credits) {
+  const limits = PLAN_LIMITS[credits] || PLAN_LIMITS['20'];
+
+  console.log("============ RESETTING USAGE =================");
+  console.log('Resetting minutes to:', limits.minutes);
+
+  try {
+    const { data, error } = await supabase.rpc('reset_usage', {
+      p_user_id: userId,
+      p_minutes: limits.minutes,
+      p_reset_time: new Date().toISOString()
+    });
+
+    if (error) throw error;
+    console.log(`✅ Reset usage to ${limits.minutes} minutes for user`);
+  } catch (error) {
+    console.error('❌ Error resetting usage:', error);
+    throw error;
+  }
 }

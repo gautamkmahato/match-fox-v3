@@ -13,7 +13,7 @@ export default function CreateInterview({ header, paragraph, iconType }) {
                 <div className="flex items-start gap-3">
                     {/* Icon Container */}
                     <div className="flex-shrink-0">
-                        <span className="inline-flex items-center justify-center rounded-md bg-teal-800 p-2 text-white">
+                        <span className="inline-flex items-center justify-center rounded-md bg-[#462eb4] p-2 text-white">
                         <Icon className="h-5 w-5" />
                         </span>
                     </div>
@@ -26,7 +26,7 @@ export default function CreateInterview({ header, paragraph, iconType }) {
                 </div>
 
 
-                <Link href="/dashboard/interview/create" className="group mt-4 inline-flex border px-3 py-2 rounded-md items-center gap-1 text-sm font-medium text-teal-800 shadow-sm shadow-teal-800 hover:bg-teal-900 hover:shadow-sm hover:text-gray-50">
+                <Link href="/dashboard/interview/create" className="group mt-4 inline-flex border px-3 py-2 rounded-md items-center gap-1 text-sm font-medium text-[#462eb4] shadow-sm shadow-[#462eb4] hover:bg-indigo-800 hover:shadow-sm hover:text-gray-50">
                     Create Interview
 
                     <span aria-hidden="true" className="block transition-all group-hover:ms-0.5 rtl:rotate-180">

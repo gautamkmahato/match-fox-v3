@@ -48,18 +48,18 @@ const InterviewCard = ({ id, name, duration, logo, date, status, position, type,
 
         <div className="flex gap-2 items-center">
           <div className="flex gap-2 items-center">
-          <Link href={`/dashboard/interview/${id}`} className="group mt-4 inline-flex bg-teal-800 text-white px-3 py-2 rounded-md items-center gap-1 text-sm font-medium shadow-sm shadow-teal-800 hover:bg-teal-950 hover:shadow-sm hover:shadow-teal-900">
+          <Link href={`/dashboard/interview/${id}`} className="group mt-4 inline-flex bg-[#462eb4] text-white px-3 py-2 rounded-md items-center gap-1 text-sm font-medium shadow-sm shadow-[#462eb4] hover:bg-indigo-900 hover:shadow-sm hover:shadow-teal-900">
             View Details
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
         {status === 'open' ? <div className="flex gap-2 items-center">
-          <Link href={`/dashboard/meetings/${id}`} className="group mt-4 inline-flex bg-teal-800 text-white px-3 py-2 rounded-md items-center gap-1 text-sm font-medium shadow-sm shadow-teal-800 hover:bg-teal-950 hover:shadow-sm hover:shadow-teal-900">
+          <Link href={`/dashboard/meetings/${id}`} className="group mt-4 inline-flex bg-[#462eb4] text-white px-3 py-2 rounded-md items-center gap-1 text-sm font-medium shadow-sm shadow-[#462eb4] hover:bg-indigo-900 hover:shadow-sm hover:shadow-teal-900">
             Start Interview
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div> : status === 'in-progress' ? <div className="flex gap-2 items-center">
-          <Link href={`/dashboard/meetings/${id}`} className="group mt-4 inline-flex bg-teal-800 text-white px-3 py-2 rounded-md items-center gap-1 text-sm font-medium shadow-sm shadow-teal-800 hover:bg-teal-950 hover:shadow-sm hover:shadow-teal-900">
+          <Link href={`/dashboard/meetings/${id}`} className="group mt-4 inline-flex bg-[#462eb4] text-white px-3 py-2 rounded-md items-center gap-1 text-sm font-medium shadow-sm shadow-[#462eb4] hover:bg-indigo-900 hover:shadow-sm hover:shadow-teal-900">
             Continue Interview
             <ArrowRight className="w-4 h-4" />
           </Link>

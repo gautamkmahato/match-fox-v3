@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 import { ArrowLeft, ArrowRight, FileText, Loader2, LoaderCircle, UploadCloud } from 'lucide-react';
+import { toast } from 'sonner';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.mjs';
 
@@ -64,6 +65,10 @@ export default function PdfTextExtractor({ onSubmit, setStep, step }) {
     onSubmit(content);
   }
 
+  if(content){
+    toast("Resume uploaded successfully")
+  }
+
   return (
     <div className="max-w-4xl mx-auto mt-10 px-8 py-8 bg-white rounded-2xl shadow-lg border border-gray-200">
       <form onSubmit={handlePdfSubmit}>
@@ -96,15 +101,7 @@ export default function PdfTextExtractor({ onSubmit, setStep, step }) {
           </div>
         )}
 
-        {content && (
-          <div className="mt-2 bg-gray-100 p-4 mb-8 rounded-md max-h-72 overflow-auto whitespace-pre-wrap text-sm">
-            <div className="flex items-center gap-2 mb-4 text-gray-700 font-medium">
-              <FileText className="w-4 h-4" />
-              Extracted Content
-            </div>
-            <p>{content}</p>
-          </div> 
-        )}
+        
       </div>
       <div className="flex justify-between items-center">
             <button onClick={() => setStep(step - 1)} className="flex gap-1 items-center cursor-pointer hover:text-gray-800 text-[#636366] text-sm font-medium">

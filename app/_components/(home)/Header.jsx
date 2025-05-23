@@ -3,17 +3,24 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, TriangleDashed, X } from 'lucide-react';
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { currentUser } from '@clerk/nextjs/server';
+import Image from 'next/image';
+import logo from '../../../public/match-fox-4.png'
 
+ 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <nav className="text-gray-700">
-      <div className="bg-[#a1a1aa] max-w-4xl mx-auto px-4 sm:px-6 lg:px-4 border-2 border-[#a1a1aa] rounded-full shadow">
+    <nav className="text-gray-500">
+      <div className="bg-gray-50 max-w-4xl mx-auto px-4 sm:px-6 lg:px-4 border-2 border-gray-50 rounded-full shadow">
         <div className="flex items-center justify-between h-16">
           {/* Mobile Menu Button */}
           <div className="flex items-center sm:hidden">
@@ -31,57 +38,71 @@ const Header = () => {
           </div>
 
           {/* Logo */}
-          <div className="flex-shrink-0 text-gray-100 flex items-center justify-center sm:justify-start flex-1 sm:flex-none">
+          <div className="flex-shrink-0 text-gray-700 flex items-center justify-center sm:justify-start flex-1 sm:flex-none">
             <Link href="/" className="flex gap-2 items-center justify-center font-bold text-xl">
-              <TriangleDashed className='w-4 h-4' />
-              <span>Blocks</span>
+              <Image src={logo} alt='logo' className='w-7 h-7' />
+              <span>MatchFox</span>
             </Link>
           </div>
 
           {/* Navigation Links (Desktop) */}
           <div className="hidden sm:flex sm:items-center sm:justify-center flex-1">
             <div className="flex items-center gap-6 text-sm">
-              <Link href="/home" className="text-gray-100 transition hover:text-gray-100/75">
+              <Link href="/" className="text-gray-700 transition hover:text-gray-700/75">
                 Home
               </Link>
-              <Link href="/about" className="text-gray-100 transition hover:text-gray-100/75">
+              <Link href="/explore" className="text-gray-700 transition hover:text-gray-700/75">
+                Explore
+              </Link>
+              <Link href="/payment" className="text-gray-700 transition hover:text-gray-700/75">
+                Payment
+              </Link>
+              <SignedIn>
+                <Link href="/dashboard" className="text-gray-700 transition hover:text-gray-700/75">
+                Dashboard
+              </Link>
+              </SignedIn>
+              <Link href="/about" className="text-gray-700 transition hover:text-gray-700/75">
                 About
               </Link>
-              <Link href="/services" className="text-gray-100 transition hover:text-gray-100/75">
-                Services
-              </Link>
-              <Link href="/contact" className="text-gray-100 transition hover:text-gray-700/75">
-                Contact
-              </Link>
+              
             </div>
           </div>
 
           {/* Login Button (Right) */}
-          <Link
-            className="block rounded-full bg-gradient-to-br bg-gray-50 px-6 py-3 text-xs font-semibold text-gray-800  hover:text-neutral-100 transition hover:bg-purple-900"
-            href="#"
-          >
-            Login
-          </Link>
+          <SignedOut>
+            <SignInButton>
+              <Link
+                className="block rounded-full bg-gradient-to-br bg-[#462eb4] px-6 py-3 text-xs font-semibold text-gray-50  hover:text-neutral-100 transition hover:bg-purple-900"
+                href="#"
+              >
+                Login
+              </Link>
+            </SignInButton>
+          </SignedOut>
+
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
       </div>
 
       {/* Mobile Menu */}
       <div className={`${isMenuOpen ? 'block' : 'hidden'} sm:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <Link href="/home" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100">
+          <Link href="/home" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-700">
             Home
           </Link>
-          <Link href="/about" className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:bg-gray-100">
+          <Link href="/about" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
             About
           </Link>
-          <Link href="/services" className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:bg-gray-100">
+          <Link href="/services" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
             Services
           </Link>
-          <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:bg-gray-100">
+          <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
             Contact
           </Link>
-          <Link href="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100">
+          <Link href="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-700">
             Login
           </Link>
         </div>
