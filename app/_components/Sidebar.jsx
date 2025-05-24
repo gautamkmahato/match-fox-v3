@@ -5,7 +5,7 @@ import { Menu, X, Home, Settings, Logs, LayoutDashboard, Book, Group, Star, Diam
 import Link from 'next/link'
 import Image from 'next/image'
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
-import matchfox from '../../public/match-fox-4.png'
+import matchfox from '../../public/match-fox-5.jpg'
 
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +52,7 @@ export default function Sidebar() {
                         href="/"
                         className="hidden md:flex items-center mt-1.5 pb-6 space-x-2 p-2 rounded"
                     >
-                        <Image src={matchfox} width={24} height={24} alt='logo' className="w-7 h-7 text-blue-500" />
+                        <Image src={matchfox} width={24} height={24} alt='logo' className="w-7 h-7 rounded-md" />
                         <span className='font-bold text-lg text-gray-700'>MatchFox</span>
                     </Link>
 

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Menu, TriangleDashed, X } from 'lucide-react';
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import Image from 'next/image';
-import logo from '../../../public/match-fox-4.png'
+import logo from '../../../public/match-fox-5.jpg'
 
  
 const Header = () => {
@@ -39,7 +39,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex-shrink-0 text-gray-700 flex items-center justify-center sm:justify-start flex-1 sm:flex-none">
             <Link href="/" className="flex gap-2 items-center justify-center font-bold text-xl">
-              <Image src={logo} alt='logo' className='w-7 h-7' />
+              <Image src={logo} alt='logo' className='w-7 h-7 rounded-md' />
               <span>MatchFox</span>
             </Link>
           </div>
