@@ -1,7 +1,5 @@
-
-
-
 // app/api/openai/job/route.ts
+import geminiQueue from '@/lib/queue/geminiQueue';
 import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
 import { GoogleGenAI } from '@google/genai';
 import { NextRequest, NextResponse } from 'next/server';
@@ -14,16 +12,15 @@ const ai = new GoogleGenAI({
 
 export async function POST(req) {
   const ip = req.headers.get('x-forwarded-for') || 'anonymous';
-      
-        const { success } = await ratelimit.limit(ip);
-      
-        if (!success) {
-          return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
-        }
+
+  const { success } = await ratelimit.limit(ip);
+  if (!success) {
+    return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
+  }
+
   try {
     const body = await req.json();
     const { jobDescription } = body;
-    //console.log(jobDescription)
 
     if (!jobDescription || typeof jobDescription !== 'string' || jobDescription.trim() === '') {
       return new Response(JSON.stringify({
@@ -34,7 +31,6 @@ export async function POST(req) {
         headers: { 'Content-Type': 'application/json' },
       });
     }
-
 
     const prompt = `
           
@@ -96,11 +92,13 @@ Do not add any explanations or extra text, just return the JSON.
 
 `.trim();
 
-
-    const result = await ai.models.generateContentStream({
-      model: 'gemini-2.0-flash',
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-    });
+    // Queue the Gemini API call
+    const result = await geminiQueue.add(() =>
+      ai.models.generateContentStream({
+        model: 'gemini-2.0-flash',
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      })
+    );
 
     const encoder = new TextEncoder();
     let responseText = '';
@@ -148,3 +146,4 @@ export async function OPTIONS() {
     },
   });
 }
+

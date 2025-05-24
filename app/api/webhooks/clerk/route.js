@@ -2,6 +2,7 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import createNewUser from '@/app/service/user/createNewUser'
 import { verifyWebhook } from '@clerk/nextjs/webhooks'
+import addUsage from '@/app/service/interview/addUsage'
 
 
 // export async function POST(req) {
@@ -96,14 +97,17 @@ export async function POST(req) {
         clerk_id: evt.data?.id,
         email: evt.data?.email_addresses[0]?.email_address,
         name: evt.data?.first_name + " " + evt.data?.last_name,
-        username: evt.data?.username,
+        username: evt.data?.username, 
         img_url: evt.data?.image_url
       }
       console.log(input);
 
       // save user to the DB
       const result = await createNewUser(input);
-      console.log("result: ", result);
+      if(!result?.state){
+        return new Response('Error in creating user', { status: 500 })
+      }
+      console.log(result?.data);
 
     }
 

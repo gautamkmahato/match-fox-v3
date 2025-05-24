@@ -1,7 +1,9 @@
 
+import geminiQueue from '@/lib/queue/geminiQueue';
 import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
 import { GoogleGenAI } from '@google/genai';
 import { NextRequest, NextResponse } from 'next/server';
+
 
 export const runtime = 'nodejs';
 
@@ -9,27 +11,26 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY || '',
 });
 
-
 export async function POST(req) {
   const ip = req.headers.get('x-forwarded-for') || 'anonymous';
-      
-        const { success } = await ratelimit.limit(ip);
-      
-        if (!success) {
-          return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
-        }
-        
+
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
+  }
+
   const { conversations } = await req.json();
 
-  console.log(conversations)
-
-
-  const response = await ai.models.generateContent({
-    model: "gemini-1.5-flash",
-    contents: [
-      {
-        role: "user",
-        parts: [
+  try {
+    // Enqueue the Gemini task
+    const response = await geminiQueue.add(async () => {
+      return await ai.models.generateContent({
+        model: "gemini-1.5-flash",
+        contents: [
+          {
+            role: "user",
+            parts: [
           {
             text: `### Interview Transcript
 
@@ -140,29 +141,41 @@ Output Format Example:
 `
           }
         ]
-      }
-    ],
-    config: {
-      systemInstruction: "You are a smart AI assistant name Niko who generates Indepth Report card for an interview based on the given data",
-    },
-  });
+          }
+        ],
+        config: {
+          systemInstruction: "You are a smart AI assistant name Niko who generates Indepth Report card for an interview based on the given data",
+        },
+      });
+    });
 
-  console.log(response.text);
+    console.log(response.text);
 
-  return new Response(JSON.stringify({
-  state: true,
-  data: response.text,
-  message: "Success",
-}), {
-  headers: {
-    'Content-Type': 'application/json; charset=utf-8',
-    'Cache-Control': 'no-cache',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  },
-});
-
+    return new Response(JSON.stringify({
+      state: true,
+      data: response.text,
+      message: "Success",
+    }), {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cache-Control': 'no-cache',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      },
+    });
+  } catch (err) {
+    console.error('Gemini Error:', err);
+    return new Response(JSON.stringify({
+      state: false,
+      error: "Gemini API failed",
+    }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 }
 
 export async function OPTIONS() {

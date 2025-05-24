@@ -41,6 +41,8 @@ export default function VideoCallUI({
   const [buttonStatus, setButtonStatus] = useState(true);
   const router = useRouter();
 
+  console.log("interview data", interviewData)
+
   useEffect(() => {
     if (!callStatus) return;
     const timer = setInterval(() => {
@@ -59,7 +61,7 @@ export default function VideoCallUI({
     startCall();
     setCallStatus(true);
     setCallStartTime(new Date().toISOString());
-    toast("Call started");
+    toast("Call started, wait for few seconds...");
   };
 
   const handleEndCall = async () => {
@@ -135,7 +137,7 @@ export default function VideoCallUI({
       return false;
     }
     console.log(`Usage upadted for ${callTime} seconds in DB`)
-    toast(`interview completed after (${Math.floor(callTime / 60)} seconds)`);
+    toast(`interview completed after (${Math.floor(parseInt(interviewData?.duration) / 60)} seconds)`);
     return true;
   };
 
@@ -171,12 +173,15 @@ export default function VideoCallUI({
    */
   useEffect(() => {
     // Once the Call ends then call handleEndCall
-    if (callStatus && callTime === 30) {
+    if (callStatus && callTime === parseInt(interviewData?.duration)) {
+      console.log("Times up !!!")
       handleEndCall();
     }
     // handle the warning message before 10 seconds of call ending
-    if(callStatus && callTime > 20){
-      toast.warning(`You have ${30 - callTime} seconds left`)
+    if(callStatus && callTime > parseInt(interviewData?.duration) - 10){
+      console.log("typeof calltime", typeof callTime);
+      console.log("type of interviewData?.duration", typeof interviewData?.duration)
+      toast.warning(`You have ${parseInt(interviewData?.duration) - callTime} seconds left`)
     }
   }, [callTime, callStatus]);
 
@@ -212,6 +217,7 @@ export default function VideoCallUI({
     {assistantSpeaking && (
       <h2 className="text-lg font-semibold mt-2">Assistant Speaking...</h2>
     )}
+    
   </div>
 
   {/* Bottom Controls */}
