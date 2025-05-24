@@ -3,10 +3,10 @@
 export default async function createNewUser(inputData){
     console.log("input data from create user: ", inputData)
     try{
-        const response = await fetch('http://localhost:3000/api/user/create', {
+        const response = await fetch(`${NEXT_APP_PRODUCTION_HOSTNAME}/api/user/create`, {
         method: 'POST',
         headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json' 
         },
         body: JSON.stringify(inputData)
     });
