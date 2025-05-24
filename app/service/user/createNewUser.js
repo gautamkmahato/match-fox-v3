@@ -3,7 +3,7 @@
 export default async function createNewUser(inputData){
     console.log("input data from create user: ", inputData)
     try{
-        const response = await fetch(`${NEXT_APP_PRODUCTION_HOSTNAME}/api/user/create`, {
+        const response = await fetch(`${process.env.NEXT_APP_PRODUCTION_HOSTNAME}/api/user/create`, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json' 
