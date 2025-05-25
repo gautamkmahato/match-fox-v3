@@ -47,7 +47,7 @@ Role Overview (string): A short paragraph summarizing what the role is about.
 
 interview_time (ISO 8601 date string) — The interview date and time, or if not mentioned, use today's date in ISO format
 
-company_logo (string URL) — A URL to the company logo if mentioned, or https://logoipsum.com/artwork/365
+company_logo (string URL) — A URL to the company logo if mentioned, or https://hirenom.com/artwork/365
 
 status (string) — Status of the interview (e.g., "open", "closed", "upcoming"), default to "open"
 

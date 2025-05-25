@@ -8,3 +8,5 @@ the camera is not stopping, it should stop only after browser load its stopping
 4. use own google credential in clerk to remove the development mode
 
 5. fix the fetch all interviews currently its fetching all interviews it should fetch interviews for that candidate only
+
+6. fix date and time in interview cards

@@ -7,7 +7,7 @@ import AIReportCard from './_components/AIReportCard';
 import Modal from '@/components/Modal';
 import fetchInterviewReport from '@/app/service/interview/fetchInterviewReport';
 import LoadingOverlay from '@/components/LoadingOverlay';
-import { calculatePerformance, formatDate } from '@/lib/utils/helper';
+import { formatDate } from '@/lib/utils/helper';
 import CompanyLogo from './_components/CompanyLogo';
 
 export default function Page() {

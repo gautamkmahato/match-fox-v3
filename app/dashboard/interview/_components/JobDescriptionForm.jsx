@@ -28,7 +28,7 @@ export default function JobDescriptionForm({ onSubmit, initialData = {}, jobData
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-
+    /** validate the job description */
     const validationError = validateJobDescription(jobData || jobDescription);
     if (validationError) {
       setError(validationError);

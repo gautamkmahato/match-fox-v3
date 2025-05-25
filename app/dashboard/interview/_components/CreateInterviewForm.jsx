@@ -18,7 +18,7 @@ const steps = [
   { title: "Step 2", description: "Resume Upload (optional)" },
   { title: "Step 3", description: "Job Description" },
   { title: "Step 4", description: "Create Interview" },
-];
+]; 
 
 export default function CreateInterviewForm({ jobDescription }) {
   const [step, setStep] = useState(1);
@@ -35,11 +35,6 @@ export default function CreateInterviewForm({ jobDescription }) {
 
 
   const router = useRouter();
-
-  const handleJobDetailsSubmit = async (result) => {
-    setJobDetails(result);
-    setStep(4);
-  };
 
   const handleJobInputSubmit = async (companyName, difficultyLevel, duration, status, remaining_minutes) => {
     if (!status) {
@@ -70,6 +65,11 @@ export default function CreateInterviewForm({ jobDescription }) {
     setResume(pdfData);
     setStep(3);
   }
+
+  const handleJobDetailsSubmit = async (result) => {
+    setJobDetails(result);
+    setStep(4);
+  };
 
   const handleFinalSubmit = async (e) => {
     e.preventDefault();
@@ -129,9 +129,6 @@ export default function CreateInterviewForm({ jobDescription }) {
     setLoadingDashboard(true);
     await router.push("/dashboard/interview");
   };
-
-
-
 
   if (limitReached) {
     return (
@@ -253,7 +250,7 @@ export default function CreateInterviewForm({ jobDescription }) {
 
 
       {/** Modal Section */}
-      <Modal isOpen={open} onClose={handleModalClose}>
+      <Modal isOpen={open} onClose={handleModalClose} width="max-w-lg">
         <div className="text-center space-y-8">
           <h2 className="text-xl font-semibold text-gray-700">Interview Created Successfully!</h2>
           <p className="text-gray-500">What would you like to do next?</p>

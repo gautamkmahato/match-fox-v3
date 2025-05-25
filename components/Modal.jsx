@@ -7,7 +7,7 @@ export default function Modal({ isOpen, onClose, children, width }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 bg-opacity-50">
-      <div className={`bg-white rounded-xl shadow-xl p-6 w-full ${width} relative`}>
+      <div className={`bg-white rounded-xl shadow-xl p-6 w-full ${width || 'max-w-lg'} relative`}>
         {/* Close Button */}
         <button
           onClick={onClose}

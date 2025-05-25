@@ -5,7 +5,7 @@ import InterviewCard from "./InterviewCard";
 export default function AllInteviewsList({ interviews }) {
     return (
         <>
-            <div className="bg-white p-4 rounded-xl shadow-md mt-6">
+            <div className="bg-white p-4 rounded-xl shadow-md">
                 <FilterSectionHeader />
 
                 <div className="flex flex-wrap justify-center sm:justify-start gap-6 mt-6">
@@ -17,9 +17,9 @@ export default function AllInteviewsList({ interviews }) {
                             <InterviewCard
                                 id={interview.id}
                                 name={interview.interview_name}
-                                duration={interview.duration}
+                                duration={Math.floor(interview.duration/60)}
                                 logo={interview.company_logo}
-                                date={interview.interview_time}
+                                date={interview.created_date}
                                 status={interview.status}
                                 position={interview.position}
                                 type={interview.interview_type}

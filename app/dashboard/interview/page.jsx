@@ -1,5 +1,5 @@
 'use client';
- 
+
 import { useEffect, useState } from 'react';
 import CreateInterview from './_components/CreateInterview';
 import InprogressInterviewsList from './_components/InprogressInterviewsList';
@@ -66,7 +66,7 @@ export default function InterviewDashboardPage() {
 
     const renderInterviews = () => {
         if (loading) {
-            return(
+            return (
                 <>
                     <LoadingOverlay text="Loading Interviews" />
                 </>
@@ -74,7 +74,7 @@ export default function InterviewDashboardPage() {
         }
 
         if (error) {
-            return(
+            return (
                 <>
                     {toast.error(`Error: ${error}`)}
                 </>
@@ -82,17 +82,17 @@ export default function InterviewDashboardPage() {
         }
 
         if (interviews.length === 0) {
-            return(
+            return (
                 <>
                     <EmptyStateComponent icon="not-found"
-  title="No Interviews available"
-  description="We couldn’t find any interviews." />
+                        title="No Interviews available"
+                        description="We couldn’t find any interviews." />
                 </>
             )
         }
 
         return (
-            <> 
+            <>
                 {/* New Open Interviews */}
                 <InprogressInterviewsList inProgressInterviews={inProgressInterviews} /> :
 

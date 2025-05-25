@@ -1,10 +1,13 @@
 import { ArrowRight, Calendar, Clock, Timer } from "lucide-react";
 import Link from "next/link";
+import CompanyLogo from "../../report/_components/CompanyLogo";
 
 const InterviewCard = ({ id, name, duration, logo, date, status, position, type, }) => {
+  console.log(date)
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-md shadow-gray-200 transition hover:shadow-lg flex items-center gap-4">
-      <img src={logo} alt="Company Logo" className="w-12 h-12 rounded-full object-contain" />
+      <CompanyLogo logo={logo} company={name?.charAt(0).toUpperCase()} />
+      
       <div className="flex-1">
         <h3 className="flex items-center justify-between font-semibold text-gray-800">
           <span>{name}</span>
@@ -42,7 +45,7 @@ const InterviewCard = ({ id, name, duration, logo, date, status, position, type,
           <p className="border border-gray-200 text-gray-700 text-xs font-medium px-2 py-1 rounded">{type}</p>
           <p className="flex gap-1 items-center text-xs">
             <Clock className="w-3 h-3" />
-            <span>{duration}</span>
+            <span>{duration} Min</span>
           </p>
         </div>
 
