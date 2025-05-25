@@ -191,7 +191,7 @@ export default function BuyCredits() {
           Payments Temporarily Unavailable
         </h3>
         <p className="text-sm text-gray-600 mt-1">
-          Razorpay is currently validating our application, Payment options will be available soon. Until then, enjoy free credits on us 🎉
+          Razorpay is currently validating our application, Paymentt options will be available soon. Until then, enjoy free credits on us 🎉
         </p>
       </div>
     </div>
