@@ -36,7 +36,6 @@ export default function Sidebar() {
                 className={`bg-white border-r border-zinc-100 shadow w-3/4 transform transition-transform duration-300 md:w-64
                     ${isOpen ? 'fixed top-0 left-0 z-40 h-screen' : 'fixed top-0 left-0 z-40 h-screen -translate-x-full'}
                     md:translate-x-0 md:sticky md:top-0 md:h-screen md:shadow-none shadow-md`}
-
                 style={{ fontFamily: "var(--font-roboto)" }}
             >
                 {/* Close button for mobile */}
@@ -46,7 +45,7 @@ export default function Sidebar() {
                     </button>
                 </div>
 
-                <nav className="space-y-2 px-4">
+                <nav className="space-y-2 px-4 pb-32">
                     {/* Logo - hidden on mobile, shown on md+ */}
                     <Link
                         href="/"
@@ -92,6 +91,25 @@ export default function Sidebar() {
                         <Settings className="w-4 h-4 text-zinc-800" />
                         <span>Settings</span>
                     </Link>
+
+                    {/* Upgrade Plan Section */}
+                    <div className="absolute bottom-4 left-0 w-full px-4">
+                        <div className="bg-gradient-to-br from-indigo-900 to-indigo-500 text-white rounded-xl p-4 shadow-md">
+                            <div className="flex items-center gap-3 mb-3">
+                                <Diamond className="w-5 h-5 text-white" />
+                                <div>
+                                    <p className="text-sm font-semibold">Upgrade Your Plan</p>
+                                    <p className="text-xs text-white/80">Unlock premium interview features</p>
+                                </div>
+                            </div>
+                            <Link
+                                href="/payment"
+                                className="block text-center bg-white text-indigo-600 font-semibold text-sm py-2 rounded-md hover:bg-zinc-200 transition"
+                            >
+                                Pay Now
+                            </Link>
+                        </div>
+                    </div>
 
                     {/* Clerk Auth Buttons - mobile only, fixed at bottom */}
                     {/* <div className="absolute bottom-4 w-full px-4 mr-[-10px] md:hidden">

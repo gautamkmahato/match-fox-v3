@@ -8,6 +8,12 @@ import {
   Trophy,
   BookOpenCheck,
 } from 'lucide-react';
+import fetchUsage from '../service/interview/fetchUsage';
+import { toast } from 'sonner';
+import { useState } from 'react';
+import ShowCreditComponent from './_components/ShowCreditComponent';
+import InterviewList from './_components/InterviewList';
+import Link from 'next/link';
 
 // data/mockDashboardData.ts
 
@@ -69,6 +75,8 @@ export const performanceMetrics = [
 
 
 export default function Dashboard() {
+
+
   const recentInterviews = interviewList.slice(0, 3);
 
   const metricIcons = {
@@ -77,6 +85,12 @@ export default function Dashboard() {
     'trophy': Trophy,
     'book-open-check': BookOpenCheck,
   };
+
+  
+
+
+
+  
 
   return (
     <div className="p-6 space-y-6">
@@ -90,48 +104,18 @@ export default function Dashboard() {
               Start a new mock interview session tailored to your job.
             </p>
           </div>
-          <button className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-[#462eb4] hover:bg-indigo-900 cursor-pointer text-white rounded-md  transition">
+          <Link href='/dashboard/interview/create' className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-[#462eb4] hover:bg-indigo-900 cursor-pointer text-white rounded-md  transition">
             <PlusCircle size={18} />
             Create Interview
-          </button>
+          </Link>
         </div>
 
-        {/* Credits Info */}
-        <div className="bg-white shadow rounded-xl p-6">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-semibold text-gray-800">Your Plan</h2>
-            <CreditCard className="text-gray-400" />
-          </div>
-          <p className="text-sm text-gray-600">Plan: <strong>{creditsData.plan}</strong></p>
-          <p className="text-sm text-gray-600">
-            Credits: <strong>{creditsData.remainingCredits}</strong>
-          </p>
-          <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
-            <div
-              className="bg-indigo-800 h-2 rounded-full"
-              style={{
-                width: `${(creditsData.remainingCredits / creditsData.totalCredits) * 100}%`,
-              }}
-            />
-          </div>
-        </div>
+        <ShowCreditComponent />
+        
       </div>
 
       {/* Recent Interviews */}
-      <div className="bg-white shadow rounded-xl p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Recent Interviews</h3>
-        <ul className="divide-y divide-gray-200">
-          {recentInterviews.map((interview) => (
-            <li key={interview.id} className="bg-gray-50 px-4 py-1 mb-3 flex items-center justify-between border border-gray-50 shadow">
-              <div>
-                <h3 className="text-sm font-semibold text-gray-600">{interview.title}</h3>
-                <p className="text-xs text-gray-500">{interview.company}</p>
-              </div>
-              <span className="text-sm font-semibold text-indigo-600">{interview.score}%</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <InterviewList />
 
       {/* Performance Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

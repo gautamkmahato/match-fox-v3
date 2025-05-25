@@ -13,7 +13,7 @@ export default function Accordion({ header, description }) {
         type="button"
         className="w-full bg-gray-50 flex justify-between cursor-pointer items-center px-4 py-3 text-left hover:bg-gray-100 rounded-t-md"
       >
-        <p className="font-semibold text-sm text-gray-800">{header}</p>
+        <p className="font-semibold text-md text-gray-800">{header}</p>
         {open ? <ChevronUp className="w-4 h-4 text-gray-600" /> : <ChevronDown className="w-4 h-4 text-gray-600" />}
       </button>
       {open && (

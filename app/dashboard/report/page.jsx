@@ -8,6 +8,7 @@ import Modal from '@/components/Modal';
 import fetchInterviewReport from '@/app/service/interview/fetchInterviewReport';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import { calculatePerformance, formatDate } from '@/lib/utils/helper';
+import CompanyLogo from './_components/CompanyLogo';
 
 export default function Page() {
   const [loading, setLoading] = useState(false);
@@ -74,20 +75,7 @@ export default function Page() {
           {/* Card Content */}
           <div className="flex items-start justify-between p-5">
             <div className="flex items-start gap-4">
-              {report?.interview_attempts?.interviews?.company_logo ? (
-                <img
-                  src={report?.interview_attempts?.interviews?.company_logo}
-                  alt={report?.interview_attempts?.interviews?.company}
-                  onError={(e) => (e.currentTarget.style.display = 'none')}
-                  className="w-16 h-16 rounded-lg object-cover"
-                />
-              ) : (
-                <div className="w-16 h-16 rounded-lg bg-gray-200 flex items-center justify-center">
-                  <h3 className="text-3xl font-semibold text-gray-700">
-                    {report?.interview_attempts?.interviews?.company?.charAt(0).toUpperCase()}
-                  </h3>
-                </div>
-              )}
+              <CompanyLogo logo={report?.interview_attempts?.interviews?.company_logo} company={report?.interview_attempts?.interviews?.company?.charAt(0).toUpperCase()} />
               <div>
                 <button
                   onClick={() => setOpenModalIndex(index)}
@@ -124,6 +112,7 @@ export default function Page() {
             isOpen={openModalIndex === index}
             onClose={() => setOpenModalIndex(null)}
             title="Interview Report"
+            width="max-w-4xl"
           >
             <AIReportCard
               id={report?.id}

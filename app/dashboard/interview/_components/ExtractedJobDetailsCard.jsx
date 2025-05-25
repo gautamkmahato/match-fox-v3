@@ -1,29 +1,10 @@
 'use client'
 
 import Accordion from '@/components/Accordion'; // Assuming Accordion component handles description expansion
-import {
-  CalendarDays,
-  MapPin,
-  Code2,
-  Users,
-  Clock,
-  Award,
-  Briefcase,
-  BookOpenText,
-  CheckCircle,
-  GitBranch,
-  Laptop2,
-  ScrollText,
-  Building,
-  Puzzle,
-  Lightbulb,
-  Heart,
-  Wallet,
-  GraduationCap,
-  Tv
-} from 'lucide-react';
-
+import { CalendarDays, MapPin, Code2, Users, Clock, Award, Briefcase, BookOpenText, CheckCircle, GitBranch, Laptop2, ScrollText, Building, Puzzle, Lightbulb, Heart, Wallet, GraduationCap, Tv } from 'lucide-react';
 import React from 'react';
+
+
 
 // Reusable Detail Item Component
 const DetailItem = ({ icon, label, value }) => {
@@ -32,8 +13,8 @@ const DetailItem = ({ icon, label, value }) => {
     <div className="flex items-start space-x-3">
       <div className="mt-0.5">{icon}</div>
       <div>
-        <p className="text-sm text-gray-500">{label}</p>
-        <p className="font-medium text-gray-800 capitalize">{value}</p>
+        <p className="text-xs text-gray-500">{label}</p>
+        <p className="text-sm font-semibold text-gray-800">{value}</p>
       </div>
     </div>
   );
@@ -49,7 +30,7 @@ const SectionWithIcon = ({ icon, title, children }) => {
     <div className="mb-6">
       <div className="flex items-center space-x-2 mb-3">
         {icon}
-        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+        <h3 className="text-md font-semibold text-gray-800">{title}</h3>
       </div>
       {children}
     </div>
@@ -93,10 +74,10 @@ const ExtractedJobDetailsCard = ({ interview }) => {
     line.startsWith('Understand that code')
   );
 
-  return ( 
+  return (
     <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden font-sans">
       {/* Header Section */}
-      <div className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <div className="p-6 bg-gradient-to-b from-gray-200 via-gray-100 to-white">
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">{interview.interview_name || 'Job Interview'}</h1>
@@ -106,8 +87,7 @@ const ExtractedJobDetailsCard = ({ interview }) => {
             </p>
           </div>
           {interview.status && (
-            <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                interview.status.toLowerCase() === 'open' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+            <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${interview.status.toLowerCase() === 'open' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
               }`}>
               {interview.status}
             </span>
@@ -120,42 +100,42 @@ const ExtractedJobDetailsCard = ({ interview }) => {
         {/* Key Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <DetailItem
-            icon={<CalendarDays className="w-5 h-5 text-blue-600" />}
+            icon={<CalendarDays className="w-4 h-4 text-gray-700" />}
             label="Interview Date"
             value={formatDate(interview.interview_time)}
           />
           <DetailItem
-            icon={<MapPin className="w-5 h-5 text-blue-600" />}
+            icon={<MapPin className="w-4 h-4 text-gray-700" />}
             label="Location"
             value={interview.location}
           />
           <DetailItem
-            icon={<Code2 className="w-5 h-5 text-blue-600" />}
+            icon={<Code2 className="w-4 h-4 text-gray-700" />}
             label="Type"
             value={interview.interview_type}
           />
           <DetailItem
-            icon={<Clock className="w-5 h-5 text-blue-600" />}
+            icon={<Clock className="w-4 h-4 text-gray-700" />}
             label="Duration"
             value={interview.duration ? `${interview.duration} mins` : null}
           />
           <DetailItem
-            icon={<Users className="w-5 h-5 text-blue-600" />}
+            icon={<Users className="w-4 h-4 text-gray-700" />}
             label="Style"
             value={interview.interview_style}
           />
           <DetailItem
-            icon={<Award className="w-5 h-5 text-blue-600" />}
+            icon={<Award className="w-4 h-4 text-gray-700" />}
             label="Difficulty"
             value={interview.difficulty_level}
           />
           <DetailItem
-            icon={<Briefcase className="w-5 h-5 text-blue-600" />}
+            icon={<Briefcase className="w-4 h-4 text-gray-700" />}
             label="Experience"
             value={interview.experience}
           />
           <DetailItem
-            icon={<BookOpenText className="w-5 h-5 text-blue-600" />}
+            icon={<BookOpenText className="w-4 h-4 text-gray-700" />}
             label="Employment"
             value={interview.Employment_Type}
           />
@@ -163,37 +143,37 @@ const ExtractedJobDetailsCard = ({ interview }) => {
 
         {/* Job Description (using Accordion) */}
         {interview.job_description && (
-          <Accordion header="Job Description" description={interview.job_description} icon={<ScrollText className="w-5 h-5 text-blue-600" />} />
+          <Accordion header="Job Description" description={interview.job_description} icon={<ScrollText className="w-4 h-4 text-gray-700" />} />
         )}
 
         {/* Role Overview */}
         <SectionWithIcon
-          icon={<Building className="w-5 h-5 text-blue-600" />}
+          icon={<Building className="w-4 h-4 text-gray-700" />}
           title="Role Overview"
         >
-          {interview.Role_Overview && <p className="text-gray-700">{interview.Role_Overview}</p>}
+          {interview.Role_Overview && <p className="text-gray-700 text-xs">{interview.Role_Overview}</p>}
         </SectionWithIcon>
 
-<br />
+        <br />
         {/* Requirements */}
         <SectionWithIcon
-          icon={<CheckCircle className="w-5 h-5 text-blue-600" />}
+          icon={<CheckCircle className="w-4 h-4 text-gray-700" />}
           title="Requirements"
         >
           {(interview.Requirements && interview.Requirements.length > 0) ? (
             <ul className="list-disc list-inside text-gray-700 space-y-1 text-sm">
               {interview.Requirements.map((req, index) => (
-                <li key={index}>{req}</li>
+                <li key={index} className='text-sm'>{req}</li>
               ))}
             </ul>
           ) : (
-            <p className="text-gray-600">No specific requirements listed.</p>
+            <p className="text-gray-600 text-sm">No specific requirements listed.</p>
           )}
         </SectionWithIcon>
 
         {/* Technical Stack */}
         <SectionWithIcon
-          icon={<Tv className="w-5 h-5 text-blue-600" />}
+          icon={<Tv className="w-4 h-4 text-gray-700" />}
           title="Technical Stack"
         >
           {(interview["Tech Stack"] && interview["Tech Stack"].length > 0) ? (
@@ -201,21 +181,21 @@ const ExtractedJobDetailsCard = ({ interview }) => {
               {interview["Tech Stack"].map((tech, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full"
+                  className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full"
                 >
                   {tech}
                 </span>
               ))}
             </div>
           ) : (
-            <p className="text-gray-600">No specific skills listed.</p>
+            <p className="text-gray-600 text-sm ">No specific skills listed.</p>
           )}
         </SectionWithIcon>
 
 
         {/* Skills */}
         <SectionWithIcon
-          icon={<CheckCircle className="w-5 h-5 text-blue-600" />}
+          icon={<CheckCircle className="w-4 h-4 text-gray-700" />}
           title="Skills"
         >
           {(interview.Skills && interview.Skills.length > 0) ? (
@@ -223,20 +203,20 @@ const ExtractedJobDetailsCard = ({ interview }) => {
               {interview.Skills.map((skill, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm rounded-full"
+                  className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full"
                 >
                   {skill}
                 </span>
               ))}
             </div>
           ) : (
-            <p className="text-gray-600">No specific skills listed.</p>
+            <p className="text-gray-600 text-sm ">No specific skills listed.</p>
           )}
         </SectionWithIcon>
 
         {/* Responsibilities */}
         <SectionWithIcon
-          icon={<Puzzle className="w-5 h-5 text-blue-600" />}
+          icon={<Puzzle className="w-4 h-4 text-gray-700" />}
           title="Responsibilities"
         >
           {(jobResponsibilities && jobResponsibilities.length > 0) ? (
@@ -253,19 +233,19 @@ const ExtractedJobDetailsCard = ({ interview }) => {
 
         {/* Cultural Fit */}
         <SectionWithIcon
-          icon={<Heart className="w-5 h-5 text-blue-600" />}
+          icon={<Heart className="w-4 h-4 text-gray-700" />}
           title="Tone / Cultural Fit"
         >
           {(interview['Tone / Cultural Fit']) ? (
             <div className="flex flex-wrap gap-2 text-sm">
-                {interview['Tone / Cultural Fit'].split(',').map((trait, index) => (
-                    <span
-                        key={index}
-                        className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full flex items-center"
-                    >
-                        {trait.trim()}
-                    </span>
-                ))}
+              {interview['Tone / Cultural Fit'].split(',').map((trait, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full flex items-center"
+                >
+                  {trait.trim()}
+                </span>
+              ))}
             </div>
           ) : (
             <p className="text-gray-600 text-sm">Cultural fit not specified.</p>
@@ -274,7 +254,7 @@ const ExtractedJobDetailsCard = ({ interview }) => {
 
         {/* Benefits */}
         <SectionWithIcon
-          icon={<Wallet className="w-5 h-5 text-blue-600" />}
+          icon={<Wallet className="w-4 h-4 text-gray-700" />}
           title="Benefits"
         >
           {(interview.Benefits && interview.Benefits.length > 0) ? (
@@ -290,15 +270,15 @@ const ExtractedJobDetailsCard = ({ interview }) => {
 
         {/* Company Overview (Optional, derived from job_description if needed) */}
         <SectionWithIcon
-            icon={<Building className="w-5 h-5 text-blue-600" />}
-            title={`About ${interview.company}`}
+          icon={<Building className="w-4 h-4 text-gray-700" />}
+          title={`About ${interview.company}`}
         >
-            {interview.job_description && (
-                <p className="text-gray-700 text-sm">
-                    {/* Extract the first paragraph about Sprinto */}
-                    {interview.job_description.split('\n\n')[0] || 'Company overview not available.'}
-                </p>
-            )}
+          {interview.job_description && (
+            <p className="text-gray-700 text-sm">
+              {/* Extract the first paragraph about Sprinto */}
+              {interview.job_description.split('\n\n')[0] || 'Company overview not available.'}
+            </p>
+          )}
         </SectionWithIcon>
 
       </div>

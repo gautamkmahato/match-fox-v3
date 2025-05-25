@@ -2,12 +2,12 @@
 
 import React from 'react';
 
-export default function Modal({ isOpen, onClose, children }) {
+export default function Modal({ isOpen, onClose, children, width }) {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 bg-opacity-50">
-      <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md relative">
+      <div className={`bg-white rounded-xl shadow-xl p-6 w-full ${width} relative`}>
         {/* Close Button */}
         <button
           onClick={onClose}

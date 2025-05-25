@@ -33,8 +33,8 @@ export default function CallComponent({ interviewId, interviewData }) {
   console.log("interview data:", interviewData);
   // console.log("user name", user?.firstName)
 
-  if(!interviewData){
-    return(
+  if (!interviewData) {
+    return (
       <>
         <div>
           <h3>No Interview Data Available for the Id, Please check again...</h3>
@@ -43,8 +43,8 @@ export default function CallComponent({ interviewId, interviewData }) {
     )
   }
 
-  if(!isSignedIn || !user){
-    return(
+  if (!isSignedIn || !user) {
+    return (
       <>
         <div>
           <h3>Please Sign In...</h3>
@@ -87,7 +87,7 @@ export default function CallComponent({ interviewId, interviewData }) {
     };
   }, []);
 
-  
+
   const questionsList = Object.values(interviewData?.questions)
     .map(q => `"${q}"`)
     .join(",\n");
@@ -666,7 +666,7 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
       console.error("Failed to start call:", err);
       toast.error("Failed to start call");
       setVapiError("Failed to start call");
-    } finally{
+    } finally {
       console.log("")
     }
 
@@ -714,16 +714,16 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
     }
   };
 
-  if(loading){
-    return(
+  if (loading) {
+    return (
       <>
         <LoadingOverlay text={loadingMessage} />
       </>
     )
   }
 
-  if(error){
-    return(
+  if (error) {
+    return (
       <>
         {toast.info(`Error: ${error}`)}
       </>
@@ -733,69 +733,90 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
 
   return (
     <>
-      <div className="flex flex-col lg:flex-row p-4 relative">
-      <div className="flex w-full lg:w-2/3 p-4">
-        <div className="w-full h-[450px] max-w-3xl mt-8 rounded-2xl overflow-hidden shadow-xl">
-          <VideoCallUI 
-            interviewId={interviewId}
-            interviewData={interviewData}
-            startCall={startCall}
-            stopCall={stopCall}
-            assistantSpeaking={assistantSpeaking}
-            chatMessages={chatMessages}
-            conversationsRef={conversationsRef}
-            onErrorCall={onErrorCall}
-            setOnErrorCall={setOnErrorCall}
-          />
+      <div className="flex items-center gap-4 px-4 py-4 ml-8 mr-4 mt-4 bg-white shadow rounded-xl border border-gray-100">
+        {/* Avatar-like Block */}
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-700 text-white text-lg font-semibold uppercase">
+          {(interviewData?.company || "H").charAt(0)}
+        </div>
+        {/* Text Content */}
+        <div className="flex flex-col">
+          <h3 className="text-base font-semibold text-gray-800">
+            {interviewData?.interview_name || "Interview Name"}
+          </h3>
+          <p className="text-sm text-gray-500">
+            {interviewData?.company || "Company Name"}
+          </p>
         </div>
       </div>
 
-      <div className="w-full h-[450px] lg:w-1/3 p-4 mt-12 rounded-xl bg-white shadow-lg">
-        <h1 className="text-xl font-bold text-gray-800 mb-4">Chat</h1>
+      <div className="flex flex-col lg:flex-row p-4 relative">
+        <div className="flex flex-col w-full lg:w-2/3 p-4">
+          <div className="w-full h-[400px] max-w-3xl mb-4 rounded-2xl overflow-hidden shadow-xl">
+            <VideoCallUI
+              interviewId={interviewId}
+              interviewData={interviewData}
+              startCall={startCall}
+              stopCall={stopCall}
+              assistantSpeaking={assistantSpeaking}
+              chatMessages={chatMessages}
+              conversationsRef={conversationsRef}
+              onErrorCall={onErrorCall}
+              setOnErrorCall={setOnErrorCall}
+            />
+          </div>
 
-        {chatMessages.length === 0 ? (
-          <p className="text-gray-400">No messages yet...</p>
-        ) : (
-          <div className="flex flex-col border border-gray-100 shadow p-4 rounded-lg h-[412px] overflow-hidden">
-            <div className="flex-1 overflow-y-auto space-y-3 pr-2">
-              <div className="space-y-3">
-                {chatMessages.map((chat, index) => {
-                  const isUser = chat.role === "user";
-                  return (
-                    <div key={index} className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
-                      <div
-                        className={`max-w-[75%] rounded-2xl p-3 shadow-md ${isUser
-                          ? "bg-green-200 text-gray-700 rounded-br-none"
-                          : "bg-gray-200 text-gray-800 rounded-bl-none"
-                          }`}
-                      >
-                        <p className="text-xs font-semibold mb-1 text-gray-700">
-                          {isUser ? "You" : "Interviewer"}
-                        </p>
-                        <p className="text-sm whitespace-pre-wrap">{chat.transcript}</p>
+          {/** Live messages */}
+          {liveMessages && <div className="flex justify-center">
+            <div className="inline-block bg-gray-200 text-center px-4 py-2 border border-gray-200 shadow-md rounded">
+              <p className="text-md text-gray-700 whitespace-nowrap">
+                <span className="font-semibold">Live:</span>
+                {liveMessages}
+              </p>
+            </div>
+          </div>}
+        </div>
+
+        {/** chat messages */}
+        <div className="w-full h-[400px] lg:w-1/3 p-4 mt-4 rounded-xl bg-white shadow-lg">
+          <h1 className="text-xl font-bold text-gray-800 mb-4">Chat</h1>
+
+          {chatMessages.length === 0 ? (
+            <p className="text-gray-400">No messages yet...</p>
+          ) : (
+            <div className="flex flex-col border border-gray-100 shadow p-4 rounded-lg h-[412px] overflow-hidden">
+              <div className="flex-1 overflow-y-auto space-y-3 pr-2">
+                <div className="space-y-3">
+                  {chatMessages.map((chat, index) => {
+                    const isUser = chat.role === "user";
+                    return (
+                      <div key={index} className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
+                        <div
+                          className={`max-w-[75%] rounded-2xl p-3 shadow-md ${isUser
+                            ? "bg-green-200 text-gray-700 rounded-br-none"
+                            : "bg-gray-200 text-gray-800 rounded-bl-none"
+                            }`}
+                        >
+                          <p className="text-xs font-semibold mb-1 text-gray-700">
+                            {isUser ? "You" : "Interviewer"}
+                          </p>
+                          <p className="text-sm whitespace-pre-wrap">{chat.transcript}</p>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-                <div ref={chatEndRef} />
+                    );
+                  })}
+                  <div ref={chatEndRef} />
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {vapiError && (
-          <p className="mt-2 text-sm text-red-500">{vapiError}</p>
-        )}
+          {vapiError && (
+            <p className="mt-2 text-sm text-red-500">{vapiError}</p>
+          )}
+        </div>
       </div>
-    </div>
-    <div className="flex justify-center">
-  <div className="inline-block bg-gray-200 text-center px-4 py-2 border border-gray-200 shadow-md rounded">
-    <p className="text-md text-gray-700 whitespace-nowrap">
-      <span className="font-semibold">Live:</span>
-      {liveMessages}
-    </p>
-  </div>
-</div>
+
+      
 
     </>
   );

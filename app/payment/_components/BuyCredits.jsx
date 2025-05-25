@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import axios from "axios";
-import { Coins, CheckCircle } from "lucide-react";
+import { Coins, CheckCircle, CreditCard } from "lucide-react";
+import Modal from "@/components/Modal";
 
 // Central plan data
 const plans = [
@@ -71,20 +72,29 @@ export default function BuyCredits() {
   const [selectedCycle, setSelectedCycle] = useState("monthly");
   const [selectedCredits, setSelectedCredits] = useState(plans[1].credits); // default to Basic
   const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handlePurchase = async () => {
-    setLoading(true);
-    try {
-      const { data } = await axios.post(
-        "/api/checkout",
-        { credits: selectedCredits },
-        { headers: { "Content-Type": "application/json" } }
-      );
-      window.location.href = data.url;
-    } catch (error) {
-      console.error("Payment Error:", error);
-    }
-    setLoading(false);
+    /**
+     * Use this when Razorpay will active
+     */
+    // setLoading(true);
+    // try {
+    //   const { data } = await axios.post(
+    //     "/api/checkout",
+    //     { credits: selectedCredits },
+    //     { headers: { "Content-Type": "application/json" } }
+    //   );
+    //   window.location.href = data.url;
+    // } catch (error) {
+    //   console.error("Payment Error:", error);
+    // }
+    // setLoading(false);
+
+    /**
+     * For now show this modal
+     */
+    setModalOpen(true);
   };
 
   return (
@@ -160,11 +170,33 @@ export default function BuyCredits() {
         <button
           onClick={handlePurchase}
           disabled={loading}
-          className="bg-[#462eb4] text-white px-8 py-3 rounded-md font-semibold shadow-md hover:bg-indigo-800 transition disabled:opacity-50"
+          className="bg-[#462eb4] text-white px-8 py-3 rounded-md cursor-pointer font-semibold shadow-md hover:bg-indigo-800 transition disabled:opacity-50"
         >
           {loading ? "Processing..." : `Buy ${selectedCredits.toLocaleString()} Credits`}
         </button>
       </div>
+
+        <Modal
+                    isOpen={modalOpen}
+                    onClose={() => setModalOpen(false)}
+                    title="Interview Report"
+                    width="max-w-lg"
+                  >
+                    <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 flex items-center gap-4 max-w-md mx-auto mt-10">
+      <div className="bg-indigo-100 text-indigo-600 p-3 rounded-full">
+        <CreditCard className="w-6 h-6" />
+      </div>
+      <div>
+        <h3 className="text-base font-semibold text-gray-800">
+          Payments Temporarily Unavailable
+        </h3>
+        <p className="text-sm text-gray-600 mt-1">
+          Razorpay is currently validating our application. Payment options will be available soon. Until then, enjoy free credits on us 🎉
+        </p>
+      </div>
+    </div>
+                  </Modal>
+
     </div>
   );
 }

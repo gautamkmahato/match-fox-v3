@@ -3,6 +3,7 @@
 import { calculatePerformance } from '@/lib/utils/helper';
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
 import Link from 'next/link';
+import CompanyLogo from './CompanyLogo';
 
 export default function AIReportCard({
   id,
@@ -32,20 +33,7 @@ export default function AIReportCard({
       <div className='flex items-center justify-between'>
         <div className="flex sm:flex-row items-start sm:items-center gap-4 mb-4">
           <div>
-            {companyLogo ? (
-            <img
-              src={companyLogo}
-              alt={companyName}
-              onError={(e) => (e.currentTarget.style.display = 'none')}
-              className="w-16 h-16 rounded-lg object-cover"
-            />
-          ) : (
-            <div className="w-16 h-16 rounded-lg bg-gray-200 flex items-center justify-center">
-              <h3 className="text-3xl font-semibold text-gray-700">
-                {companyName?.charAt(0).toUpperCase()}
-              </h3>
-            </div>
-          )}
+            <CompanyLogo logo={companyLogo} company={companyName?.charAt(0).toUpperCase()} />
           </div>
 
           <div className='flex flex-col'>
@@ -64,22 +52,21 @@ export default function AIReportCard({
 
       {/* Candidate Info */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between border-t border-gray-100 pt-4 mb-6 gap-4">
-        <div>
+        <div className='border border-gray-100 shadow px-12 py-4'>
           <p className="text-gray-500 text-sm">Candidate</p>
           <p className="font-semibold text-md truncate">
             {userName?.toUpperCase()}
           </p>
         </div>
-        <div className="text-center">
+        <div className="text-center border border-gray-100 shadow px-12 py-4">
           <p className="text-gray-500 text-sm">Score</p>
           <p className="text-2xl font-bold text-teal-600">{overallScore}/10</p>
         </div>
-        <div className="text-center">
+        <div className="text-center border border-gray-100 shadow px-12 py-4">
           <p className="text-gray-500 text-sm">Performance</p>
           <div
-            className={`inline-flex items-center px-3 py-1 rounded-full text-white text-sm font-medium ${
-              performance?.status ? 'bg-teal-500' : 'bg-red-500'
-            }`}
+            className={`inline-flex items-center px-3 py-1 rounded-full text-white text-sm font-medium ${performance?.status ? 'bg-teal-500' : 'bg-red-500'
+              }`}
           >
             {performance?.status ? (
               <ThumbsUp size={16} className="mr-1" />

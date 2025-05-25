@@ -77,7 +77,7 @@ experience (string) — Required experience level in years, default to "Not spec
 
 difficulty_level (string) — Interview difficulty (e.g., "easy", "medium", "hard"), default to "medium"
 
-company (string) — Company name if available in job description else default "matchfox"
+company (string) — Company name if available in job description else default " " (empty string)
 
 
 

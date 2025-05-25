@@ -3,6 +3,7 @@
 import { calculatePerformance } from '@/lib/utils/helper';
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
 import Link from 'next/link';
+import CompanyLogo from './CompanyLogo';
 
 export default function InterviewSummary({
   id,
@@ -31,20 +32,7 @@ export default function InterviewSummary({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-6 pb-6 border-b border-gray-100 dark:border-zinc-800 mb-6">
         <div className="flex-shrink-0">
-          {companyLogo ? (
-            <img
-              src={companyLogo}
-              alt={companyName}
-              onError={(e) => (e.currentTarget.style.display = 'none')}
-              className="w-20 h-20 rounded-2xl object-cover shadow-lg"
-            />
-          ) : (
-            <div className="w-20 h-20 rounded-2xl bg-gray-100 dark:bg-zinc-700 flex items-center justify-center shadow-lg">
-              <span className="text-3xl font-bold text-gray-700 dark:text-gray-300">
-                {companyName?.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          )}
+          <CompanyLogo logo={companyLogo} company={companyName?.charAt(0).toUpperCase()} />
         </div>
 
         <div className="flex flex-col">

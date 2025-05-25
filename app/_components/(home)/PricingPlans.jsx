@@ -1,6 +1,7 @@
 "use client"
 
 import { Check } from "lucide-react"
+import Link from "next/link"
 import { useState } from "react"
 
 export default function PricingPlans() {
@@ -141,7 +142,8 @@ export default function PricingPlans() {
                   </ul>
                 </div>
 
-                <button
+                <Link
+                href='/payment'
                   className={`w-full py-2 px-4 rounded-md text-center ${
                     plan.buttonVariant === "primary"
                       ? "bg-indigo-600 text-white hover:bg-indigo-700"
@@ -149,7 +151,7 @@ export default function PricingPlans() {
                   }`}
                 >
                   {plan.buttonText}
-                </button>
+                </Link>
               </div>
             </div>
           ))}

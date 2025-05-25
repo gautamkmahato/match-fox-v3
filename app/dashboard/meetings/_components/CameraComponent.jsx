@@ -1,16 +1,18 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
 
+import React, { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 const CameraComponent = ({ isVisible }) => {
   const videoRef = useRef(null);
-  const [stream, setStream] = useState(null);
+  const streamRef = useRef(null); // ✅ Use ref for stream
+  const pathname = usePathname();
 
   useEffect(() => {
     const startCamera = async () => {
       try {
         const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        setStream(mediaStream);
+        streamRef.current = mediaStream;
         if (videoRef.current) {
           videoRef.current.srcObject = mediaStream;
         }
@@ -22,10 +24,12 @@ const CameraComponent = ({ isVisible }) => {
     startCamera();
 
     return () => {
-      // Optional: Stop stream on unmount
-      stream?.getTracks().forEach(track => track.stop());
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        console.log('📷 Camera stream stopped');
+      }
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <video

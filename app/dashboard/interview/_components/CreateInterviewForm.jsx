@@ -11,6 +11,7 @@ import generateQuestions from "@/app/service/interview/generateQuestions";
 import { extractJsonBlock } from "@/lib/utils/cleanCodeBlock";
 import PdfTextExtractor from "./PdfTextExtractor";
 import { ArrowLeft, ArrowRight, CheckCircle, ChevronRight, Circle, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 const steps = [
   { title: "Step 1", description: "Basic Info" },
@@ -29,6 +30,9 @@ export default function CreateInterviewForm({ jobDescription }) {
   const [questions, setQuestions] = useState(false);
   const [interviewData, setInterviewData] = useState();
   const [resume, setResume] = useState();
+  const [loadingStart, setLoadingStart] = useState(false);
+  const [loadingDashboard, setLoadingDashboard] = useState(false);
+
 
   const router = useRouter();
 
@@ -39,13 +43,13 @@ export default function CreateInterviewForm({ jobDescription }) {
 
   const handleJobInputSubmit = async (companyName, difficultyLevel, duration, status, remaining_minutes) => {
     if (!status) {
-      setError("Something went wrong please enter data again");
+      toast.error("Something went wrong please enter data again");
       return;
     }
     console.log(remaining_minutes)
 
     if (remaining_minutes < duration) {
-      setError("Limit exceeded. Please upgrade your plan.");
+      toast.error("Limit exceeded. Please upgrade your plan.");
       setLimitReached(true);
       return;
     }
@@ -61,7 +65,7 @@ export default function CreateInterviewForm({ jobDescription }) {
     setStep(2);
   };
 
-  const handlePdfUpload = async(pdfData) =>{
+  const handlePdfUpload = async (pdfData) => {
     console.log("PDF File data: ", pdfData)
     setResume(pdfData);
     setStep(3);
@@ -70,7 +74,7 @@ export default function CreateInterviewForm({ jobDescription }) {
   const handleFinalSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(""); 
+    setError("");
 
     console.log("jobDetails", jobDetails)
 
@@ -111,10 +115,21 @@ export default function CreateInterviewForm({ jobDescription }) {
     }
   };
 
-  const handleModalClose = () =>{
+  const handleModalClose = () => {
     setOpen(false);
     setLoading(true);
   }
+
+  const handleStartInterview = async () => {
+    setLoadingStart(true);
+    await router.push(`/dashboard/meetings/${interviewData?.id}`);
+  };
+
+  const handleGoToDashboard = async () => {
+    setLoadingDashboard(true);
+    await router.push("/dashboard/interview");
+  };
+
 
 
 
@@ -153,20 +168,18 @@ export default function CreateInterviewForm({ jobDescription }) {
               )}
               <div className="ml-2">
                 <p
-                  className={`font-semibold ${
-                    idx === step
+                  className={`font-semibold ${idx === step
                       ? "text-gray-400"
                       : idx < step
-                      ? "text-indigo-600"
-                      : "text-gray-400"
-                  }`}
+                        ? "text-indigo-600"
+                        : "text-gray-400"
+                    }`}
                 >
                   {curr.title}
                 </p>
-                <p className={`font-medium text-xs ${
-                    idx === step
-                      ? "text-gray-400"
-                      : idx < step
+                <p className={`font-medium text-xs ${idx === step
+                    ? "text-gray-400"
+                    : idx < step
                       ? "text-indigo-600"
                       : "text-gray-400"
                   }`}>{curr.description}</p>
@@ -176,26 +189,25 @@ export default function CreateInterviewForm({ jobDescription }) {
             {/* Chevron except for last step */}
             {idx < steps.length - 1 && (
               <ChevronRight
-                className={`mx-4 ${
-                  idx < step ? "text-indigo-500" : "text-gray-300"
-                }`}
+                className={`mx-4 ${idx < step ? "text-indigo-500" : "text-gray-300"
+                  }`}
                 size={20}
               />
             )}
           </div>
         ))}
       </div>
-
+ 
 
       {step === 1 && (
         <div>
           <JobInputs onSubmit={handleJobInputSubmit} />
         </div>
       )}
- 
+
       {step === 2 && (
         <div>
-            <PdfTextExtractor onSubmit={handlePdfUpload} setStep={setStep} step={step}  />
+          <PdfTextExtractor onSubmit={handlePdfUpload} setStep={setStep} step={step} />
         </div>
       )}
 
@@ -216,8 +228,8 @@ export default function CreateInterviewForm({ jobDescription }) {
             )}
           </div>
 
-          
-          <div className="flex justify-between items-center">
+          {/** Next and back buttons */}
+          <div className="flex justify-between items-center px-4">
             <button onClick={() => setStep(step - 1)} className="flex gap-1 items-center cursor-pointer hover:text-gray-800 text-[#636366] text-sm font-medium">
               <ArrowLeft className="w-4 h-4" />
               Back
@@ -226,40 +238,51 @@ export default function CreateInterviewForm({ jobDescription }) {
               className="bg-[#462eb4] hover:shadow-2xl text-white px-5 py-3 rounded-md text-sm font-medium flex items-center gap-2 cursor-pointer transition duration-300 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed">
               {loading ? (
                 <>
-                  <Loader2 className="animate-spin mr-2 w-5 h-5" /> {/* Loader2 icon with animate-spin */}
-                  Creating Interview...
+                  <Loader2 className="animate-spin mr-1 w-5 h-5" /> {/* Loader2 icon with animate-spin */}
+                  Creating Interview
                 </>
               ) : (
                 'Create Interview'
               )}
               {!loading ? <ArrowRight className="w-4 h-4" /> : <></>}
             </button>
-          </div> 
+          </div>
 
         </form>
       )}
 
-      
+
+      {/** Modal Section */}
       <Modal isOpen={open} onClose={handleModalClose}>
         <div className="text-center space-y-8">
           <h2 className="text-xl font-semibold text-gray-700">Interview Created Successfully!</h2>
           <p className="text-gray-500">What would you like to do next?</p>
           <div className="flex justify-center gap-4 mt-6">
             <button
-              onClick={() => router.push(`/dashboard/meetings/${interviewData?.id}`)}
-              className="bg-[#462eb4] text-sm shadow-lg cursor-pointer text-white px-4 py-2 rounded-md hover:bg-indigo-900"
+              onClick={handleStartInterview}
+              disabled={loadingStart}
+              className="bg-[#462eb4] text-sm shadow-lg cursor-pointer text-white px-4 py-2 rounded-md hover:bg-indigo-900 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
             >
+              {loadingStart && (
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              )}
               Start the Interview
             </button>
+
             <button
-              onClick={() => router.push("/dashboard/interview")}
-              className="bg-gray-200 text-sm shadow-lg cursor-pointer font-medium text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
+              onClick={handleGoToDashboard}
+              disabled={loadingDashboard}
+              className="bg-gray-200 text-sm shadow-lg cursor-pointer font-medium text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
             >
+              {loadingDashboard && (
+                <span className="w-4 h-4 border-2 border-gray-800 border-t-transparent rounded-full animate-spin"></span>
+              )}
               Go to Dashboard
             </button>
           </div>
         </div>
       </Modal>
+
 
     </div>
   );

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { SubmitButton } from "./SubmitButton";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ChevronDown, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -17,15 +16,15 @@ export default function JobInputs({ onSubmit, initialData = {} }) {
     e.preventDefault();
 
     if (!companyName) {
-      setError("Please fill out companyName");
+      toast.error("Please fill out company name");
       return;
     }
     if (!difficultyLevel) {
-      setError("Please fill out difficultyLevel");
+      toast.error("Please fill out difficulty level");
       return;
     }
     if (!duration) {
-      setError("Please fill out duration");
+      toast.error("Please fill out duration");
       return;
     }
 
@@ -63,18 +62,11 @@ export default function JobInputs({ onSubmit, initialData = {} }) {
     }
   };
 
-  useEffect(() => {
-    if (error) {
-      toast.info(error);
-    }
-  }, [error]);
-
   return (
     <div className="w-full">
       <div className="">
 
         <form onSubmit={handleInputData}>
-
           <label className="block text-sm text-[#303032] font-medium mb-1">
             Please enter Company's Name
           </label>
