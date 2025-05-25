@@ -38,6 +38,7 @@ export async function GET(req) {
     let { data: interviews, error } = await supabase
         .from('interviews')
         .select('*')
+        .eq('user_id', userId)
             
 
     console.log(interviews)
