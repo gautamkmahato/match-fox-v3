@@ -2,7 +2,6 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import createNewUser from '@/app/service/user/createNewUser'
 import { verifyWebhook } from '@clerk/nextjs/webhooks'
-import addUsage from '@/app/service/interview/addUsage'
 
 
 // export async function POST(req) {

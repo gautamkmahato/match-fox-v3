@@ -36,8 +36,8 @@ export default function Sidebar() {
                 className={`bg-white border-r border-zinc-100 shadow w-3/4 transform transition-transform duration-300 md:w-64
                     ${isOpen ? 'fixed top-0 left-0 z-40 h-screen' : 'fixed top-0 left-0 z-40 h-screen -translate-x-full'}
                     md:translate-x-0 md:sticky md:top-0 md:h-screen md:shadow-none shadow-md`}
-                    
-                    style={{ fontFamily: "var(--font-roboto)" }}
+
+                style={{ fontFamily: "var(--font-roboto)" }}
             >
                 {/* Close button for mobile */}
                 <div className="md:hidden flex justify-end p-4">
@@ -53,7 +53,7 @@ export default function Sidebar() {
                         className="hidden md:flex items-center mt-1.5 pb-6 space-x-2 p-2 rounded"
                     >
                         <Image src={matchfox} width={24} height={24} alt='logo' className="w-7 h-7 rounded-md" />
-                        <span className='font-bold text-lg text-gray-700'>MatchFox</span>
+                        <span className='font-bold text-lg text-indigo-900'>Hirenom</span>
                     </Link>
 
                     {/* Other Nav Items */}
@@ -61,35 +61,35 @@ export default function Sidebar() {
                         href="/dashboard"
                         className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
                     >
-                        <LayoutDashboard className="w-5 h-5 text-zinc-800" />
+                        <LayoutDashboard className="w-4 h-4 text-zinc-800" />
                         <span>Dashboard</span>
                     </Link>
                     <Link
                         href="/dashboard/interview"
                         className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
                     >
-                        <Book className="w-5 h-5 text-zinc-800" />
+                        <Book className="w-4 h-4 text-zinc-800" />
                         <span>Interviews</span>
                     </Link>
                     <Link
                         href="/dashboard/report"
                         className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
                     >
-                        <Group className="w-5 h-5 text-zinc-800" />
+                        <Group className="w-4 h-4 text-zinc-800" />
                         <span>Reports</span>
                     </Link>
                     <Link
                         href="/payment"
                         className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
                     >
-                        <CreditCard className="w-5 h-5 text-zinc-800" />
+                        <CreditCard className="w-4 h-4 text-zinc-800" />
                         <span>Billing</span>
                     </Link>
                     <Link
                         href="/"
                         className="flex items-center text-sm text-zinc-800 space-x-2 p-2 hover:bg-zinc-200 rounded"
                     >
-                        <Settings className="w-5 h-5 text-zinc-800" />
+                        <Settings className="w-4 h-4 text-zinc-800" />
                         <span>Settings</span>
                     </Link>
 

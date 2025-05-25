@@ -19,7 +19,7 @@ const steps = [
   { title: "Step 4", description: "Create Interview" },
 ];
 
-export default function CreateInterviewForm() {
+export default function CreateInterviewForm({ jobDescription }) {
   const [step, setStep] = useState(1);
   const [jobDetails, setJobDetails] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -201,7 +201,7 @@ export default function CreateInterviewForm() {
 
       {step === 3 && (
         <div>
-          <JobDescriptionForm onSubmit={handleJobDetailsSubmit} initialData={jobDetails}setStep={setStep} step={step} />
+          <JobDescriptionForm onSubmit={handleJobDetailsSubmit} initialData={jobDetails} jobData={jobDescription} setStep={setStep} step={step} />
         </div>
       )}
 

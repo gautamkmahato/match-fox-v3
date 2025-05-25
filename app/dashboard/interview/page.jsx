@@ -5,6 +5,8 @@ import CreateInterview from './_components/CreateInterview';
 import InprogressInterviewsList from './_components/InprogressInterviewsList';
 import AllInteviewsList from './_components/AllInteviewsList';
 import fetchAllInterviews from '@/app/service/interview/fetchAllInterviews';
+import LoadingOverlay from '@/components/LoadingOverlay';
+import EmptyStateComponent from '@/app/_components/EmptyStateComponent';
 
 
 
@@ -64,15 +66,29 @@ export default function InterviewDashboardPage() {
 
     const renderInterviews = () => {
         if (loading) {
-            return <p className="text-gray-500 text-center mt-10">Loading interviews...</p>;
+            return(
+                <>
+                    <LoadingOverlay text="Loading Interviews" />
+                </>
+            )
         }
 
         if (error) {
-            return <p className="text-red-500 text-center mt-10">Error: {error}</p>;
+            return(
+                <>
+                    {toast.error(`Error: ${error}`)}
+                </>
+            )
         }
 
         if (interviews.length === 0) {
-            return <p className="text-gray-400 text-center mt-10">No interviews found.</p>;
+            return(
+                <>
+                    <EmptyStateComponent icon="not-found"
+  title="No Interviews available"
+  description="We couldn’t find any interviews." />
+                </>
+            )
         }
 
         return (

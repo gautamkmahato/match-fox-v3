@@ -7,11 +7,11 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@cl
 import Image from 'next/image';
 import logo from '../../../public/match-fox-5.jpg'
 
- 
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -40,7 +40,7 @@ const Header = () => {
           <div className="flex-shrink-0 text-gray-700 flex items-center justify-center sm:justify-start flex-1 sm:flex-none">
             <Link href="/" className="flex gap-2 items-center justify-center font-bold text-xl">
               <Image src={logo} alt='logo' className='w-7 h-7 rounded-lg' />
-              <span>MatchFox</span>
+              <span className='text-indigo-900'>Hirenom</span>
             </Link>
           </div>
 
@@ -58,13 +58,13 @@ const Header = () => {
               </Link>
               <SignedIn>
                 <Link href="/dashboard" className="text-gray-700 transition hover:text-gray-700/75">
-                Dashboard
-              </Link>
+                  Dashboard
+                </Link>
               </SignedIn>
               <Link href="/about" className="text-gray-700 transition hover:text-gray-700/75">
                 About
               </Link>
-              
+
             </div>
           </div>
 
@@ -92,18 +92,29 @@ const Header = () => {
           <Link href="/home" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-700">
             Home
           </Link>
-          <Link href="/about" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
-            About
+          <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
+            How It Works
           </Link>
-          <Link href="/services" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
-            Services
-          </Link>
-          <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
-            Contact
-          </Link>
-          <Link href="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-700">
-            Login
-          </Link>
+
+          <SignedIn>
+            <Link href="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
+              Dashboard
+            </Link>
+          </SignedIn>
+
+          <SignedIn>
+            <Link href="/payment" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
+              Payment
+            </Link>
+          </SignedIn>
+
+          <SignedOut>
+            <SignInButton>
+              <Link href="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-700">
+                Login
+              </Link>
+            </SignInButton>
+          </SignedOut>
         </div>
       </div>
     </nav>

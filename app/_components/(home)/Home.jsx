@@ -11,7 +11,6 @@ export default function Home() {
     <div>
       <HeroSection />
       {/* Rest of your page content */}
-      <ProductShowcase />
       <WhySection />
       <FeatureCards />
       <PricingPlans />

@@ -2,16 +2,17 @@
 import Link from 'next/link';
 import Header from './Header';
 import { ArrowBigRight, ArrowRight } from 'lucide-react';
+import ProductShowcase from './ProductShowcase';
 
 const HeroSection = () => {
   return (
     // Add `relative` and `isolate` to manage stacking context
-    <section
+    <section 
       // className="h-screen relative isolate bg-[radial-gradient(ellipse_at_center,_#0f0f0f,_#52525b,_#a1a1aa,_#e4e4e7)] pb-24 text-center overflow-hidden" // Added overflow-hidden for tidiness
-      className="h-screen relative isolate bg-gray-50 pb-24 text-center overflow-hidden" // Added overflow-hidden for tidiness
+      className="relative isolate bg-gray-50 pb-24 text-center overflow-hidden" // Added overflow-hidden for tidiness
 
     >
-        <Header />
+      <Header />
       {/* The Dot Pattern using ::before pseudo-element */}
       <div
         className="absolute inset-0 -z-10"
@@ -31,8 +32,8 @@ const HeroSection = () => {
           Supercharge your <br /> interview with AI
         </h1>
         <p className="text-md md:text-xl lg:text-[16px] text-gray-400 max-w-2xl mx-auto mb-10">
-  Ace your interviews with AI-powered practice, real-time feedback, and smart insights—built for ambitious job seekers.
-</p>
+          Ace your interviews with AI-powered practice, real-time feedback, and smart insights—built for ambitious job seekers.
+        </p>
 
 
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
@@ -51,6 +52,9 @@ const HeroSection = () => {
           </Link>
         </div>
       </div>
+
+      <ProductShowcase />
+
     </section>
   );
 };

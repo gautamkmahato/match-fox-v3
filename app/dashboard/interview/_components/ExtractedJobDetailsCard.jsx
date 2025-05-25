@@ -291,7 +291,7 @@ const ExtractedJobDetailsCard = ({ interview }) => {
         {/* Company Overview (Optional, derived from job_description if needed) */}
         <SectionWithIcon
             icon={<Building className="w-5 h-5 text-blue-600" />}
-            title="About Sprinto"
+            title={`About ${interview.company}`}
         >
             {interview.job_description && (
                 <p className="text-gray-700 text-sm">

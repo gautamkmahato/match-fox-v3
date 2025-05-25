@@ -76,7 +76,7 @@ export default function PricingPlans() {
           <h2 className="text-4xl font-bold mb-4">
             Choose the Perfect Plan for
             <br />
-            Your Hiring Needs
+            Your Interview Needs
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Our Basic Plan is ideal for startups and small businesses looking to optimize their hiring process.

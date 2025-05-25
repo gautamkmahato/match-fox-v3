@@ -28,6 +28,7 @@
     "p-queue": "^8.1.0",
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^5.2.133",
+    "razorpay": "^2.9.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sonner": "^2.0.3",

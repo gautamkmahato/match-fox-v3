@@ -2,17 +2,21 @@
 
 import { cleanCodeBlock } from "@/lib/utils/cleanCodeBlock";
 import { useState } from "react";
-import { TextAreaField } from "./TextAreaFeild";
+import { TextAreaField } from "./TextAreaFeild"; 
 import { SubmitButton } from "./SubmitButton";
 import { validateJobDescription } from "@/lib/utils/validateJobDescription";
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import generateJobDetails from "@/app/service/interview/generateJobDetails";
 import { toast } from "sonner";
 
-export default function JobDescriptionForm({ onSubmit, initialData = {}, setStep, step }) {
+export default function JobDescriptionForm({ onSubmit, initialData = {}, jobData, setStep, step }) {
   const [jobDescription, setJobDescription] = useState(initialData.jobDescription || "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  if(!jobData){
+    console.log("No jobData from Linkedin")
+  }
 
   // Destructure initial job input data (from JobInputs step)
   const {
@@ -24,7 +28,8 @@ export default function JobDescriptionForm({ onSubmit, initialData = {}, setStep
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const validationError = validateJobDescription(jobDescription);
+
+    const validationError = validateJobDescription(jobData || jobDescription);
     if (validationError) {
       setError(validationError);
       return;
@@ -35,20 +40,20 @@ export default function JobDescriptionForm({ onSubmit, initialData = {}, setStep
 
     try {
       // Generate extracted job info
-      const apiResult = await generateJobDetails(jobDescription);
+      const apiResult = await generateJobDetails(jobData || jobDescription);
       console.log("api results: ", apiResult)
       const cleanedResult = cleanCodeBlock(apiResult);
 
       // Merge data from job inputs and extracted fields
       const mergedResult = {
         ...cleanedResult,
-        company: companyName,
+        company: cleanedResult?.company || companyName,
         difficulty_level: difficultyLevel || cleanedResult.difficulty_level || 'medium',
         duration: duration ? String(duration) : cleanedResult.duration || '30',
         interview_time: cleanedResult?.interview_time
           ? new Date(cleanedResult.interview_time).toISOString()
           : new Date().toISOString(), // fallback to now
-        job_description: jobDescription,
+        job_description: jobData || jobDescription,
       };
 
       console.log("Final Merged Job Details:", mergedResult);
@@ -70,7 +75,7 @@ export default function JobDescriptionForm({ onSubmit, initialData = {}, setStep
 
       <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
         <TextAreaField
-          value={jobDescription}
+          value={jobData ? jobData : jobDescription}
           onChange={(e) => setJobDescription(e.target.value)}
           placeholder="Paste the job description here..."
           ariaLabel="Job Description"
