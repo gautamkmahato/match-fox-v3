@@ -8,7 +8,7 @@ export default function page() {
         <>
             <Header />
             <BuyCredits />
-            <Checkout />
+            {/* <Checkout /> */}
         </>
     )
 }
