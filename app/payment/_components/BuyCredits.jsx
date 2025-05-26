@@ -12,7 +12,7 @@ const plans = [
   {
     name: "Free Plan",
     tagline: "Give AI interviews a try",
-    credits: 300,
+    credits: { monthly: 0, yearly: 0 },
     price: { monthly: 0, yearly: 0 },
     features: [
       "5 Min Mock Interview",
@@ -27,7 +27,7 @@ const plans = [
   {
     name: "Basic Plan",
     tagline: "Kickstart your interview prep",
-    credits: 9000,
+    credits: { monthly: 9000, yearly: 108000 },
     price: { monthly: 10, yearly: 99 },
     features: [
       "150 Min Mock Interview",
@@ -41,9 +41,9 @@ const plans = [
     disabled: false,
   },
   {
-    name: "Pro Plan",
+    name: "Professional Plan",
     tagline: "Best for regular practice",
-    credits: 27000,
+    credits: { monthly: 27000, yearly: 324000 },
     price: { monthly: 25, yearly: 449 },
     features: [
       "450 Min Mock Interview",
@@ -59,7 +59,7 @@ const plans = [
   {
     name: "Enterprise Plan",
     tagline: "For teams and organizations",
-    credits: 120000,
+    credits: { monthly: 120000, yearly: 1440000 },
     price: { monthly: 99, yearly: 999 },
     features: [
       "2000 Min Mock Interview",
@@ -175,18 +175,23 @@ export default function BuyCredits() {
   };
 
   const handleSelection = (credits, priceObj, cycle) =>{
-    setSelectedCredits(credits);
-    const price = priceObj[cycle];
-    setSelectedPrice(price);
-    const planObj = PLAN_LIMITS[credits];
-    console.log("planObj", planObj)
-    const plan = planObj.name;
+    let planObj;
+    let plan;
     console.log("credits", credits);
     console.log("price obj", priceObj);
     console.log("cycle", cycle);
+    setSelectedCredits(credits);
+    const price = priceObj[cycle];
+    setSelectedPrice(price);
+    planObj = PLAN_LIMITS[credits];
+     console.log("planObj", planObj)
+    plan = planObj.name;
+    setSelectedPlan(plan);
+   
+    
     console.log("price", price);
     console.log("plan", plan);
-    setSelectedPlan(plan)
+    
   }
 
   return (
@@ -223,8 +228,8 @@ export default function BuyCredits() {
         {plans.map((plan) => (
           <div
             key={plan.name}
-            onClick={() => handleSelection(plan.credits, plan.price, selectedCycle)}
-            className={`p-6 rounded-2xl shadow-md border cursor-pointer transition hover:shadow-lg ${selectedCredits === plan.credits
+            onClick={() => handleSelection(plan.credits[selectedCycle], plan.price, selectedCycle)}
+            className={`p-6 rounded-2xl shadow-md border cursor-pointer transition hover:shadow-lg ${selectedCredits === plan.credits.selectedCycle
                 ? "border-[#462eb4] ring-2 ring-[#462eb4]"
                 : "border-gray-200"
               } ${plan.highlighted ? "border-yellow-300 ring-4 ring-yellow-300 shadow-2xl bg-white" : "bg-white"}
@@ -235,7 +240,7 @@ export default function BuyCredits() {
             <p className={`text-xs ${plan.highlighted ? "text-gray-500" : "text-gray-500"} mb-2`}>{plan.tagline}</p>
             <div className={`flex items-center gap-2 text-md ${plan.highlighted ? "text-[#462eb4] text-lg font-extrabold" : "text-[#462eb4]"} font-semibold mb-2`}>
               <Coins className="w-5 h-5 text-yellow-500" />
-              {plan.credits.toLocaleString()} Credits
+              {plan.credits.selectedCycle} Credits
             </div>
             <p className={`text-3xl mb-4 font-semibold ${plan.highlighted ? "text-gray-600" : "text-gray-600"}`}>
               ${plan.price[selectedCycle]} / {selectedCycle}
@@ -249,7 +254,7 @@ export default function BuyCredits() {
               ))}
             </ul>
 
-            {selectedCredits === plan.credits && (
+            {selectedCredits === plan.credits.selectedCycle && (
               <div className="text-sm text-[#462eb4] font-medium text-center">Selected</div>
             )}
           </div>
