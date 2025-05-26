@@ -195,104 +195,131 @@ export default function BuyCredits() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h2 className="text-4xl font-bold text-center mb-2">Buy Interview Credits</h2>
-      <p className="text-center text-gray-500 mb-6">
-        Unlock AI-driven mock interviews, resume tools, analytics, and more.
-      </p>
+<>
+<div className="">
+<div className="max-w-6xl mx-auto px-6 py-12">
+  <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-2">
+    Choose your right plan!
+  </h2>
+  <p className="text-center text-gray-500 mb-8">
+    Select from best plans, ensuring a perfect match. Need more or less? Customize your subscription for a seamless fit!
+  </p>
 
-      {/* Toggle */}
-      <div className="flex justify-center mb-10 gap-4">
-        <button
-          onClick={() => setSelectedCycle("monthly")}
-          className={`px-4 py-2 rounded-full text-sm font-semibold transition ${selectedCycle === "monthly"
-              ? "bg-[#462eb4] text-white"
-              : "bg-gray-200 text-gray-700"
-            }`}
-        >
-          Monthly Plans
-        </button>
-        <button
-          onClick={() => setSelectedCycle("yearly")}
-          className={`px-4 py-2 rounded-full text-sm font-semibold transition ${selectedCycle === "yearly"
-              ? "bg-[#462eb4] text-white"
-              : "bg-gray-200 text-gray-700"
-            }`}
-        >
-          Yearly Plans
-        </button>
-      </div>
-
-      {/* Plans */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {plans.map((plan) => (
-          <div
-            key={plan.name}
-            onClick={() => handleSelection(plan.credits[selectedCycle], plan.price, selectedCycle)}
-            className={`p-6 rounded-2xl shadow-md border cursor-pointer transition hover:shadow-lg ${selectedCredits === plan.credits.selectedCycle
-                ? "border-[#462eb4] ring-2 ring-[#462eb4]"
-                : "border-gray-200"
-              } ${plan.highlighted ? "border-yellow-300 ring-4 ring-yellow-300 shadow-2xl bg-white" : "bg-white"}
-               ${plan.disabled ? "opacity-50 cursor-not-allowed pointer-events-none select-none": ""}
-               `}
-          >
-            <h3 className={`text-xl font-bold mb-1 ${plan.highlighted ? "bg-white text-gray-800" : "bg-white"}`}>{plan.name}</h3>
-            <p className={`text-xs ${plan.highlighted ? "text-gray-500" : "text-gray-500"} mb-2`}>{plan.tagline}</p>
-            <div className={`flex items-center gap-2 text-md ${plan.highlighted ? "text-[#462eb4] text-lg font-extrabold" : "text-[#462eb4]"} font-semibold mb-2`}>
-              <Coins className="w-5 h-5 text-yellow-500" />
-              {plan.credits.selectedCycle} Credits
-            </div>
-            <p className={`text-3xl mb-4 font-semibold ${plan.highlighted ? "text-gray-600" : "text-gray-600"}`}>
-              ${plan.price[selectedCycle]} / {selectedCycle}
-            </p>
-
-            <ul className="text-sm space-y-2 mb-4">
-              {plan.features.map((f, idx) => (
-                <li key={idx} className={`flex items-center gap-2 ${plan.highlighted ? "text-gray-700" : "text-gray-700"}`}>
-                  <CheckCircle className="text-green-500 w-4 h-4" /> {f}
-                </li>
-              ))}
-            </ul>
-
-            {selectedCredits === plan.credits.selectedCycle && (
-              <div className="text-sm text-[#462eb4] font-medium text-center">Selected</div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Buy Button */}
-      <div className="flex justify-center mt-10">
-        <button
-          onClick={handlePayment}
-          disabled={loading}
-          className="bg-[#462eb4] text-white px-8 py-3 rounded-md cursor-pointer font-semibold shadow-md hover:bg-indigo-800 transition disabled:opacity-50"
-        >
-          {loading ? "Processing..." : selectedCredits > 0 ? `Buy ${selectedCredits} Credits` : `Select Plan`}
-        </button>
-      </div>
-
-      <Modal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        title="Interview Report"
-        width="max-w-lg"
+  {/* Toggle */}
+  <div className="flex justify-center mb-10">
+    <div className="inline-flex bg-gray-100 rounded-full p-1">
+      <button
+        onClick={() => setSelectedCycle("monthly")}
+        className={`px-6 py-2 text-sm font-medium rounded-full transition ${
+          selectedCycle === "monthly"
+            ? "bg-[#462eb4] text-white"
+            : "text-gray-700"
+        }`}
       >
-        <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 flex items-center gap-4 max-w-md mx-auto mt-10">
-          <div className="bg-indigo-100 text-indigo-600 p-3 rounded-full">
-            <CreditCard className="w-6 h-6" />
-          </div>
-          <div>
-            <h3 className="text-base font-semibold text-gray-800">
-              Payments Temporarily Unavailable
-            </h3>
-            <p className="text-sm text-gray-600 mt-1">
-              Razorpay is currently validating our application, Paymentt options will be available soon. Until then, enjoy free credits on us 🎉
-            </p>
-          </div>
-        </div>
-      </Modal>
-
+        Monthly
+      </button>
+      <button
+        onClick={() => setSelectedCycle("yearly")}
+        className={`px-6 py-2 text-sm font-medium rounded-full transition ${
+          selectedCycle === "yearly"
+            ? "bg-[#462eb4] text-white"
+            : "text-gray-700"
+        }`}
+      >
+        Yearly (Save 10%)
+      </button>
     </div>
+  </div>
+
+  {/* Plans */}
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {plans.map((plan) => {
+      const isSelected = selectedCredits === plan.credits[selectedCycle];
+
+      return (
+        <div
+          key={plan.name}
+          onClick={() =>
+            handleSelection(
+              plan.credits[selectedCycle],
+              plan.price,
+              selectedCycle
+            )
+          }
+          className={`p-8 rounded-3xl shadow-xl border transition hover:shadow-2xl cursor-pointer bg-gradient-to-br from-white to-purple-50 ${
+            isSelected ? "ring-4 ring-[#462eb4] border-transparent" : "border-gray-200"
+          } ${plan.highlighted ? "bg-white ring-4 ring-yellow-300" : ""} ${
+            plan.disabled ? "opacity-50 pointer-events-none select-none" : ""
+          }`}
+        >
+          <div className="mb-4">
+<h3 className=" text-sm font-bold text-white bg-[#462eb4] px-3 py-1 inline-block rounded-md">
+  {plan.name}
+</h3>
+            <p className="text-sm text-gray-500 mt-1">{plan.tagline}</p>
+          </div>
+
+          <div className="flex items-center gap-2 mb-2 text-md font-semibold text-[#462eb4]">
+            <Coins className="w-5 h-5 text-yellow-500" />
+            {plan.credits[selectedCycle]} Credits
+          </div>
+
+          <p className="text-3xl font-bold text-gray-800 mb-6">
+            ${plan.price[selectedCycle]} / {selectedCycle}
+          </p>
+
+          <ul className="text-sm space-y-2 mb-6">
+            {plan.features.map((f, idx) => (
+              <li key={idx} className="flex items-center text-gray-700 gap-2">
+                <CheckCircle className="text-green-500 w-4 h-4" /> {f}
+              </li>
+            ))}
+          </ul>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent triggering card's onClick again
+              handlePayment();
+            }}
+            disabled={!isSelected || loading}
+            className={`w-full mt-4 py-2 px-4 rounded-xl font-semibold text-white transition ${
+              isSelected
+                ? "bg-[#462eb4] hover:bg-indigo-700"
+                : "bg-gray-300 cursor-not-allowed"
+            }`}
+          >
+            {loading && isSelected ? "Processing..." : "Pay Now"}
+          </button>
+        </div>
+      );
+    })}
+  </div>
+
+  {/* Modal */}
+  <Modal
+    isOpen={modalOpen}
+    onClose={() => setModalOpen(false)}
+    title="Interview Report"
+    width="max-w-lg"
+  >
+    <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 flex items-center gap-4 max-w-md mx-auto mt-10">
+      <div className="bg-indigo-100 text-indigo-600 p-3 rounded-full">
+        <CreditCard className="w-6 h-6" />
+      </div>
+      <div>
+        <h3 className="text-base font-semibold text-gray-800">
+          Payments Temporarily Unavailable
+        </h3>
+        <p className="text-sm text-gray-600 mt-1">
+          Razorpay is currently validating our application. Payment options will be available soon. Until then, enjoy free credits on us 🎉
+        </p>
+      </div>
+    </div>
+  </Modal>
+</div>
+</div>
+</>
+
+
   );
 }
