@@ -1,37 +1,29 @@
 'use client';
 
+import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 
 export default function Checkout() {
   const [loading, setLoading] = useState(false);
 
-  const loadRazorpayScript = () => {
-  return new Promise((resolve) => {
-    if (window.Razorpay) return resolve(true); // already loaded
+  const { user } = useUser();
 
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.body.appendChild(script);
-  });
-};
+  console.log(user)
 
 
   const handlePayment = async () => {
-  setLoading(true);
+        if (!user?.id) return alert("User not found");
 
-  const scriptLoaded = await loadRazorpayScript();
-  if (!scriptLoaded) {
-    alert("Failed to load Razorpay SDK.");
-    setLoading(false);
-    return;
-  }
+  setLoading(true);
 
   const res = await fetch("/api/checkout/razorpay", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount: 499 }) // ₹499
+    body: JSON.stringify({
+  amount: 499,
+  clerk_id: user?.id, // ✅ add this line
+})
+
   });
 
   const result = await res.json();
@@ -49,6 +41,7 @@ export default function Checkout() {
     amount: result.data.amount,
     currency: result.data.currency,
     name: "Cron Labs",
+    clerk_id: user?.id,
     description: "Test Transaction",
     order_id: result.data.id,
     handler: async function (response) {

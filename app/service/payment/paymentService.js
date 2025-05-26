@@ -69,7 +69,7 @@ export async function upsertSubscription(userId, plan) {
 
   const { error } = await supabase
     .from('subscriptions')
-    .upsert({
+    .upsert({ 
       user_id: userId,
       plan,
       started_at: startedAt.toISOString(),

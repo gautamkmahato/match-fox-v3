@@ -1,17 +1,42 @@
 // app/api/create-order/route.js
 
 import razorpay from "@/lib/razorpay/razorpay";
+import { NextResponse } from "next/server";
 
 
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { amount, currency = "INR", receipt = "receipt#1" } = body;
+    const { amount, credits, plan, clerk_id } = body;
 
+    console.log("clerk_id::::", clerk_id);
+    console.log("amount, credit, plan::::", amount, credits, plan);
+
+    if (!clerk_id) {
+      return NextResponse.json(
+        { state: false, message: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    if (!amount || !credits || !plan) {
+      return NextResponse.json(
+        { state: false, message: "Missing amount or credits or plan" },
+        { status: 400 }
+      );
+    }
+
+    
     const options = {
-      amount: amount * 100, // Razorpay needs paise
-      currency,
-      receipt,
+      amount: amount * 100, // amount in paise
+      currency: "USD",
+      receipt: `receipt_order_${Math.random() * 1000}`,
+      notes: {
+        clerk_id: clerk_id,
+        description: "Razorpay Test Transaction",
+        credits: credits,
+        plan: plan,
+      },
     };
 
     const order = await razorpay.orders.create(options);

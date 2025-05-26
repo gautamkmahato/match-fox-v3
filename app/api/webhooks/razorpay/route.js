@@ -1,54 +1,50 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { headers } from "next/headers";
-import savePayment from "@/app/service/payment/paymentService";
+import { handlePaymentCaptured } from "@/app/service/payment/webhookEvents";
 
 export async function POST(req) {
   try {
-    const body = await req.text(); // get raw body for signature verification
+    const rawBody = await req.text();
+    console.log("🔔 Webhook called with raw body:", rawBody);
+
     const razorpaySignature = headers().get("x-razorpay-signature");
+    console.log("🧾 Received signature:", razorpaySignature);
 
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+    if (!razorpaySignature || !secret) {
+      console.error("❌ Missing Razorpay signature or secret");
+      return NextResponse.json({ state: false, message: "Unauthorized" }, { status: 400 });
+    }
 
     const expectedSignature = crypto
       .createHmac("sha256", secret)
-      .update(body)
+      .update(rawBody)
       .digest("hex");
+
+    console.log("🧠 Expected signature:", expectedSignature);
 
     if (razorpaySignature !== expectedSignature) {
       console.warn("❌ Invalid webhook signature");
       return NextResponse.json({ state: false, message: "Invalid signature" }, { status: 400 });
     }
 
-    const payload = JSON.parse(body);
+    const payload = JSON.parse(rawBody);
     const event = payload.event;
+    console.log("📦 Parsed event:", event);
 
-    if (event === "payment.captured") {
-      const payment = payload.payload.payment.entity;
-
-      const paymentData = {
-        id: crypto.randomUUID(),
-        user_id: null, // Set based on context if you can track the user from metadata or order notes
-        amount: payment.amount / 100,
-        payment_provider: "razorpay",
-        payment_status: payment.status,
-        transaction_id: payment.id,
-        credits: 100, // or dynamically assign based on metadata/amount
-        remarks: payment.notes?.description || "Razorpay Purchase",
-        customer_id: payment.customer_id || null,
-        invoice_id: null,
-        receipt_url: null,
-        payment_intent_id: null,
-      };
-
-      await savePayment(paymentData);
-      return NextResponse.json({ state: true, message: "Payment captured and saved" }, { status: 200 });
+    switch (event) {
+      case "payment.captured":
+        await handlePaymentCaptured(payload);
+        break;
+      default:
+        console.log(`⚠️ Unhandled event type: ${event}`);
     }
 
-    return NextResponse.json({ state: true, message: "Ignored event" }, { status: 200 });
+    return NextResponse.json({ state: true, message: "Webhook processed" });
   } catch (err) {
-    console.error("🔴 Webhook error:", err);
-    return NextResponse.json({ state: false, message: "Webhook processing failed" }, { status: 500 });
+    console.error("💥 Webhook error:", err);
+    return NextResponse.json({ state: false, message: "Internal server error" }, { status: 500 });
   }
 }
 
