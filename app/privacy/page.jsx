@@ -64,7 +64,7 @@ const PrivacyPolicy = () => {
           <li>You can uninstall the extension at any time.</li>
           <li>
             If you have questions about your data or privacy, please contact us
-            at <a href="mailto:support@hirenom.com" className="text-blue-600 underline">support@hirenom.com</a>.
+            at <a href="hirenom.com" className="text-blue-600 underline">@hirenom.com</a>.
           </li>
         </ul>
       </section>
