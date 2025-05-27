@@ -9,6 +9,7 @@ import fetchInterviewReport from '@/app/service/interview/fetchInterviewReport';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import { formatDate } from '@/lib/utils/helper';
 import CompanyLogo from './_components/CompanyLogo';
+import EmptyStateComponent from '@/app/_components/EmptyStateComponent';
 
 export default function Page() {
   const [loading, setLoading] = useState(false);
@@ -64,7 +65,10 @@ export default function Page() {
       </h1>
 
       {reports.length === 0 && (
-        <p className="text-gray-600 text-sm">No reports found.</p>
+        <EmptyStateComponent 
+          title = 'No reports found'
+          description = 'Looks like there’s nothing here yet.'
+        />
       )}
 
       {reports.map((report, index) => (

@@ -33,7 +33,7 @@ export default function Sidebar() {
 
             {/* Sidebar */}
             <div
-                className={`bg-white border-r border-zinc-100 shadow w-3/4 transform transition-transform duration-300 md:w-64
+                className={`bg-white border-r border-zinc-100 shadow w-3/4 transform transition-transform duration-300 md:w-60
                     ${isOpen ? 'fixed top-0 left-0 z-40 h-screen' : 'fixed top-0 left-0 z-40 h-screen -translate-x-full'}
                     md:translate-x-0 md:sticky md:top-0 md:h-screen md:shadow-none shadow-md`}
                 style={{ fontFamily: "var(--font-roboto)" }}
