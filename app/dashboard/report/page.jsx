@@ -124,7 +124,7 @@ export default function Page() {
               overallScore={report?.score}
               recommendation={!!report?.recommendation}
               Skill_Evaluation={report?.report?.Skill_Evaluation}
-              summary="John demonstrated strong technical capabilities and problem-solving skills throughout the interview. His communication was clear and effective, and his previous experience aligns well with the role expectations."
+              summary={report?.report?.overall_summary}
             />
           </Modal>
         </div>
