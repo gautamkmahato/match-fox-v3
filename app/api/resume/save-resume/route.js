@@ -22,10 +22,6 @@ export async function POST(req) {
 
     // 2. Authenticated user
     const user = await currentUser();
-
-    console.log("************** user ********")
-    console.log(user)
-
     const userId = user?.id;
 
     if (!userId) {
@@ -43,12 +39,12 @@ export async function POST(req) {
         return NextResponse.json({ state: false, error: 'User not found in database', message: 'Forbidden' }, { status: 403 });
     }
 
-    const { file_name, html_content, } = await req.json();
+    const { html_content, } = await req.json();
 
     // Insert metadata into 'resumes' table
     const { error: resumeError, data } = await supabase.from('resume_html').insert({
         clerk_id: userId,
-        file_name: file_name,
+        file_name: `resume-${Date.now()}`,
         file_url: 'https://hirenom.pdf',
         file_type: 'pdf',
         parsed_successfully: false,

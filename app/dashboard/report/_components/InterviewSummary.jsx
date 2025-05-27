@@ -85,7 +85,7 @@ export default function InterviewSummary({
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {skills.map(({ label, key }) => {
-            const score = Skill_Evaluation?.[key]?.rating ?? 'N/A';
+            const score = Skill_Evaluation?.[key]?.rating ?? '0';
             return (
               <div
                 key={key}

@@ -101,7 +101,7 @@ resume: ${resume}
   "education": {
     same from the resume
   },
-  "Extra Curricular Activities": [
+  "extra_curricular_activities": [
     same from the resume
   ]
 }

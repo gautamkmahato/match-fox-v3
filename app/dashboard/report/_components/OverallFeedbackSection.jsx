@@ -21,7 +21,7 @@ export default function OverallFeedbackSection({
 
       {!hasFeedback ? (
         <div className="flex flex-col items-center justify-center py-10 text-gray-500 dark:text-gray-400">
-          <XCircle size={48} className="mb-4 text-red-400 dark:text-red-600" />
+          <XCircle size={48} className="mb-4 text-gray-400 dark:text-red-600" />
           <p className="text-lg font-medium">No feedback available yet.</p>
           <p className="text-sm mt-2">Please complete the interview to generate feedback.</p>
         </div>
@@ -30,7 +30,7 @@ export default function OverallFeedbackSection({
           {/* Areas for Improvement */}
           <div className="mb-8">
             <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center mb-4 border-b pb-3 border-gray-100 dark:border-zinc-800">
-              <Lightbulb className="mr-3 text-red-500" size={22} />
+              <Lightbulb className="mr-1 text-gray-800" size={22} />
               Areas for Improvement
             </h3>
             {feedback.areasForImprovement && feedback.areasForImprovement.length > 0 ? (
@@ -52,7 +52,7 @@ export default function OverallFeedbackSection({
           {/* Key Strengths */}
           <div className="mb-8">
             <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center mb-4 border-b pb-3 border-gray-100 dark:border-zinc-800">
-              <Sparkles className="mr-3 text-green-500" size={22} />
+              <Sparkles className="mr-3 text-gray-800" size={22} />
               Key Strengths
             </h3>
             {feedback.keyStrengths && feedback.keyStrengths.length > 0 ? (
@@ -67,14 +67,14 @@ export default function OverallFeedbackSection({
                 ))}
               </div>
             ) : (
-              <p className="text-gray-600 dark:text-gray-400 text-base">No key strengths listed.</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">No key strengths listed.</p>
             )}
           </div>
 
           {/* Topics to Focus On */}
           <div className="mb-8">
             <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center mb-4 border-b pb-3 border-gray-100 dark:border-zinc-800">
-              <Target className="mr-3 text-blue-500" size={22} />
+              <Target className="mr-3 text-gray-800" size={22} />
               Topics to Focus On
             </h3>
             {feedback.topicsToFocusOn && feedback.topicsToFocusOn.length > 0 ? (
@@ -89,14 +89,14 @@ export default function OverallFeedbackSection({
                 ))}
               </div>
             ) : (
-              <p className="text-gray-600 dark:text-gray-400 text-base">No specific topics to focus on listed.</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">No specific topics to focus on listed.</p>
             )}
           </div>
 
           {/* Suggested Learning Resources */}
           <div>
             <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center mb-4 border-b pb-3 border-gray-100 dark:border-zinc-800">
-              <BookOpen className="mr-3 text-purple-500" size={22} />
+              <BookOpen className="mr-3 text-gray-800" size={22} />
               Suggested Learning Resources
             </h3>
             {feedback.suggestedLearningResources && feedback.suggestedLearningResources.length > 0 ? (
@@ -107,7 +107,7 @@ export default function OverallFeedbackSection({
                       href={resource.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline text-base font-medium transition-colors p-3 -m-3 rounded-lg hover:bg-gray-50 dark:hover:bg-zinc-800"
+                      className="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:underline text-base font-medium transition-colors p-3 -m-3 rounded-lg hover:bg-gray-50 dark:hover:bg-zinc-800"
                     >
                       <span className="mr-2">{resource.name}</span>
                       {/* External link icon */}
@@ -119,7 +119,7 @@ export default function OverallFeedbackSection({
                 ))}
               </ul>
             ) : (
-              <p className="text-gray-600 dark:text-gray-400 text-base">No suggested learning resources available.</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">No suggested learning resources available.</p>
             )}
           </div>
         </>

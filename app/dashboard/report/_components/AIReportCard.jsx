@@ -24,7 +24,7 @@ export default function AIReportCard({
     { label: 'Technical knowledge', key: 'technical_knowledge' },
     { label: 'Communication clarity', key: 'Communication_Clarity' },
     { label: 'Confidence & Composure', key: 'Confidence_&_Composure' },
-    { label: 'Best practices', key: 'Best_Practices_&_Style' },
+    { label: 'Best practices', key: 'Best_Practices_and_Style' },
   ];
 
   return (
@@ -83,7 +83,7 @@ export default function AIReportCard({
         <h3 className="text-lg font-semibold mb-1.5 text-gray-800">Skills Assessment</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {skills.map(({ label, key }) => {
-            const score = Skill_Evaluation?.[key]?.rating ?? 'N/A';
+            const score = Skill_Evaluation?.[key]?.rating ?? '0';
             return (
               <div
                 key={key}

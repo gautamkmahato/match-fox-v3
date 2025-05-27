@@ -35,19 +35,20 @@ export async function GET(req) {
 
     // Step 5: Fetch all interviews  
 
-    let { data: interviews, error } = await supabase
-      .from('interviews')
+    let { data: resumes, error } = await supabase
+      .from('resume_html')
       .select('*')
-      .eq('user_id', userId)
+      .eq('clerk_id', userId)
 
 
-    console.log(interviews)
+    console.log(resumes)
+    console.log("Resume error: ", error)
 
     if (error) {
-      return NextResponse.json({ state: false, error: 'Failed to fetch interviews', message: "Failed" }, { status: 500 });
+      return NextResponse.json({ state: false, error: 'Failed to fetch resumes', message: "Failed" }, { status: 500 });
     }
 
-    return NextResponse.json({ state: true, data: interviews, message: "Success" }, { status: 200 });
+    return NextResponse.json({ state: true, data: resumes, message: "Success" }, { status: 200 });
 
   } catch (err) {
     console.error('Unexpected error:', err);

@@ -12,13 +12,13 @@ const tabs = ['Interview Summary', 'Overall Feedback', 'Questions']
 
 export default function Tabs({ content, code, reportDetails }) {
   const [activeTab, setActiveTab] = useState(0)
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(true)
   const contentRef = useRef(null)
   const [height, setHeight] = useState(0);
 
   const { user } = useUser();
 
-  const collapsedHeight = 200;
+  //const collapsedHeight = 500;
 
   const feedback = {
           areasForImprovement: reportDetails?.report?.Areas_for_Improvement,
@@ -96,8 +96,8 @@ export default function Tabs({ content, code, reportDetails }) {
 
         {/* Tab Content with animated height */}
         <motion.div
-          initial={{ height: collapsedHeight }}
-          animate={{ height: expanded ? height : collapsedHeight }}
+          // initial={{ height: collapsedHeight }}
+          animate={{ height: expanded ? height : height }}
           transition={{
             type: 'spring',
             stiffness: 100,
@@ -116,7 +116,7 @@ export default function Tabs({ content, code, reportDetails }) {
 
           {/* Bottom Gradient Overlay */}
           <AnimatePresence>
-            {!expanded && height > collapsedHeight && (
+            {height && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -129,7 +129,7 @@ export default function Tabs({ content, code, reportDetails }) {
         </motion.div>
 
         {/* Expand/Collapse Button */}
-        {height > collapsedHeight && (
+        {/* {height > collapsedHeight && (
           <div className="mt-4 text-center">
             <motion.button
               onClick={() => setExpanded((prev) => !prev)}
@@ -139,7 +139,7 @@ export default function Tabs({ content, code, reportDetails }) {
               {expanded ? 'Show Less' : 'Show More'}
             </motion.button>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   )

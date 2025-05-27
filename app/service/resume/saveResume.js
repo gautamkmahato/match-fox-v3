@@ -3,7 +3,7 @@
  */
 
 
-export default async function saveResume(file_name, htmlContent) {
+export default async function saveResume(htmlContent) {
     if(!htmlContent){
         return {
             state: false,
@@ -13,7 +13,6 @@ export default async function saveResume(file_name, htmlContent) {
     }
 
     const input = {
-        file_name: file_name,
         html_content: htmlContent,
     }
 
@@ -30,6 +29,7 @@ export default async function saveResume(file_name, htmlContent) {
     const result = await response.json();
 
     if (!response.ok) {
+      console.log("response:::", result)
       return {
         state: false,
         error: `${result?.error} || Failed to insert resume`,
@@ -37,14 +37,15 @@ export default async function saveResume(file_name, htmlContent) {
       };
     }
 
-    if (!result?.data) {
+    if (!result?.state) {
+      console.log("result no data:::", result)
       return {
         state: false,
         error: 'Failed',
         message: 'Failed to update usage',
       };
     }
-
+console.log("result:::", result)
     return {
       state: true,
       data: result.data,

@@ -2,11 +2,13 @@
 
 
 import saveResume from "@/app/service/resume/saveResume";
+import { Download, Loader, Loader2, Save } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
 const ResumeTemplate = ({ resume }) => {
   const [downloading, setDownloading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const resumeRef = useRef(null);
 
   const {
@@ -15,7 +17,7 @@ const ResumeTemplate = ({ resume }) => {
     skills,
     projects,
     education,
-    extracurricular_activities,
+    extra_curricular_activities,
   } = resume;
 
   const htmlContent = `
@@ -175,7 +177,7 @@ const ResumeTemplate = ({ resume }) => {
       <section class="section">
         <h2>Extra Curricular Activities</h2>
         <ul>
-          ${extracurricular_activities.map((activity) => `<li>${activity}</li>`).join("")}
+          ${extra_curricular_activities.map((activity) => `<li>${activity}</li>`).join("")}
         </ul>
       </section>
     </div>
@@ -194,6 +196,7 @@ const ResumeTemplate = ({ resume }) => {
       });
 
       if (!res.ok) {
+        toast.error("Failed to generate PDF");
         throw new Error("Failed to generate PDF");
       }
 
@@ -205,28 +208,74 @@ const ResumeTemplate = ({ resume }) => {
       a.download = "resume.pdf";
       a.click();
       window.URL.revokeObjectURL(url);
+      toast("Successfully downloaded the Resume")
     } catch (err) {
       console.error("PDF download error:", err);
-      alert("Failed to download resume PDF.");
+      toast.error("Failed to download resume PDF.");
     } finally {
       setDownloading(false);
     }
   };
 
-  const handleSavePDF = async () =>{
-    const result = await saveResume(file_name, htmlContent);
+  const handleSavePDF = async () => {
+    try{
+      setSaving(true);
+      const result = await saveResume(htmlContent);
 
-    if(!result?.state){
+    if (!result?.state) {
       toast.error(`Error: ${result?.error}`)
     }
     console.log(result);
     toast("Successfully saved the resume")
+    } catch(error){
+      console.log("Error: ", error);
+      toast.error(`Error: ${error}`)
+    } finally{
+      setSaving(false);
+    }
   }
 
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 p-4 sm:p-8 flex flex-col items-center">
+      {/** Header */}
+      <div className="w-full max-w-4xl flex justify-between items-center mx-auto pt-8">
+        <h3 className="text-lg font-semibold">Resume</h3>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleSavePDF}
+            disabled={downloading}
+            className={`flex items-center justify-center gap-2 text-sm bg-[#462eb4] hover:bg-gradient-to-b hover:from-indigo-700 hover:to-indigo-900 text-white px-4 py-2 rounded transition
+            ${saving ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}
+          `}
+          >
+            {saving ? "" : <Save className="w-4 h-4" />}
+            {saving && (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            )}
+            {saving ? "Saving..." : "Save Resume"}
+          </button>
+          <button
+          onClick={handleDownloadPDF}
+          disabled={downloading}
+          className={`flex items-center justify-center gap-2 text-sm bg-[#462eb4] hover:bg-gradient-to-b hover:from-indigo-700 hover:to-indigo-900 text-white px-4 py-2 rounded transition
+          ${downloading ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}
+        `}
+        >
+          {downloading && (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          )}
+          {downloading ? "Downloading..." : "Download Resume"}
+          {downloading ? "" : <Download className="w-4 h-4" />}
+          
+          </button>
+          
+        </div>
+
+      </div>
+
+      {/** Main Resume section */}
+      <div className="min-h-screen bg-gray-50 p-4 sm:p-8 flex flex-col items-center">
         {/* Resume Preview */}
         <iframe
           ref={resumeRef}
@@ -234,16 +283,12 @@ const ResumeTemplate = ({ resume }) => {
           className="w-full max-w-4xl h-[1200px] bg-white shadow-lg rounded-md"
         />
       </div>
-      <button
-        onClick={handleDownloadPDF}
-        disabled={downloading}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        {downloading ? "Downloading..." : "Download PDF"}
-      </button>
+
 
     </>
   );
 };
 
 export default ResumeTemplate;
+
+
