@@ -57,7 +57,7 @@ export default function InterviewJoinScreen({ onJoinInterview, interviewData }) 
             </span>
             <span className="flex items-center gap-1">
               <CalendarClock className="w-4 h-4" />
-              {interviewData?.duration} Minutes
+              {Math.ceil(interviewData?.duration/60)} Minutes
             </span>
           </div>
         </div>

@@ -1,16 +1,17 @@
-import { flattenCommaArray } from "@/lib/utils/helper";
 
-const generateQuestions = async (interviewDetails, resume) => {
+const generateQuestions = async (job_description, company, interview_style, position, difficulty_level, experience,) => {
   try {
     const input = {
-      ...interviewDetails,
-      skills_required: flattenCommaArray(interviewDetails?.["Skills"]),
-      tech_stack: flattenCommaArray(interviewDetails?.["Tech Stack"]),
-      resume: resume 
+      job_description,
+      company,
+      interview_style,
+      position,
+      difficulty_level,
+      experience,
     }; 
     console.log("generate question input", input);
 
-    const response = await fetch(`/api/interview/generate-questions`, {
+    const response = await fetch(`/api/jobs/generate-questions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +23,7 @@ const generateQuestions = async (interviewDetails, resume) => {
       const errorText = await response.text();
       console.error("Response Error:", errorText);
       return {
-        status: false,
+        state: false,
         error: "Failed to fetch data",
         message: 'Failed',
       };
@@ -34,21 +35,21 @@ const generateQuestions = async (interviewDetails, resume) => {
 
     if (!result.state) {
       return {
-        status: false,
+        state: false,
         error: "Backend returned failure",
         message: result.message || 'Failed',
       };
     }
 
     return {
-      status: true,
+      state: true,
       data: result.data,
       message: result.message || 'Success',
     };
   } catch (error) {
     console.error("Catch Error:", error);
     return {
-      status: false,
+      state: false,
       error: error.message || 'Unexpected error',
       message: 'Failed',
     };

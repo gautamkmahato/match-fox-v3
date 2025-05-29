@@ -8,7 +8,10 @@ import {
   ClipboardList, FileSignature, Video,
   Plus,
   BriefcaseBusiness,
-  Briefcase
+  Briefcase,
+  Salad,
+  Sailboat,
+  Notebook
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -83,6 +86,15 @@ export default function Sidebar() {
           >
             <Video className="w-4 h-4" />
             <span>Interviews</span>
+          </Link>
+
+          <Link
+            href="/dashboard/jobs"
+            className={`flex items-center text-sm space-x-2 p-2 rounded 
+              ${pathname === '/dashboard/jobs' ? 'bg-gray-400 text-white' : 'text-zinc-800 hover:bg-zinc-200'}`}
+          >
+            <Notebook className="w-4 h-4" />
+            <span>Jobs Post</span>
           </Link>
 
           {/* Resume Dropdown */}

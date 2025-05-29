@@ -10,3 +10,8 @@ the camera is not stopping, it should stop only after browser load its stopping
 5. fix the fetch all interviews currently its fetching all interviews it should fetch interviews for that candidate only
 
 6. fix date and time in interview cards
+
+7. Before the call start there should be a loading screen in the videoCall UI.
+
+8. if the user wants to end the call and press the end-call button show the modal
+do you realy want to end the call like that

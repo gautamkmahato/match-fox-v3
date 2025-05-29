@@ -14,6 +14,7 @@ import { useState } from 'react';
 import ShowCreditComponent from './_components/ShowCreditComponent';
 import InterviewList from './_components/InterviewList';
 import Link from 'next/link';
+import JobList from './jobs/_components/JobList';
 
 // data/mockDashboardData.ts
 
@@ -99,41 +100,48 @@ export default function Dashboard() {
         {/* Create Interview */}
         <div className="bg-white shadow rounded-xl p-6 flex flex-col justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-gray-800">Create Interview</h2>
+            <h2 className="text-xl font-semibold text-gray-800">Create New Job</h2>
             <p className="text-sm text-gray-500 mt-1">
-              Start a new mock interview session tailored to your job.
+              Post a new job session tailored to your job.
             </p>
           </div>
-          <Link href='/dashboard/interview/create' className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-[#462eb4] hover:bg-indigo-900 cursor-pointer text-white rounded-md  transition">
+          <Link href='/dashboard/jobs/create' className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-[#462eb4] hover:bg-indigo-900 cursor-pointer text-white rounded-md  transition">
             <PlusCircle size={18} />
-            Create Interview
+            Create New Job
           </Link>
         </div>
 
-        <ShowCreditComponent />
+        {/* <ShowCreditComponent /> */}
+        {/* Performance Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4">
+          {performanceMetrics.map((metric, i) => {
+            const Icon = metricIcons[metric.icon];
+            return (
+              <div key={i} className="bg-white shadow rounded-xl p-4 flex items-center gap-4">
+                <div className="p-2 rounded-full bg-blue-50 text-indigo-600">
+                  <Icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">{metric.title}</p>
+                  <h4 className="text-lg font-semibold text-gray-800">{metric.value}</h4>
+                </div>
+              </div>
+            );
+          })}
+        </div>
         
       </div>
 
       {/* Recent Interviews */}
-      <InterviewList />
+      {/* <InterviewList /> */}
 
-      {/* Performance Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {performanceMetrics.map((metric, i) => {
-          const Icon = metricIcons[metric.icon];
-          return (
-            <div key={i} className="bg-white shadow rounded-xl p-4 flex items-center gap-4">
-              <div className="p-2 rounded-full bg-blue-50 text-indigo-600">
-                <Icon className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">{metric.title}</p>
-                <h4 className="text-lg font-semibold text-gray-800">{metric.value}</h4>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {/** Interview List */}
+
+
+      {/** Job List */}
+      <JobList />
+
+      
     </div>
   );
 }
