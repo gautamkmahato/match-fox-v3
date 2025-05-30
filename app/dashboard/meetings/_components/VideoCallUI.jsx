@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Video,
   PhoneOff,
@@ -20,6 +20,8 @@ import LoadingOverlay from "@/components/LoadingOverlay";
 import avatar from '../../../../public/avatar.jpg'
 import CameraComponent from "./CameraComponent";
 import Image from "next/image";
+import updateInterviewDuration from "@/app/service/interview/updateInterviewDuration";
+import { useMicToggle } from "@/lib/utils/useMicToggle";
 
 export default function VideoCallUI({
   interviewId,
@@ -29,7 +31,8 @@ export default function VideoCallUI({
   assistantSpeaking,
   chatMessages,
   conversationsRef,
-  onErrorCall
+  onErrorCall,
+  leftUsage
 }) {
   const [callTime, setCallTime] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
@@ -39,9 +42,23 @@ export default function VideoCallUI({
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
   const [buttonStatus, setButtonStatus] = useState(true);
-  const router = useRouter();
+  const [isMicOn, setIsMicOn] = useState(false);
+  const [stream, setStream] = useState(null);
 
-  console.log("interview data", interviewData)
+  const { startMic, stopMic } = useMicToggle();
+  const router = useRouter();
+  const endCallTriggered = useRef(false);
+  const isMounted = useRef(true);
+
+  const toggleMic = () => {
+  console.log('Toggle mic. isMicOn:', isMicOn);
+  if (isMicOn) {
+    stopMic();
+  } else {
+    startMic();
+  }
+};
+
 
   useEffect(() => {
     if (!callStatus) return;
@@ -65,6 +82,9 @@ export default function VideoCallUI({
   };
 
   const handleEndCall = async () => {
+    if (endCallTriggered.current) return;
+    endCallTriggered.current = true;
+
     try {
       stopCall();
       setCallStatus(false);
@@ -80,10 +100,21 @@ export default function VideoCallUI({
       const generatedReport = await handleGenerateReport();
       if (!generatedReport?.status || !generatedReport?.data) {
         return;
-      }
+      } 
 
-      const status = deriveStatus(interviewData?.duration, callTime);
+      // duration
+      // current_duration
+      // callTime
+      console.log("======== call time ========", callTime);
+      const status = await deriveStatus(interviewData?.duration, interviewData?.current_duration, callTime);
+      const updateInterviewDB = await updateInterviewDuration(callTime, interviewId, status)
+      
+      if(!updateInterviewDB.state){
+        console.log("Error: ", updateInterviewDB.error);
+        toast.error("Error: ", updateInterviewDB.error);
+      }
       setLoadingMessage("Saving Report...");
+
       const submitAttempt = await submitInteviewAttempt(
         interviewId,
         callStartTime,
@@ -124,8 +155,10 @@ export default function VideoCallUI({
       toast.error("Unexpected error occurred during end call");
       setLoading(false)
     } finally {
-      setLoading(false);
-      router.push("/dashboard/report")
+      if (isMounted.current) {
+        setLoading(false);
+        router.push("/dashboard/report");
+      }
     }
   };
 
@@ -139,7 +172,7 @@ export default function VideoCallUI({
     console.log(`Usage upadted for ${callTime} seconds in DB`)
     toast(`interview completed after (${Math.floor(parseInt(interviewData?.duration) / 60)} seconds)`);
     return true;
-  };
+  }; 
 
   const handleGenerateReport = async () => {
     setLoadingMessage("Generating Report...");
@@ -171,19 +204,34 @@ export default function VideoCallUI({
   /**
    * This useEffect to end the call once the callTime reachs duration
    */
+
   useEffect(() => {
-    // Once the Call ends then call handleEndCall
-    if (callStatus && callTime === parseInt(interviewData?.duration)) {
-      console.log("Times up !!!")
-      handleEndCall();
+    
+  const durationLeft = Number(interviewData?.duration) - Number(interviewData?.current_duration);
+  const threshold = leftUsage > durationLeft ? durationLeft : leftUsage;
+if (isNaN(durationLeft) || isNaN(leftUsage)) return;
+
+  if (!callStatus) return;
+
+  if (callTime === threshold) {
+    console.log("Times up !!!");
+    handleEndCall();
+  }
+
+  if (callTime > threshold - 10) {
+    const secondsLeft = threshold - callTime;
+    if (secondsLeft > 0) {
+      toast.warning(`You have ${secondsLeft} seconds left`);
     }
-    // handle the warning message before 10 seconds of call ending
-    if (callStatus && callTime > parseInt(interviewData?.duration) - 10) {
-      console.log("typeof calltime", typeof callTime);
-      console.log("type of interviewData?.duration", typeof interviewData?.duration)
-      toast.warning(`You have ${parseInt(interviewData?.duration) - callTime} seconds left`)
-    }
-  }, [callTime, callStatus]);
+  }
+}, [callTime, callStatus]);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
 
   if (loading) {
@@ -225,15 +273,16 @@ export default function VideoCallUI({
         {/* Mute Toggle */}
         <button
           className="bg-gray-800 hover:bg-gray-500 cursor-pointer rounded-full p-4"
-          onClick={() => setIsMuted(!isMuted)}
-          title="Toggle Mute"
+          onClick={toggleMic}
+          title="Toggle Mic"
         >
-          {isMuted ? (
-            <MicOff className="text-white" />
-          ) : (
+          {isMicOn ? (
             <Mic className="text-white" />
+          ) : (
+            <MicOff className="text-white" />
           )}
         </button>
+
 
         {/* Video Toggle */}
         <button
@@ -275,6 +324,7 @@ export default function VideoCallUI({
           </button>
         )}
       </div>
+
     </div>
 
   );

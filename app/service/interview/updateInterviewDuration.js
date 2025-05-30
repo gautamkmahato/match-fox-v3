@@ -3,19 +3,21 @@
  */
  
 
-const updateTimeUsage = async(usage_in_seconds) => {
-    if(usage_in_seconds == null || usage_in_seconds == 0){
+const updateInterviewDuration = async( currentDuration, interviewId, status ) => {
+    if(currentDuration == null || interviewId == null || !status){
         return {
         state: false,
         error: 'Failed in input',
-        message: 'Something wrong in usage in seconds value',
+        message: 'Something wrong in interviewId or currentDuration value',
       };
     }
     const input = {
-        usage_in_seconds: usage_in_seconds
+        currentDuration, 
+        interviewId,
+        status
     }
   try{
-    const response = await fetch(`/api/interview/update-usage`, {
+    const response = await fetch(`/api/interview/update-interview`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,14 +29,18 @@ const updateTimeUsage = async(usage_in_seconds) => {
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result?.error || 'Failed to fetch interview data');
+      return {
+        state: false,
+        error: `${result?.error} || 'Failed to update interview data'`,
+        message: 'Error response',
+      };
     }
 
     if (!result?.data) {
       return {
         state: false,
         error: 'Failed',
-        message: 'Failed to update usage',
+        message: 'Failed to update interview',
       };
     }
 
@@ -44,7 +50,7 @@ const updateTimeUsage = async(usage_in_seconds) => {
       message: result.message || 'Success',
     };
   } catch (err) {
-    console.error('Interview fetch error:', err); // Remove or replace with monitoring logger
+    console.error('Interview update error:', err); // Remove or replace with monitoring logger
     return {
       state: false,
       error: err.message || 'Something went wrong',
@@ -56,4 +62,4 @@ const updateTimeUsage = async(usage_in_seconds) => {
 
 
 
-export default updateTimeUsage
+export default updateInterviewDuration

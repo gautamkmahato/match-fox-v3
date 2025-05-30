@@ -1,4 +1,5 @@
-import JobDetails from "./_components/JobDetails";
+import Tabs from "@/components/Tabs";
+import JobDetailsComponent from "./_components/JobDetailsComponent";
 
 
 export default async function page({ params }) {
@@ -10,7 +11,7 @@ export default async function page({ params }) {
 
     return(
         <>
-            <JobDetails interviewId={interviewId} />
+            <JobDetailsComponent interviewId={interviewId} />
         </>
     )
 }

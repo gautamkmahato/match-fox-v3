@@ -9,19 +9,24 @@ const companies = [
   { name: "Figma", logo: "https://logo.clearbit.com/figma.com" },
   { name: "Amazon", logo: "https://logo.clearbit.com/amazon.com" },
   { name: "Meta", logo: "https://logo.clearbit.com/meta.com" },
-  { name: "Dropbox", logo: "https://logo.clearbit.com/dropbox.com" },
   { name: "HappyCo", logo: "https://logo.clearbit.com/happyco.com" },
   { name: "Google", logo: "https://logo.clearbit.com/google.com" },
   { name: "Apple", logo: "https://logo.clearbit.com/apple.com" },
   { name: "Twitter", logo: "https://logo.clearbit.com/twitter.com" },
   { name: "Uber", logo: "https://logo.clearbit.com/uber.com" },
+  { name: "Netflix", logo: "https://logo.clearbit.com/netflix.com" },
   { name: "Snapchat", logo: "https://logo.clearbit.com/snapchat.com" },
 ];
 
 const filters = ["Type", "Experience", "Location", "Salary"];
 
-export default function RecentOffers() {
-  const [selectedCompany, setSelectedCompany] = useState("Figma");
+export default function RecentOffers({ handleJobFilters }) {
+  const [selectedCompany, setSelectedCompany] = useState("");
+
+  const handleFilter = (company) =>{
+    setSelectedCompany(company)
+    handleJobFilters(company);
+  }
 
   return (
     <div className="p-4 lg:mt-0 mt-16 space-y-6">
@@ -41,32 +46,31 @@ export default function RecentOffers() {
 
       {/* Company logos row */}
       <div className="w-full sm:w-auto mx-auto flex items-center justify-center gap-4 overflow-x-auto px-2 sm:px-4 py-2 scrollbar-thin scrollbar-thumb-gray-300">
-  {companies.map((company) => (
-    <div
-      key={company.name}
-      onClick={() => setSelectedCompany(company.name)}
-      className={`flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer shadow-md px-4 py-2 rounded-xl transition ${
-        selectedCompany === company.name ? "bg-gray-300" : "bg-gray-100"
-      } hover:bg-gray-200`}
-    >
-      <div className="w-12 h-12 relative">
-        <Image
-          src={company.logo}
-          alt={company.name}
-          fill
-          className="object-contain rounded-full"
-        />
+        {companies.map((company) => (
+          <div
+            key={company.name}
+            onClick={() => handleFilter(company.name)}
+            className={`flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer shadow-md px-4 py-2 rounded-xl transition ${selectedCompany === company.name ? "bg-gray-300" : "bg-gray-100"
+              } hover:bg-gray-200`}
+          >
+            <div className="w-12 h-12 relative">
+              <Image
+                src={company.logo}
+                alt={company.name}
+                fill
+                className="object-contain rounded-full"
+              />
+            </div>
+            <span className="text-xs text-center font-semibold whitespace-nowrap">
+              {company.name}
+            </span>
+          </div>
+        ))}
       </div>
-      <span className="text-xs text-center font-semibold whitespace-nowrap">
-        {company.name}
-      </span>
-    </div>
-  ))}
-</div>
 
 
       {/* Filter dropdown buttons */}
-      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 px-2 sm:px-4">
+      {/* <div className="flex flex-wrap items-center justify-center gap-3 px-2 sm:px-4">
         {filters.map((filter) => (
           <button
             key={filter}
@@ -76,7 +80,7 @@ export default function RecentOffers() {
             <ChevronDown className="w-4 h-4" />
           </button>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -1,13 +1,9 @@
-'use client'
 
-import fetchJobDetails from "@/app/service/jobs/fetchJobDetails";
 import Accordion from "@/components/Accordion";
 import { CalendarDays, Share2, MapPin, Video, Copy, TicketCheck, Timer, User, LucideView, Clock, DollarSign } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function JobDetails({ interviewId }) {
+export default function JobDetails({ job }) {
   const statusColor = {
     completed: "bg-green-100 text-green-600",
     cancelled: "bg-red-100 text-red-600",
@@ -16,81 +12,7 @@ export default function JobDetails({ interviewId }) {
     default: "bg-gray-100 text-gray-600",
   };
 
-  const [job, setJob] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [meetingLoading, setMeetingLoading] = useState(false);
-
-  const router = useRouter();
-
-  // employment_type
-  // job_type
-  // salary
-  // location
-  // duration
-
-//   const generateLink = async () => {
-//     try {
-//       setMeetingLoading(true);
-//       const response = await fetch(`/api/interviews/${interviewId}/generate-link`, {
-//         method: 'POST',
-//       });
-
-//       const result = await response.json();
-
-//       console.log("result: ", result);
-
-//       if (!response.ok || !result.state) throw new Error(result.error || "Failed to generate link");
-
-//       // Update state first
-//       setInterview((prev) => ({
-//         ...prev,
-//         "interview_link": result.data.link,
-//       }));
-//       console.log(interview)
-//       await router.push(`/dashboard/interview/${interviewId}`);
-//     } catch (err) {
-//       alert(`Error: ${err.message}`);
-//       setMeetingLoading(false);
-//     } finally {
-//       setMeetingLoading(false);
-//     }
-//   };
-
-// 
-
-  useEffect(() => {
-    if (!interviewId) return;
-
-    const fetchInterview = async () => {
-      try {
-        setLoading(true);
-        const result = await fetchJobDetails(interviewId);
-
-        if (!result?.state){
-            console.log(data.error || "Failed to fetch");
-            toast.error(data.error || "Failed to fetch");
-        }
-
-        if (!result.state) {
-          setError("Something went wrong");
-          toast.error("Something went wrong");
-        }
-
-        console.log(result);
-        setJob(result?.data);
-      } catch (err) {
-        console.log(err.message);
-        toast.error(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchInterview();
-  }, [interviewId]);
-
-  if (loading) return <p>Loading job?...</p>;
+  
 
   return (
     <>
@@ -190,47 +112,21 @@ export default function JobDetails({ interviewId }) {
             </span> */}
           </div>
 
-          {!meetingLoading ? (job?.interview_link ? <div>
-            <div className="flex justify-between items-center bg-white border border-gray-200 rounded-md px-4 py-2">
+          <div className="flex justify-between items-center bg-white border border-gray-200 rounded-md px-4 py-2">
               <span className="text-sm text-gray-800 truncate">
                 {`https://hirenom.com/dashboard/meetings/${job?.id}`}
               </span>
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(`https://hirenom.com/dashboard/meetings/${job?.id}`);
-                  alert("Link copied to clipboard!");
+                  toast("Link copied to clipboard!");
                 }}
-                className="flex gap-1 items-center text-white bg-teal-800 hover:bg-teal-950 cursor-pointer text-sm font-medium px-3 py-2 rounded-md"
+                className="flex gap-1 items-center text-white bg-[#462eb4] hover:bg-indigo-800 cursor-pointer font-medium px-3 py-2 rounded-md"
               >
                 <Copy className="w-3 h-3 text-white" />
-                <span className="text-xs">Copy Link</span>
+                <span className="lg:text-xs text-[10px]">Copy</span>
               </button>
             </div>
-            <div className="flex items-center gap-6 mt-4 text-sm text-gray-600">
-              <div className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                {job?.duration} min
-              </div>
-              <div className="flex items-center gap-1">
-                <Video className="w-4 h-4" />
-                {job?.interview_type}
-              </div>
-              <div className="flex items-center gap-1">
-                <CalendarDays className="w-4 h-4" />
-                Expires:{" "}
-                {job?.expiry_date
-                  ? new Date(job?.expiry_date).toLocaleDateString()
-                  : "N/A"}
-              </div>
-            </div>
-          </div> : <div>
-            <div className="flex flex-col text-center items-center justify-center">
-              <h3 className="font-semibold text-sm text-gray-500">No meeting link available</h3>
-              <button className="group mt-4 inline-flex bg-teal-800 text-white px-3 py-2 rounded-md items-center gap-1 text-sm font-medium cursor-pointer shadow-sm shadow-teal-800 hover:bg-teal-950 hover:shadow-sm hover:shadow-teal-900">Generate Meeting Link</button>
-            </div>
-          </div>) : <div>
-            <p>Generting meeting link...</p>
-          </div>}
         </div>
 
         {/* Share Section */}

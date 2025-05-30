@@ -15,3 +15,5 @@ the camera is not stopping, it should stop only after browser load its stopping
 
 8. if the user wants to end the call and press the end-call button show the modal
 do you realy want to end the call like that
+
+9. Line 662 in call component an error is showing in browser console

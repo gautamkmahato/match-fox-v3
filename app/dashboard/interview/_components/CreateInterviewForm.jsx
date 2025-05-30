@@ -116,6 +116,7 @@ export default function CreateInterviewForm({ jobDescription }) {
   };
 
   const handleModalClose = () => {
+    router.push("/dashboard/interview");
     setOpen(false);
     setLoading(true);
   }

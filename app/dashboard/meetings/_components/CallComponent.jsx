@@ -11,7 +11,7 @@ import getRandomGreeting from "@/lib/utils/getRandomGreeting";
 import chatPrompt from "@/lib/utils/prompts/chatPrompt";
 import CameraComponent from "./CameraComponent";
 
-export default function CallComponent({ interviewId, interviewData }) {
+export default function CallComponent({ interviewId, interviewData, leftUsage }) {
   // const [interviewData, setInterviewData] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ export default function CallComponent({ interviewId, interviewData }) {
 
   const { isSignedIn, user } = useUser();
 
-  console.log("interview data:", interviewData);
+  // console.log("interview data:", interviewData);
   // console.log("user name", user?.firstName)
 
   if (!interviewData) {
@@ -107,8 +107,8 @@ export default function CallComponent({ interviewId, interviewData }) {
         language: "en-US",
       },
       voice: {
-        provider: "vapi",
-        voiceId: "Neha",
+        provider: "openai",
+        voiceId: "alloy",
         fallbackPlan: {
           voices: [
             { provider: "cartesia", voiceId: "248be419-c632-4f23-adf1-5324ed7dbf1d" },
@@ -733,7 +733,7 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
 
   return (
     <>
-      <div className="flex items-center gap-4 px-4 py-4 ml-8 mr-4 mt-4 bg-white shadow rounded-xl border border-gray-100">
+      <div className="flex items-center gap-4 px-4 py-4 ml-4 mb-4 mr-4 mt-20 lg:mt-4 md:mt-4 bg-white shadow rounded-xl border border-gray-100">
         {/* Avatar-like Block */}
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-700 text-white text-lg font-semibold uppercase">
           {(interviewData?.company || "H").charAt(0)}
@@ -750,7 +750,7 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
       </div>
 
       <div className="flex flex-col lg:flex-row p-4 relative">
-        <div className="flex flex-col w-full lg:w-2/3 p-4">
+        <div className="flex flex-col w-full lg:w-2/3">
           <div className="w-full h-[400px] max-w-3xl mb-4 rounded-2xl overflow-hidden shadow-xl">
             <VideoCallUI
               interviewId={interviewId}
@@ -762,6 +762,7 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
               conversationsRef={conversationsRef}
               onErrorCall={onErrorCall}
               setOnErrorCall={setOnErrorCall}
+              leftUsage={leftUsage}
             />
           </div>
 
@@ -784,7 +785,7 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
             <p className="text-gray-400">No messages yet...</p>
           ) : (
             <div className="flex flex-col border border-gray-100 shadow p-4 rounded-lg h-[412px] overflow-hidden">
-              <div className="flex-1 overflow-y-auto space-y-3 pr-2">
+              <div className="flex-1 overflow-y-auto space-y-3">
                 <div className="space-y-3">
                   {chatMessages.map((chat, index) => {
                     const isUser = chat.role === "user";

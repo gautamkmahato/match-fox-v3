@@ -20,6 +20,28 @@ export default function Page() {
 
   const { user } = useUser();
 
+  // ✅ Stop all active video streams on mount
+useEffect(() => {
+  navigator.mediaDevices.enumerateDevices().then((devices) => {
+    const hasVideoInput = devices.some((d) => d.kind === 'videoinput');
+    if (!hasVideoInput) return;
+
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        stream.getTracks().forEach((track) => {
+          if (track.kind === 'video') {
+            track.stop();
+          }
+        });
+      })
+      .catch((err) => {
+        console.warn('Could not access video stream to stop:', err);
+      });
+  });
+}, []);
+
+
   useEffect(() => {
     async function getReports() {
       try {
@@ -60,13 +82,13 @@ export default function Page() {
   return (
     <>
       <div>
-        <div className='border-b border-gray-100 shadow shadow-gray-50 pt-8'>
+        <div className='border-b border-gray-100 shadow shadow-gray-50 pt-24 lg:pt-8 px-4'>
           <h1 className="flex items-center gap-2 w-full max-w-4xl mx-auto text-2xl font-bold text-gray-900 mb-6">
             <FileText className="text-gray-800" />
             Interview Reports
           </h1>
         </div>
-        <div className="w-full max-w-4xl mx-auto  pt-4">
+        <div className="w-full max-w-4xl mx-auto pt-4 px-4">
           {reports.length === 0 && (
             <EmptyStateComponent 
               title = 'No reports found'

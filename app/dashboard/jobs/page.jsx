@@ -8,7 +8,6 @@ export default async function page() {
   return (
     <>
       {/* <JobForm /> */}
-      <RecentOffers />
       <JobComponent />
 
     </>

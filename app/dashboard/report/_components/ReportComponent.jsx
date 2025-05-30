@@ -43,7 +43,7 @@ export default function ReportComponent({ id }) {
     }
 
     return(
-        <>
+        <> 
             <Tabs reportDetails={reportDetails} />
         </>
     )    

@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import CallComponent from "./CallComponent";
 import InterviewJoinScreen from "./InterviewJoinScreen";
 import fetchInterviewDetails from "@/app/service/interview/fetchInteviewDetails";
 import { toast } from "sonner";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { UsageContext } from "@/app/context/usageContext";
 
 export default function InterviewPage({ interviewId }) {
   const [loading, setLoading] = useState(true);
@@ -16,14 +17,15 @@ export default function InterviewPage({ interviewId }) {
   const [interviewData, setInterviewData] = useState(null);
   const [loadingMessage, setLoadingMessage] = useState("");
 
-
-
   const { isSignedIn, user, isLoaded } = useUser();
-
-
+  const { usage, usageLoading } = useContext(UsageContext);
+ 
   // Validate user and get Interview details
   useEffect(() => {
-    async function validateUser() {
+    validateUser();
+  }, [user, interviewId]);
+
+  async function validateUser() {
       if (!user?.id) return;
 
       try {
@@ -58,10 +60,7 @@ export default function InterviewPage({ interviewId }) {
       } finally {
         setLoading(false);
       }
-    }
-
-    validateUser();
-  }, [user, interviewId]);
+  }
 
   // // fetch Interview Details
   // useEffect(() => {
@@ -96,6 +95,14 @@ export default function InterviewPage({ interviewId }) {
 
   // --- Conditional UI ---
 
+  if(usageLoading){
+    return(
+      <>
+        <div className="text-center mt-20 text-gray-600">Loading...</div>;
+      </>
+    )
+  }
+
   if (!isLoaded || loading) {
     return <div className="text-center mt-20 text-gray-600">Loading...</div>;
   }
@@ -129,7 +136,7 @@ export default function InterviewPage({ interviewId }) {
     }
  
   if (showCallComponent) {
-    return <CallComponent interviewId={interviewId} interviewData={interviewData} />;
+    return <CallComponent interviewId={interviewId} interviewData={interviewData} leftUsage={usage} />;
   }  
 
   if (!interviewAccess) {

@@ -94,7 +94,7 @@ export default function Dashboard() {
   
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 mt-16 lg:mt-0 md:mt-0">
       {/* Top Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Create Interview */}
@@ -139,6 +139,7 @@ export default function Dashboard() {
 
 
       {/** Job List */}
+      <h3 className='text-lg font-semibold'>All Jobs</h3>
       <JobList />
 
       

@@ -1,12 +1,10 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import React, { useEffect, useRef } from 'react';
 
 const CameraComponent = ({ isVisible }) => {
   const videoRef = useRef(null);
-  const streamRef = useRef(null); // ✅ Use ref for stream
-  const pathname = usePathname();
+  const streamRef = useRef(null);
 
   useEffect(() => {
     const startCamera = async () => {
@@ -29,7 +27,16 @@ const CameraComponent = ({ isVisible }) => {
         console.log('📷 Camera stream stopped');
       }
     };
-  }, [pathname]);
+  }, []);
+
+  useEffect(() => {
+    if (videoRef.current && streamRef.current) {
+      const videoTrack = streamRef.current.getVideoTracks()[0];
+      if (videoTrack) {
+        videoTrack.enabled = isVisible;
+      }
+    }
+  }, [isVisible]);
 
   return (
     <video
@@ -37,9 +44,7 @@ const CameraComponent = ({ isVisible }) => {
       autoPlay
       muted
       playsInline
-      className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
-        isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
-      }`}
+      className="w-full h-full object-cover"
     />
   );
 };

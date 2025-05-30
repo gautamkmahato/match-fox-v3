@@ -17,15 +17,22 @@ export default function InterviewJoinScreen({ onJoinInterview, interviewData }) 
   const [permissionError, setPermissionError] = useState('');
 
   const handleJoin = async () => {
+    onJoinInterview();
+  };
+
+  const handleCheck = async () => {
     setPermissionError('');
     setCheckingPermissions(true);
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-      // Close the tracks immediately
-      stream.getTracks().forEach((track) => track.stop());
+
+      // ✅ Stop tracks immediately after checking permissions
+      stream.getTracks().forEach(track => {
+        track.stop(); // Turn off audio and video
+      });
+
       setCheckingPermissions(false);
-      onJoinInterview();
     } catch (err) {
       console.error('Media access denied:', err);
       setPermissionError('Please allow access to your camera and microphone to continue.');
@@ -57,7 +64,7 @@ export default function InterviewJoinScreen({ onJoinInterview, interviewData }) 
             </span>
             <span className="flex items-center gap-1">
               <CalendarClock className="w-4 h-4" />
-              {Math.ceil(interviewData?.duration/60)} Minutes
+              {Math.ceil(interviewData?.duration / 60)} Minutes
             </span>
           </div>
         </div>
@@ -88,24 +95,13 @@ export default function InterviewJoinScreen({ onJoinInterview, interviewData }) 
           </ul>
         </div>
 
-
         {/* Join Button */}
         <button
           onClick={handleJoin}
           disabled={checkingPermissions}
           className="w-full flex items-center justify-center gap-2 bg-[#462eb4] hover:bg-indigo-900 shadow-lg text-white font-semibold py-2 rounded-md cursor-pointer disabled:opacity-70"
         >
-          {checkingPermissions ? (
-            <>
-              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              Checking Camera & Mic...
-            </>
-          ) : (
-            <>
-              <Video className="w-4 h-4" />
-              Join Interview
-            </>
-          )}
+          Join Interview
         </button>
 
         {/* Permission Error */}
@@ -114,7 +110,11 @@ export default function InterviewJoinScreen({ onJoinInterview, interviewData }) 
         )}
 
         {/* Test Audio/Video */}
-        <button className="w-full flex items-center font-semibold justify-center gap-2 text-gray-600 hover:text-gray-800 text-sm cursor-pointer">
+        <button
+          onClick={handleCheck}
+          disabled={checkingPermissions}
+          className="w-full flex items-center font-semibold justify-center gap-2 text-gray-600 hover:text-gray-800 text-sm cursor-pointer"
+        >
           <Settings className="w-4 h-4" />
           Test Audio & Video
         </button>

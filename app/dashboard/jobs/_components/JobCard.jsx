@@ -20,7 +20,9 @@ export default function JobCard({
   highlight = false,
 }) {
 
-  const pathname = usePathname()
+  const pathname = usePathname();
+
+  console.log("company name", companyLogo);
 
   return (
     <div className={`rounded-xl`}>
@@ -37,6 +39,7 @@ export default function JobCard({
                 fill
                 className="rounded-full object-contain"
               /> */}
+              
               <CompanyLogo logo={companyLogo} company={companyName?.charAt(0).toUpperCase()} width="w-10" height="h-10" />
 
             </div>
@@ -77,7 +80,7 @@ export default function JobCard({
               className="text-xs border border-gray-300 text-gray-700 px-3 py-1 rounded-md"
             >
               {employmentType} 
-            </span>
+            </span> 
             <span
               className="text-xs border border-gray-300 text-gray-700 px-3 py-1 rounded-md"
             >
@@ -103,7 +106,7 @@ export default function JobCard({
             Start Interview
             <ArrowRight className="w-3 h-3" />
           </Link> : 
-          <Link href={`/dashboard/jobs/${id}`} className="flex items-center gap-2 bg-[rgb(70,46,180)] text-white px-4 py-2 text-xs rounded-md hover:bg-gradient-to-b hover:from-indigo-600 hover:to-indigo-950 cursor-pointer">
+          <Link href={`/dashboard/jobs/${id}`} className="flex items-center gap-2 bg-[#462eb4] text-white px-4 py-2 text-xs rounded-md hover:bg-gradient-to-b hover:from-indigo-600 hover:to-indigo-950 cursor-pointer">
             View Details
             <ArrowRight className="w-3 h-3" />
           </Link>
