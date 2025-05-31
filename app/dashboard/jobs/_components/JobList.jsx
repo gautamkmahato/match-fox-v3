@@ -46,7 +46,7 @@ export default function JobList() {
     return (
         <>
         {/* <JobForm /> */} 
-        <div className="grid grid-cols-1 lg:mt-0 lg:grid-cols-3 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:mt-0 lg:grid-cols-3 md:grid-cols-1 gap-6">
             {jobs && jobs?.length > 0 && jobs.map((job, index) =>(
                 <div key={index}>
                     <JobCard

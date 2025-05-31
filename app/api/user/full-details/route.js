@@ -3,8 +3,8 @@ import { currentUser } from '@clerk/nextjs/server';
 import supabase from '@/lib/supabase/client';
 import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
 
-
-export async function GET(req, context) {
+ 
+export async function GET(req) {
   try {
     const ip = req.headers.get('x-forwarded-for') || 'anonymous';
 
@@ -13,12 +13,6 @@ export async function GET(req, context) {
     if (!success) {
       return NextResponse.json({ state: false, error: 'Rate limit exceeded' }, { status: 429 });
     }
- 
-    const param = await context.params;
-    const interviewId = param.id;
-
-    console.log(interviewId)
-
     // Step 1: Get authenticated Clerk user
     const user = await currentUser();
     const userId = user?.id;
@@ -27,49 +21,21 @@ export async function GET(req, context) {
       return NextResponse.json({ state: false, error: 'Unauthorized', message: "Failed" }, { status: 401 });
     }
 
-    // Step 3: Verify the user exists in Supabase "users" table
+    // Step 3: Verify the user exists in Supabase "users" table and get data
     const { data: userRecord, error: userError } = await supabase
       .from('users')
       .select('*')
       .eq('clerk_id', userId)
       .single();
 
+    console.log("usererror", userError);
+    console.log("userRecord", userRecord);
+
     if (userError || !userRecord) {
       return NextResponse.json({ state: false, error: 'User not found in database', message: "Failed" }, { status: 403 });
     }
 
-    // Step 5: Fetch all interviews  
-
-    const { data: reports, error } = await supabase
-      .from('ai_reports')
-      .select(`
-        id,
-        recommendation,
-        score,
-        created_at,
-        duration,
-        report,
-        interview_id,
-        interview_attempts (
-          id,
-          started_at,
-          completed_at,
-          status,
-          chat_conversation,
-          users (
-            *
-          )
-        )
-      `)
-      .eq('interview_id', interviewId);
-
-    console.log(reports)
-
-    if (error) {
-      return NextResponse.json({ state: false, error: 'Failed to fetch interview_attempts', message: "Failed" }, { status: 500 });
-    }
-
-    return NextResponse.json({ state: true, data: reports, message: "Success" }, { status: 200 });
+    return NextResponse.json({ state: true, data: userRecord, message: "Success" }, { status: 200 });
 
   } catch (err) {
     console.error('Unexpected error:', err);

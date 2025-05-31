@@ -1,23 +1,22 @@
 'use client'
 
 import { useState, useRef, useLayoutEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useUser } from '@clerk/nextjs'
 import JobDetails from '../[id]/_components/JobDetails'
 import QuestionsList from './QuestionsList'
 import JobAttemptDetails from './JobAttemptDetails'
 
-const tabs = ['Job Details', 'Questions', 'Candidates',]
+const tabs = ['Job Details', 'Questions', 'Candidates']
 
 export default function JobTabs({ details }) {
     const [activeTab, setActiveTab] = useState(0)
-    const [expanded, setExpanded] = useState(true)
     const contentRef = useRef(null)
-    const [height, setHeight] = useState(0);
+    const [height, setHeight] = useState(0)
+    const [candidatesData, setCandidatesData] = useState(null)
+    const [loadingCandidates, setLoadingCandidates] = useState(false)
 
-    const { user } = useUser();
-
-    //const collapsedHeight = 500;
+    const { user } = useUser()
 
     useLayoutEffect(() => {
         if (contentRef.current) {
@@ -26,36 +25,32 @@ export default function JobTabs({ details }) {
     }, [activeTab])
 
     const tabContents = [
-        <>
-            {/* Job details goes here. */}
-            <JobDetails job={details} />
-        </>,
-        <>
-            {/* Questions goes here. */}
-            <QuestionsList questions={details?.questions} />
-        </>,
-        <>
-            {/* Candidate goes here. */}
-            <JobAttemptDetails interviewId={details?.id} />
-        </>
+        <JobDetails key="details" job={details} />,
+        <QuestionsList key="questions" questions={details?.questions} />,
+        <JobAttemptDetails 
+            key="candidates" 
+            interviewId={details?.id} 
+            candidatesData={candidatesData}
+            setCandidatesData={setCandidatesData}
+            loading={loadingCandidates}
+            setLoading={setLoadingCandidates}
+        />
     ]
 
     return (
         <div className="w-full px-4 py-8">
-            <div className="max-w-4xl mx-auto px-6 py-6 shadow border border-gray-100 rounded-lg">
+            <div className="bg-white max-w-4xl mx-auto px-6 py-6 shadow border border-gray-100 rounded-lg">
                 {/* Tabs */}
                 <div className="relative flex space-x-4 md:space-x-8 border-b border-gray-200 overflow-x-auto scrollbar-hide">
                     {tabs.map((tab, index) => (
                         <button
                             key={index}
-                            onClick={() => {
-                                setActiveTab(index)
-                                setExpanded(false)
-                            }}
-                            className={`relative pb-3 text-sm md:text-sm cursor-pointer whitespace-nowrap transition-colors duration-300 ${activeTab === index
+                            onClick={() => setActiveTab(index)}
+                            className={`relative pb-3 text-sm md:text-sm cursor-pointer whitespace-nowrap transition-colors duration-300 ${
+                                activeTab === index
                                     ? 'text-gray-800 font-semibold'
                                     : 'text-gray-500 hover:text-gray-700'
-                                }`}
+                            }`}
                         >
                             {tab}
                             {activeTab === index && (
@@ -69,15 +64,13 @@ export default function JobTabs({ details }) {
                     ))}
                 </div>
 
-                {/* Tab Content with animated height */}
-                    {/* Content */}
-                    <div
-                        ref={contentRef}
-                        className="relative z-0 px-4 md:px-6 py-6 text-gray-700 text-sm md:text-base space-y-4"
-                    >
-                        {tabContents[activeTab]}
-                    </div>
-
+                {/* Tab Content */}
+                <div
+                    ref={contentRef}
+                    className="relative z-0 lg:px-6 py-6 text-gray-700 text-sm md:text-base space-y-4"
+                >
+                    {tabContents[activeTab]}
+                </div>
             </div>
         </div>
     )

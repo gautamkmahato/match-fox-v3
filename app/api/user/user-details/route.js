@@ -3,7 +3,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import supabase from '@/lib/supabase/client';
 import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
 
-
+ 
 export async function GET(req, context) {
   try {
     const ip = req.headers.get('x-forwarded-for') || 'anonymous';
@@ -33,6 +33,9 @@ export async function GET(req, context) {
       .select('*')
       .eq('clerk_id', userId)
       .single();
+
+    console.log("usererror", userError);
+    console.log("userRecord", userRecord);
 
     if (userError || !userRecord) {
       return NextResponse.json({ state: false, error: 'User not found in database', message: "Failed" }, { status: 403 });

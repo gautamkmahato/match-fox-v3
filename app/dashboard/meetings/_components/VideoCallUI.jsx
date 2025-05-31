@@ -7,7 +7,11 @@ import {
   Mic,
   MicOff,
   VideoOff,
-  PhoneIcon
+  PhoneIcon,
+  Loader,
+  Loader2,
+  Cross,
+  X
 } from "lucide-react";
 import updateTimeUsage from "@/app/service/interview/updateTimeUsage";
 import { useRouter } from "next/navigation";
@@ -21,7 +25,10 @@ import avatar from '../../../../public/avatar.jpg'
 import CameraComponent from "./CameraComponent";
 import Image from "next/image";
 import updateInterviewDuration from "@/app/service/interview/updateInterviewDuration";
-import { useMicToggle } from "@/lib/utils/useMicToggle";
+import Link from "next/link";
+import Modal from "@/components/Modal";
+
+
 
 export default function VideoCallUI({
   interviewId,
@@ -35,30 +42,32 @@ export default function VideoCallUI({
   leftUsage
 }) {
   const [callTime, setCallTime] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
   const [isVideoOff, setIsVideoOff] = useState(false);
   const [callStatus, setCallStatus] = useState(false);
   const [callStartTime, setCallStartTime] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
-  const [isMicOn, setIsMicOn] = useState(false);
-  const [stream, setStream] = useState(null);
+  const [limitCheck, setLimitCheck] = useState(false);
+  const [openModalIndex, setOpenModalIndex] = useState(false);
 
-  const { startMic, stopMic } = useMicToggle();
+
   const router = useRouter();
   const endCallTriggered = useRef(false);
   const isMounted = useRef(true);
 
-  const toggleMic = () => {
-  console.log('Toggle mic. isMicOn:', isMicOn);
-  if (isMicOn) {
-    stopMic();
-  } else {
-    startMic();
+  if (!interviewId || !interviewData) {
+    console.error("VideoCallUI: Missing required props interviewId or interviewData", { interviewId, interviewData });
+    toast("Invalid interviewId or interviewData. Please try again.");
+    // Optionally, if you want to redirect or show a specific error page:
+    // useRouter().push('/error-page');
+    return null; // Render nothing if the required props are missing
   }
-};
 
+  const toggleMic = () => {
+    toast("Mic access is required and cannot be disabled during the interview.");
+  };
 
   useEffect(() => {
     if (!callStatus) return;
@@ -75,11 +84,28 @@ export default function VideoCallUI({
   };
 
   const handleStartCall = () => {
-    startCall();
-    setCallStatus(true);
-    setCallStartTime(new Date().toISOString());
-    toast("Call started, wait for few seconds...");
-  };
+    // Add this check at the start of the function
+    if (leftUsage <= 0) {
+      toast.error("Credit limit exceeded. Cannot start call.");
+      setLimitCheck(true);
+      setOpenModalIndex(true)
+      return;
+    }
+
+    setIsLoading(true)
+    setButtonStatus(false)
+
+    startCall()
+    setCallStartTime(new Date().toISOString())
+    toast("Call started, wait for a few seconds...")
+
+    // Simulate AI assistant loading time (8s)
+    setTimeout(() => {
+      setIsLoading(false)
+      setButtonStatus(true)
+      setCallStatus(true)
+    }, 8000)
+  }
 
   const handleEndCall = async () => {
     if (endCallTriggered.current) return;
@@ -95,21 +121,16 @@ export default function VideoCallUI({
       const updateResult = await handleUpdateUsage();
       if (!updateResult) return;
 
-      setCallTime(0);
-
       const generatedReport = await handleGenerateReport();
       if (!generatedReport?.status || !generatedReport?.data) {
         return;
-      } 
+      }
 
-      // duration
-      // current_duration
-      // callTime
       console.log("======== call time ========", callTime);
       const status = await deriveStatus(interviewData?.duration, interviewData?.current_duration, callTime);
       const updateInterviewDB = await updateInterviewDuration(callTime, interviewId, status)
-      
-      if(!updateInterviewDB.state){
+
+      if (!updateInterviewDB.state) {
         console.log("Error: ", updateInterviewDB.error);
         toast.error("Error: ", updateInterviewDB.error);
       }
@@ -157,6 +178,7 @@ export default function VideoCallUI({
     } finally {
       if (isMounted.current) {
         setLoading(false);
+        setCallTime(0);
         router.push("/dashboard/report");
       }
     }
@@ -172,7 +194,7 @@ export default function VideoCallUI({
     console.log(`Usage upadted for ${callTime} seconds in DB`)
     toast(`interview completed after (${Math.floor(parseInt(interviewData?.duration) / 60)} seconds)`);
     return true;
-  }; 
+  };
 
   const handleGenerateReport = async () => {
     setLoadingMessage("Generating Report...");
@@ -206,25 +228,36 @@ export default function VideoCallUI({
    */
 
   useEffect(() => {
-    
-  const durationLeft = Number(interviewData?.duration) - Number(interviewData?.current_duration);
-  const threshold = leftUsage > durationLeft ? durationLeft : leftUsage;
-if (isNaN(durationLeft) || isNaN(leftUsage)) return;
-
-  if (!callStatus) return;
-
-  if (callTime === threshold) {
-    console.log("Times up !!!");
-    handleEndCall();
-  }
-
-  if (callTime > threshold - 10) {
-    const secondsLeft = threshold - callTime;
-    if (secondsLeft > 0) {
-      toast.warning(`You have ${secondsLeft} seconds left`);
+    console.log("leftUsage: ", leftUsage);
+    if(leftUsage <= 0){
+      toast("Credit limit exceeded");
+      setLimitCheck(true);
+      setOpenModalIndex(true);
+      return;
     }
-  }
-}, [callTime, callStatus]);
+    const durationLeft = Number(interviewData?.duration) - Number(interviewData?.current_duration);
+    const threshold = leftUsage > durationLeft ? durationLeft : leftUsage;
+
+    console.log("durationLeft", durationLeft);
+    console.log("threshold", threshold);
+
+    if (isNaN(durationLeft) || isNaN(leftUsage) || leftUsage <= 0) return;
+
+    if (!callStatus) return;
+
+    if (callTime === threshold) {
+      console.log("Times up !!!");
+      handleEndCall();
+    }
+
+    if (callTime > threshold - 10) {
+      const secondsLeft = threshold - callTime;
+      if (secondsLeft > 0) {
+        toast.warning(`You have ${secondsLeft} seconds left`);
+      }
+    }
+  }, [callTime, callStatus, leftUsage, interviewData?.duration, interviewData?.current_duration]);
+
 
   useEffect(() => {
     isMounted.current = true;
@@ -238,6 +271,35 @@ if (isNaN(durationLeft) || isNaN(leftUsage)) return;
     return (
       <>
         <LoadingOverlay text={loadingMessage} />
+      </>
+    )
+  }
+
+  if(limitCheck){
+    return(
+      <>
+        <Modal
+          isOpen={openModalIndex}
+          onClose={() => router.push('/payment')}
+          title="Interview Report"
+          width="max-w-lg"
+        >
+          <div className="flex items-center justify-center h-full">
+            <div className="text-center">
+              <h3 className="flex items-center justify-center gap-1 mb-4 text-red-600 font-semibold">
+                <X />
+                Credit limit exceeded
+              </h3>
+              <Link
+                href="/payment"
+                className="bg-indigo-700 p-3 hover:bg-indigo-900 text-white rounded-md cursor-pointer text-sm inline-block"
+              >
+                Buy More Credits
+              </Link>
+            </div>
+          </div>
+        </Modal>
+
       </>
     )
   }
@@ -276,11 +338,7 @@ if (isNaN(durationLeft) || isNaN(leftUsage)) return;
           onClick={toggleMic}
           title="Toggle Mic"
         >
-          {isMicOn ? (
-            <Mic className="text-white" />
-          ) : (
-            <MicOff className="text-white" />
-          )}
+          <Mic className="text-white" />
         </button>
 
 
@@ -301,26 +359,35 @@ if (isNaN(durationLeft) || isNaN(leftUsage)) return;
         {callStatus ? (
           <button
             disabled={!buttonStatus}
-            className={`flex gap-1 items-center rounded-full cursor-pointer p-4 transition-colors
-          ${callStatus && buttonStatus ? 'bg-red-600 hover:bg-red-500' : 'bg-gray-500 cursor-not-allowed'}
-        `}
+            className={`flex gap-2 items-center rounded-full px-5 py-3 text-sm font-medium transition-colors
+            ${callStatus && buttonStatus ? 'bg-red-600 hover:bg-red-500' : 'bg-gray-500 cursor-not-allowed'}
+            text-white`}
             onClick={handleEndCall}
             title="End Call"
           >
-            <PhoneOff className="text-white h-4 w-4" />
+            <PhoneOff className="h-4 w-4" />
             End Call
           </button>
         ) : (
           <button
             disabled={!buttonStatus}
-            className={`flex gap-1 items-center rounded-full cursor-pointer p-4 transition-colors
-          ${buttonStatus ? 'bg-indigo-700 hover:bg-indigo-900' : 'bg-gray-500 cursor-not-allowed'}
-        `}
             onClick={handleStartCall}
             title="Start Call"
+            className={`flex gap-2 items-center rounded-full px-5 py-3 text-sm font-medium transition-colors cursor-pointer
+              ${buttonStatus ? 'bg-indigo-700 hover:bg-indigo-900' : 'bg-gray-500 cursor-not-allowed'}
+              text-white`}
           >
-            <PhoneIcon className="text-white h-4 w-4" />
-            Start Call
+            {isLoading ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Connecting...
+              </>
+            ) : (
+              <>
+                <PhoneIcon className="h-4 w-4" />
+                Start Call
+              </>
+            )}
           </button>
         )}
       </div>

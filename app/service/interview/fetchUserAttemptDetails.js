@@ -1,9 +1,8 @@
 
+const fetchUserAttemptDetails = async () => {
 
-const fetchResumes = async () => {
-
-  try {
-    const response = await fetch(`/api/resume/get-resumes`, {
+  try { 
+    const response = await fetch(`/api/interview/attempts`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -14,13 +13,13 @@ const fetchResumes = async () => {
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result?.error || 'Failed to fetch Resume list');
+      throw new Error(result?.error || 'Failed to fetch interview attempt details');
     }
 
     if (!result?.data) {
       return {
         state: false,
-        error: 'No resume list found',
+        error: 'No interview attempt found',
         message: 'No data',
       };
     }
@@ -32,13 +31,13 @@ const fetchResumes = async () => {
     };
 
   } catch (err) {
-    console.error('Resume fetch error:', err); // Remove or replace with monitoring logger
+    console.error('Interview attempt fetch error:', err); // Remove or replace with monitoring logger
     return {
       state: false,
       error: err.message || 'Something went wrong',
-      message: 'Failed', 
+      message: 'Failed',
     };
   }
 };
 
-export default fetchResumes;
+export default fetchUserAttemptDetails;

@@ -20,27 +20,6 @@ export default function Page() {
 
   const { user } = useUser();
 
-  // ✅ Stop all active video streams on mount
-useEffect(() => {
-  navigator.mediaDevices.enumerateDevices().then((devices) => {
-    const hasVideoInput = devices.some((d) => d.kind === 'videoinput');
-    if (!hasVideoInput) return;
-
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        stream.getTracks().forEach((track) => {
-          if (track.kind === 'video') {
-            track.stop();
-          }
-        });
-      })
-      .catch((err) => {
-        console.warn('Could not access video stream to stop:', err);
-      });
-  });
-}, []);
-
 
   useEffect(() => {
     async function getReports() {

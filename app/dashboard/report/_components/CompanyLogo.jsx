@@ -9,6 +9,7 @@ export default function CompanyLogo({
   height = 'h-16',
   className = '',
   rounded = 'rounded-full',
+  text='text-sm'
 }) {
   const [imgError, setImgError] = useState(false)
 
@@ -25,7 +26,7 @@ export default function CompanyLogo({
         <div
           className={`bg-gray-200 flex items-center justify-center ${width} ${height} ${rounded} ${className}`}
         >
-          <p className="text-sm font-semibold text-gray-700">
+          <p className={`${text} font-semibold text-gray-700`}>
             {company?.charAt(0).toUpperCase()}
           </p>
         </div>

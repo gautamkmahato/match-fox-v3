@@ -7,6 +7,8 @@ const CameraComponent = ({ isVisible }) => {
   const streamRef = useRef(null);
 
   useEffect(() => {
+    let stream = null;
+    
     const startCamera = async () => {
       try {
         const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -14,6 +16,7 @@ const CameraComponent = ({ isVisible }) => {
         if (videoRef.current) {
           videoRef.current.srcObject = mediaStream;
         }
+        stream = mediaStream;
       } catch (err) {
         console.error('Camera error:', err);
       }
@@ -22,9 +25,17 @@ const CameraComponent = ({ isVisible }) => {
     startCamera();
 
     return () => {
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
-        console.log('📷 Camera stream stopped');
+      // Use the locally scoped stream variable to avoid race conditions
+      if (stream) {
+        stream.getTracks().forEach(track => {
+          track.stop(); // Ensure each track is stopped
+          console.log(`Stopped ${track.kind} track`);
+        });
+      } else if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => {
+          track.stop();
+          console.log(`Stopped ${track.kind} track (fallback)`);
+        });
       }
     };
   }, []);

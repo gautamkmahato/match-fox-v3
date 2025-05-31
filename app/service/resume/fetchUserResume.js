@@ -1,9 +1,9 @@
 
 
-const fetchResumes = async () => {
+const fetchUserResume = async () => {
 
   try {
-    const response = await fetch(`/api/resume/get-resumes`, {
+    const response = await fetch(`/api/resume/user-resume`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -41,4 +41,4 @@ const fetchResumes = async () => {
   }
 };
 
-export default fetchResumes;
+export default fetchUserResume;
