@@ -52,6 +52,7 @@ export async function GET(req, context) {
                 started_at,
                 completed_at,
                 status,
+                chat_conversation,
                 interview_attempt,
                 interview_id,
                 user_id,

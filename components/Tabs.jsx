@@ -1,33 +1,45 @@
 'use client'
 
 import { useState, useRef, useLayoutEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import AIReportCard from '@/app/dashboard/report/_components/AIReportCard'
+import { motion } from 'framer-motion'
 import { useUser } from '@clerk/nextjs'
+
 import InterviewSummary from '@/app/dashboard/report/_components/InterviewSummary'
 import OverallFeedbackSection from '@/app/dashboard/report/_components/OverallFeedbackSection'
 import QuestionsWiseFeedback from '@/app/dashboard/report/_components/QuestionsWiseFeedback'
+import ChatComponent from '@/app/dashboard/report/_components/ChatComponent'
 
-const tabs = ['Interview Summary', 'Overall Feedback', 'Questions']
+const tabs = ['Interview Summary', 'Overall Feedback', 'Questions', 'Interview Copilot']
 
 export default function Tabs({ content, code, reportDetails }) {
   const [activeTab, setActiveTab] = useState(0)
-  const [expanded, setExpanded] = useState(true)
   const contentRef = useRef(null)
-  const [height, setHeight] = useState(0);
+  const [height, setHeight] = useState(0)
+  const { user } = useUser()
 
-  const { user } = useUser();
+  // Handle chat conversation
+  let finalConversation = []
+  try {
+    const rawChat = reportDetails?.interview_attempts?.chat_conversation
+    if (typeof rawChat === 'string' && rawChat.trim()) {
+      const parsed = JSON.parse(rawChat)
+      if (parsed && Array.isArray(parsed.current)) {
+        finalConversation = parsed.current.filter(msg => msg.role !== 'system')
+      }
+    }
+  } catch (err) {
+    console.error('❌ Failed to parse chat:', err)
+  }
 
-  //const collapsedHeight = 500;
+  const [chat, setChat] = useState(finalConversation)
 
+  const reportInString = JSON.stringify(reportDetails?.report)
   const feedback = {
-          areasForImprovement: reportDetails?.report?.Areas_for_Improvement,
-        keyStrengths: reportDetails?.report?.Key_Strengths,
-        suggestedLearningResources: reportDetails?.report?.Suggested_Learning_Resources,
-        topicsToFocusOn: reportDetails?.report?.Topics_to_focus_on,
-        }
-
-  const questionFeedback = reportDetails?.report?.Question_Wise_Feedback;
+    areasForImprovement: reportDetails?.report?.Areas_for_Improvement,
+    keyStrengths: reportDetails?.report?.Key_Strengths,
+    suggestedLearningResources: reportDetails?.report?.Suggested_Learning_Resources,
+    topicsToFocusOn: reportDetails?.report?.Topics_to_focus_on,
+  }
 
   useLayoutEffect(() => {
     if (contentRef.current) {
@@ -36,32 +48,25 @@ export default function Tabs({ content, code, reportDetails }) {
   }, [activeTab])
 
   const tabContents = [
-    <>
-        {/* Content goes here. */}
-        <InterviewSummary
-                      id={reportDetails?.id}
-                      companyLogo={reportDetails?.interview_attempts?.interviews?.company_logo}
-                      companyName={reportDetails?.interview_attempts?.interviews?.company}
-                      interviewTitle={reportDetails?.interview_attempts?.interviews?.interview_name}
-                      position={reportDetails?.interview_attempts?.interviews?.position}
-                      userName={user?.firstName}
-                      overallScore={reportDetails?.score}
-                      recommendation={!!reportDetails?.recommendation}
-                      Skill_Evaluation={reportDetails?.report?.Skill_Evaluation}
-                      summary={reportDetails?.report?.overall_summary}
-                    />
-    </>,
-    <>
-        {/* Code goes here. */}
-        
-      <OverallFeedbackSection
-        feedback={feedback}
-       />
-    </>,
-    <>
-        {/* Code goes here. */}
-      <QuestionsWiseFeedback feedbackData={reportDetails?.report?.Question_Wise_Feedback} />
-    </>
+    <InterviewSummary
+      id={reportDetails?.id}
+      companyLogo={reportDetails?.interview_attempts?.interviews?.company_logo}
+      companyName={reportDetails?.interview_attempts?.interviews?.company}
+      interviewTitle={reportDetails?.interview_attempts?.interviews?.interview_name}
+      position={reportDetails?.interview_attempts?.interviews?.position}
+      userName={user?.firstName}
+      overallScore={reportDetails?.score}
+      recommendation={!!reportDetails?.recommendation}
+      Skill_Evaluation={reportDetails?.report?.Skill_Evaluation}
+      summary={reportDetails?.report?.overall_summary}
+    />,
+    <OverallFeedbackSection feedback={feedback} />,
+    <QuestionsWiseFeedback feedbackData={reportDetails?.report?.Question_Wise_Feedback} />,
+    <ChatComponent
+      report={reportInString}
+      chat={chat}
+      setChat={setChat}
+    />,
   ]
 
   return (
@@ -72,10 +77,7 @@ export default function Tabs({ content, code, reportDetails }) {
           {tabs.map((tab, index) => (
             <button
               key={index}
-              onClick={() => {
-                setActiveTab(index)
-                setExpanded(false)
-              }}
+              onClick={() => setActiveTab(index)}
               className={`relative pb-3 text-sm md:text-sm cursor-pointer whitespace-nowrap transition-colors duration-300 ${
                 activeTab === index
                   ? 'text-gray-800 font-semibold'
@@ -94,52 +96,13 @@ export default function Tabs({ content, code, reportDetails }) {
           ))}
         </div>
 
-        {/* Tab Content with animated height */}
-        <motion.div
-          // initial={{ height: collapsedHeight }}
-          animate={{ height: expanded ? height : height }}
-          transition={{
-            type: 'spring',
-            stiffness: 100,
-            damping: 20,
-            mass: 1
-          }}
-          className="relative overflow-hidden"
+        {/* Tab Content */}
+        <div
+          ref={contentRef}
+          className="relative z-0 px-4 md:px-6 py-6 text-gray-700 text-sm md:text-base space-y-4"
         >
-          {/* Content */}
-          <div
-            ref={contentRef}
-            className="relative z-0 px-4 md:px-6 py-6 text-gray-700 text-sm md:text-base space-y-4"
-          >
-            {tabContents[activeTab]}
-          </div>
-
-          {/* Bottom Gradient Overlay */}
-          <AnimatePresence>
-            {height && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-100 to-transparent z-10 pointer-events-none"
-              />
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Expand/Collapse Button */}
-        {/* {height > collapsedHeight && (
-          <div className="mt-4 text-center">
-            <motion.button
-              onClick={() => setExpanded((prev) => !prev)}
-              className="text-sm text-gray-600 cursor-pointer hover:underline font-medium transition"
-              whileTap={{ scale: 0.97 }}
-            >
-              {expanded ? 'Show Less' : 'Show More'}
-            </motion.button>
-          </div>
-        )} */}
+          {tabContents[activeTab]}
+        </div>
       </div>
     </div>
   )

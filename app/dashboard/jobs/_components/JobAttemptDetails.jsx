@@ -25,6 +25,7 @@ export default function JobAttemptDetails({ interviewId }) {
             console.log("Full result attempts", result?.data);
             const completedResult = result?.data?.filter((job) => job?.interview_attempts?.status === 'completed')
             console.log("filtered result", completedResult);
+            //console.log("Stringyfy result", JSON.stringify(completedResult));
             setJobAttemptList(completedResult);
         } catch (error) {
             console.log("Job attempt fetch error: ", error);
@@ -63,7 +64,7 @@ export default function JobAttemptDetails({ interviewId }) {
                     </thead>
                     <tbody>
                         {jobAttemptList && jobAttemptList?.length > 0 && jobAttemptList.map((data, index) => (
-                            <UserRow key={index} report={data} user={data?.interview_attempts?.users} interviewAttempts={data?.interview_attempts} />
+                            <UserRow key={index} index={index} report={data} user={data?.interview_attempts?.users} interviewAttempts={data?.interview_attempts} />
                         ))}
                     </tbody>
                 </table>
@@ -71,6 +72,7 @@ export default function JobAttemptDetails({ interviewId }) {
                     Showing: <strong>8</strong> of <strong>17</strong>
                 </div> */}
             </div>
+            
 
         </>
     );

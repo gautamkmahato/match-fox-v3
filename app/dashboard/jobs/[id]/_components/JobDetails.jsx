@@ -139,30 +139,6 @@ export default function JobDetails({ job }) {
         </div>
       </div>
 
-      {/* Candidates Section - Placeholder data for now */}
-      <div className="max-w-4xl mx-auto p-6 mt-8 bg-white rounded-2xl shadow-sm space-y-6">
-        <h3 className="font-semibold">Candidates</h3>
-        <div className="bg-gray-50 p-4 rounded-xl flex items-center justify-between shadow">
-          <div className="flex gap-2 items-center">
-            <div className="bg-teal-200 p-2 rounded-full">
-              <User />
-            </div>
-            <div className="flex flex-col text-xs">
-              <span className="font-semibold">Gautam Mahato</span>
-              <span className="text-gray-500">Completed on 08-05-2025</span>
-            </div>
-          </div>
-          <div className="flex gap-4 items-center">
-            <p className="text-gray-800 font-semibold text-xs bg-gray-300 px-3 py-2 rounded-lg">
-              80%
-            </p>
-            <button className="flex gap-1 border-2 border-teal-600 p-2 rounded-lg items-center text-teal-800 shadow cursor-pointer hover:text-teal-950">
-              <LucideView className="w-3 h-3" />
-              <span className="text-xs">View Report</span>
-            </button>
-          </div>
-        </div>
-      </div>
     </>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { calculatePerformance } from '@/lib/utils/helper';
-import { ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ThumbsUp, ThumbsDown } from 'lucide-react'; 
 import Link from 'next/link';
 import CompanyLogo from './CompanyLogo';
 

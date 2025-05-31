@@ -13,7 +13,7 @@ export default function ReportComponent({ id }) {
     const [loading, setLoading] = useState(false);
 
 
-    useEffect(() =>{
+    useEffect(() =>{ 
         async function getReport() {
             try{
                 setLoading(true);

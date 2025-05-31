@@ -173,6 +173,7 @@ export default function JobForm() {
       toast.error(error.message || "Something went wrong. Please try again.")
     } finally{
       setLoading(false);
+      router.push("/dashboard/jobs");
     }
   };
 

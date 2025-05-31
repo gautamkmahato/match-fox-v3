@@ -89,24 +89,24 @@ Give score out of 10 and give recommendation (YES or NO)
 
 Output Format Example: 
 {
-  "Skill_Evaluation": {
+  "skill_evaluation": {
     "technical_knowledge": {
       "rating": "",
       "notes": ""
     },
-    "Communication_Clarity": {
+    "communication_clarity": {
       "rating": "",
       "notes": ""
     },
-    "Problem_Solving_Approach": {
+    "problem_solving_approach": {
       "rating": "",
       "notes": ""
     },
-    "Collaboration_and_Team_Fit": {
+    "collaboration_and_team_fit": {
       "rating": "",
       "notes": ""
     },
-    "Time_Management": {
+    "time_management": {
       "rating": "",
       "notes": ""
     }
@@ -115,17 +115,17 @@ Output Format Example:
   "reasons": [
   ],
   "most_frequent_words_used_in_conversations": "",
-  "Question_Wise_Feedback": [
+  "question_wise_feedback": [
       {
       "question": "",
       "score": "",
       "feedback": ""
     }
   ],
-  "Key_Strengths": [], 
-  "Areas_for_Improvement": [],
-  "Topics_to_focus_on": [],
-  "Suggested_Learning_Resources": [
+  "key_strengths": [], 
+  "areas_for_improvement": [],
+  "topics_to_focus_on": [],
+  "suggested_learning_resources": [
   {
       "name": "",
       "url": "" // provide some youtube url for the related topics
