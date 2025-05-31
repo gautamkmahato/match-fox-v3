@@ -8,7 +8,8 @@ export async function POST(req) {
     const rawBody = await req.text();
     console.log("🔔 Webhook called with raw body:", rawBody);
 
-    const razorpaySignature = headers().get("x-razorpay-signature");
+    const requestHeaders = await headers();
+    const razorpaySignature = requestHeaders.get("x-razorpay-signature");
     console.log("🧾 Received signature:", razorpaySignature);
 
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
