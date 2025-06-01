@@ -29,11 +29,14 @@ export default function Sidebar() {
   return (
     <div className="bg-white text-white min-h-screen">
       {/* Mobile top bar */}
-      <div className="md:hidden fixed top-0 left-0 w-full bg-gray-800 z-30 flex items-center justify-between px-4 h-14 border-b border-gray-700">
+      <div className="md:hidden fixed top-0 left-0 w-full bg-gray-50 z-30 flex items-center justify-between px-4 h-14 border-b border-gray-200">
         <button onClick={toggleSidebar}>
-          <Menu className="w-6 h-6 text-gray-400" />
+          <Menu className="w-6 h-6 text-gray-600" />
         </button>
-        <div className="text-lg font-semibold">MatchFox</div>
+        <div className="flex items-center gap-1 text-lg text-indigo-900 font-semibold">
+          <Image src={matchfox} width={24} height={24} alt='logo' className='rounded-md' />
+          Hirenom
+        </div>
         <div className="w-6" />
       </div>
 
@@ -71,7 +74,7 @@ export default function Sidebar() {
           {/* User Type Selector - Untitled UI style */}
           <div className="mb-4">
             <div 
-              className="flex items-center justify-between border-2 border-indigo-600 px-2 py-3 rounded-lg cursor-pointer hover:bg-indigo-700 hover:text-white"
+              className="flex items-center justify-between bg-gray-50 px-2 py-3 rounded-sm cursor-pointer shadow hover:bg-indigo-50 hover:text-white"
               onClick={toggleUserTypes}
             >
               <div className="flex items-center space-x-2">
@@ -93,7 +96,7 @@ export default function Sidebar() {
 
             {/* Dropdown options */}
             {showUserTypes && (
-              <div className="mt-1 space-y-1">
+              <div className="space-y-1">
                 <div 
                   className={`flex items-center space-x-2 p-2 rounded-lg cursor-pointer ${userType === 'CANDIDATE' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
                   onClick={() => {
@@ -231,7 +234,7 @@ export default function Sidebar() {
               <CreditCard className="w-4 h-4" />
               <span>Billing</span>
             </Link>
-
+ 
             <Link
               href="/settings"
               className={`flex items-center text-sm space-x-2 p-2 rounded 

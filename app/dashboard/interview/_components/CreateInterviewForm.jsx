@@ -43,7 +43,7 @@ export default function CreateInterviewForm({ jobDescription }) {
     }
     console.log(remaining_minutes)
 
-    if (remaining_minutes < duration) {
+    if (remaining_minutes < duration * 60) {
       toast.error("Limit exceeded. Please upgrade your plan.");
       setLimitReached(true);
       return;
