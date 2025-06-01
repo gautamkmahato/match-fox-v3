@@ -102,7 +102,7 @@ export default function JobCard({
               <p className="text-gray-500 text-[11px]">{personTitle}</p>
             </div>
           </div>
-          {pathname === '/dashboard/jobs' ? <Link href={`/dashboard/meetings/${id}`} className="flex items-center gap-2 bg-[rgb(70,46,180)] text-white px-4 py-2 text-xs rounded-md hover:bg-gradient-to-b hover:from-indigo-600 hover:to-indigo-950 cursor-pointer">
+          {pathname === '/dashboard/jobs/find' ? <Link href={`/dashboard/meetings/${id}`} className="flex items-center gap-2 bg-[rgb(70,46,180)] text-white px-4 py-2 text-xs rounded-md hover:bg-gradient-to-b hover:from-indigo-600 hover:to-indigo-950 cursor-pointer">
             Start Interview
             <ArrowRight className="w-3 h-3" />
           </Link> : 
@@ -110,6 +110,11 @@ export default function JobCard({
             View Details
             <ArrowRight className="w-3 h-3" />
           </Link>
+          
+          // <Link href={`/dashboard/jobs/${id}`} className="flex items-center gap-2 bg-[#462eb4] text-white px-4 py-2 text-xs rounded-md hover:bg-gradient-to-b hover:from-indigo-600 hover:to-indigo-950 cursor-pointer">
+          //   View Details
+          //   <ArrowRight className="w-3 h-3" />
+          // </Link>
           }
           
         </div>

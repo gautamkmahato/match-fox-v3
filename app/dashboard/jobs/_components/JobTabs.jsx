@@ -7,8 +7,6 @@ import JobDetails from '../[id]/_components/JobDetails'
 import QuestionsList from './QuestionsList'
 import JobAttemptDetails from './JobAttemptDetails'
 
-const tabs = ['Job Details', 'Questions', 'Candidates']
-
 export default function JobTabs({ details }) {
     const [activeTab, setActiveTab] = useState(0)
     const contentRef = useRef(null)
@@ -16,26 +14,46 @@ export default function JobTabs({ details }) {
     const [candidatesData, setCandidatesData] = useState(null)
     const [loadingCandidates, setLoadingCandidates] = useState(false)
 
-    const { user } = useUser()
+    const { isLoaded, user } = useUser()
+    // console.log("======== user ID =======")
+    // console.log(user?.id)
+
+    let tabContents
+
+    if (details?.user_id === user?.id) {
+        //console.log("its if block")
+        tabContents = [
+            <JobDetails key="details" job={details} />,
+            <QuestionsList key="questions" questions={details?.questions} />,
+            <JobAttemptDetails
+                key="candidates"
+                interviewId={details?.id}
+                candidatesData={candidatesData}
+                setCandidatesData={setCandidatesData}
+                loading={loadingCandidates}
+                setLoading={setLoadingCandidates}
+            />
+        ]
+    } else {
+        //console.log("its else block")
+        tabContents = [
+            <JobDetails key="details" job={details} />
+        ]
+    }
+
+    // Dynamically generate tab labels to match tabContents
+    const tabs = tabContents.map((tab) => {
+        if (tab.key === "details") return "Job Details"
+        if (tab.key === "questions") return "Questions"
+        if (tab.key === "candidates") return "Candidates"
+        return "Tab"
+    })
 
     useLayoutEffect(() => {
         if (contentRef.current) {
             setHeight(contentRef.current.scrollHeight)
         }
     }, [activeTab])
-
-    const tabContents = [
-        <JobDetails key="details" job={details} />,
-        <QuestionsList key="questions" questions={details?.questions} />,
-        <JobAttemptDetails 
-            key="candidates" 
-            interviewId={details?.id} 
-            candidatesData={candidatesData}
-            setCandidatesData={setCandidatesData}
-            loading={loadingCandidates}
-            setLoading={setLoadingCandidates}
-        />
-    ]
 
     return (
         <div className="w-full px-4 py-8">

@@ -778,35 +778,39 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
         </div>
 
         {/** chat messages */}
-        <div className="w-full h-[400px] lg:w-1/3 p-4 mt-4 rounded-xl bg-white shadow-lg">
+        <div className="w-full h-[400px] lg:w-1/3 p-4 ml-4 rounded-xl bg-white shadow-lg flex flex-col">
           <h1 className="text-xl font-bold text-gray-800 mb-4">Chat</h1>
 
           {chatMessages.length === 0 ? (
             <p className="text-gray-400">No messages yet...</p>
           ) : (
-            <div className="flex flex-col border border-gray-100 shadow p-4 rounded-lg h-[412px] overflow-hidden">
-              <div className="flex-1 overflow-y-auto space-y-3">
-                <div className="space-y-3">
-                  {chatMessages.map((chat, index) => {
-                    const isUser = chat.role === "user";
-                    return (
-                      <div key={index} className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
-                        <div
-                          className={`max-w-[75%] rounded-2xl p-3 shadow-md ${isUser
+            <div className="flex-1 border border-gray-100 shadow p-4 rounded-lg overflow-hidden flex flex-col">
+              <div className="flex-1 overflow-y-auto space-y-3 pr-1">
+                {chatMessages.map((chat, index) => {
+                  const isUser = chat.role === "user";
+                  return (
+                    <div
+                      key={index}
+                      className={`flex ${isUser ? "justify-end" : "justify-start"}`}
+                    >
+                      <div
+                        className={`max-w-[75%] rounded-2xl p-3 shadow-md ${
+                          isUser
                             ? "bg-green-200 text-gray-700 rounded-br-none"
                             : "bg-gray-200 text-gray-800 rounded-bl-none"
-                            }`}
-                        >
-                          <p className="text-xs font-semibold mb-1 text-gray-700">
-                            {isUser ? "You" : "Interviewer"}
-                          </p>
-                          <p className="text-sm whitespace-pre-wrap">{chat.transcript}</p>
-                        </div>
+                        }`}
+                      >
+                        <p className="text-xs font-semibold mb-1 text-gray-700">
+                          {isUser ? "You" : "Interviewer"}
+                        </p>
+                        <p className="text-sm whitespace-pre-wrap">
+                          {chat.transcript}
+                        </p>
                       </div>
-                    );
-                  })}
-                  <div ref={chatEndRef} />
-                </div>
+                    </div>
+                  );
+                })}
+                <div ref={chatEndRef} />
               </div>
             </div>
           )}
@@ -815,6 +819,7 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
             <p className="mt-2 text-sm text-red-500">{vapiError}</p>
           )}
         </div>
+
       </div>
 
       
