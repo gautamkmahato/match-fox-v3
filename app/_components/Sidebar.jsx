@@ -125,9 +125,9 @@ export default function Sidebar() {
           {userType === 'CANDIDATE' && (
             <>
               <Link
-                href="/dashboard"
+                href="/dashboard/candidate"
                 className={`flex items-center text-sm space-x-2 p-2 rounded 
-                  ${pathname === '/dashboard' ? 'bg-gray-400 text-white' : 'text-zinc-800 hover:bg-zinc-200'}`}
+                  ${pathname === '/dashboard/candidate' ? 'bg-gray-400 text-white' : 'text-zinc-800 hover:bg-zinc-200'}`}
               >
                 <LayoutDashboard className="w-4 h-4" />
                 <span>Dashboard</span>
@@ -140,6 +140,15 @@ export default function Sidebar() {
               >
                 <Video className="w-4 h-4" />
                 <span>Interviews</span>
+              </Link>
+
+              <Link
+                href="/dashboard/jobs/find"
+                className={`flex items-center text-sm space-x-2 p-2 rounded 
+                  ${pathname === '/dashboard/jobs/find' ? 'bg-gray-400 text-white' : 'text-zinc-800 hover:bg-zinc-200'}`}
+              >
+                <BriefcaseBusiness className="w-4 h-4" />
+                <span>Explore Jobs</span>
               </Link>
 
               {/* Resume Dropdown for Candidate */}
