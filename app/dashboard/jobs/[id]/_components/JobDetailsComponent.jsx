@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import JobDetails from "./JobDetails";
 import JobTabs from "../../_components/JobTabs";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 
 export default function JobDetailsComponent({ interviewId }) {
@@ -45,11 +46,15 @@ export default function JobDetailsComponent({ interviewId }) {
         fetchInterview();
     }, [interviewId]);
 
-  if (loading) return <p>Loading job?...</p>;
+  if (loading){
+    <>
+        <LoadingOverlay text="Loading details..." />
+    </>
+  }
 
     return(
         <>
-            <JobTabs details={job} />
+            <JobTabs details={job} /> 
         </>
     )
 }

@@ -38,7 +38,7 @@ export default function JobAttemptDetails({
     }, [interviewId])
 
     if (loading && !candidatesData) {
-        return <LoadingOverlay text="Loading Jobs..." />
+        return <LoadingOverlay text="Loading Candidates..." />
     }
 
     return (
