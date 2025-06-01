@@ -97,7 +97,7 @@ export default function Dashboard() {
           <div>
             <h2 className="text-xl font-semibold text-gray-800">Create New Job</h2>
             <p className="text-sm text-gray-500 mt-1">
-              Post a new job session tailored to your job...
+              Post a new job session tailored to your job test
             </p>
           </div>
           <Link href='/dashboard/jobs/create' className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-[#462eb4] hover:bg-indigo-900 cursor-pointer text-white rounded-md  transition">
