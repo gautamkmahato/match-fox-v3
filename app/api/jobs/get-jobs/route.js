@@ -36,9 +36,12 @@ export async function GET(req) {
     // Step 5: Fetch all interviews  
 
     const { data: jobs, error } = await supabase
-  .from('interviews')
-  .select('*')
-  .eq('type', 'JOB')
+    .from('interviews')
+    .select(`
+      *,
+      users:users(*)
+    `)
+    .eq('type', 'JOB')
 
 
 

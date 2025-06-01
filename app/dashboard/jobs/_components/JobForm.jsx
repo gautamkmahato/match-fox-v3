@@ -32,6 +32,7 @@ export default function JobForm() {
   const [employmentType, setEmploymentType] = useState('');
   const [jobType, setJobType] = useState('');
   const [loading, setLoading] = useState(false);
+  const [limitReached, setLimitReached] = useState(false);
 
   const statuses = ["Scheduled", "In-Progress", "Completed", "Cancelled"];
   const interviewTypes = ["Video", "In-person"];
@@ -90,6 +91,7 @@ export default function JobForm() {
 
       if (usage?.remaining_minutes < duration*60) {
         toast.error("Limit exceeded. Please upgrade your plan.");
+        setLimitReached(true);
         return;
       }
 
@@ -223,6 +225,28 @@ export default function JobForm() {
       toast.error("Something went wrong: " + (err?.message || String(err)));
 
     }
+  }
+
+
+  if (limitReached) {
+    return (
+      <>
+        <div className="flex items-center justify-center">
+          <div className="bg-white max-w-xl mx-auto text-center px-10 py-10 shadow">
+        <h1 className="text-2xl font-semibold mb-4">Usage Limit Reached</h1>
+        <p className="text-gray-600 mb-4">
+          You’ve reached your monthly limit. Please upgrade your plan to create more interviews.
+        </p>
+        <button
+          className="bg-[#462eb4] cursor-pointer text-sm text-white px-4 py-2.5 rounded hover:bg-indigo-700"
+          onClick={() => router.push("/payment")}
+        >
+          Upgrade Plan
+        </button>
+      </div>
+        </div>
+      </>
+    );
   }
 
 
