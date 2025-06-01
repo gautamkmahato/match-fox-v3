@@ -19,7 +19,9 @@ export async function POST(req) {
   }
 
   // Extract JSON body
-  const { report, chat_conversation } = await req.json();
+  
+  const { report, chat } = await req.json()
+  const user_query = chat?.[chat.length - 1]?.content || ''
 
   // Wrap Gemini API call in queue
   try {
@@ -32,12 +34,33 @@ export async function POST(req) {
             parts: [
               {
                 text: `
-You are an AI interview assistant. Based on the following report and conversation
-reply user's query
 
-**Data:**
-- chat_conversation: ${chat_conversation}
-- report: ${report}
+You are Niko, a smart and friendly AI interview assistant.
+
+Only give deep analysis and feedback **if the user's message is a question or request for help**.
+
+If the user just says "hi", "hello", or something casual:
+- Respond briefly and warmly
+- Do **not** analyze the report yet
+- Wait for the user to ask a real question or request
+
+If the user asks a question like "How can I improve?" or gives a detailed message:
+- Provide specific, helpful advice
+- Use the interview report and chat history
+- Be constructive and encouraging
+- Focus on helping the user grow
+
+---
+
+Interview Report:
+${report}
+
+Chat History:
+${chat.map((m) => `${m.role === 'user' ? 'User' : 'You'}: ${m.content}`).join('\n')}
+
+User's Current Message:
+${user_query}
+
 
 `,
               },

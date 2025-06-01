@@ -1,22 +1,23 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import chatWithAgent from '@/app/service/interview/chatWithAgent'
 
 export default function ChatComponent({ report, chat, setChat }) {
   const [userMessage, setUserMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const scrollRef = useRef(null)
 
   const sendMessage = async () => {
-    if (!userMessage.trim()) return
+    if (!userMessage.trim() || loading) return
 
     const updatedChat = [...chat, { role: 'user', content: userMessage }]
     setChat(updatedChat)
     setUserMessage('')
     setLoading(true)
     setError('')
-
+ 
     const response = await chatWithAgent(report, updatedChat)
 
     setLoading(false)
@@ -30,6 +31,10 @@ export default function ChatComponent({ report, chat, setChat }) {
     setChat([...updatedChat, { role: 'assistant', content: aiMessage }])
   }
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [chat, loading])
+
   return (
     <div className="bg-white w-full max-w-4xl mx-auto p-4 border border-gray-100 rounded-xl shadow-md space-y-4">
       <h2 className="text-xl font-bold">Interview Copilot</h2>
@@ -39,7 +44,7 @@ export default function ChatComponent({ report, chat, setChat }) {
           chat.map((msg, index) => (
             <div
               key={index}
-              className={`p-2 rounded-md max-w-[75%] ${
+              className={`p-2 rounded-md max-w-[75%] whitespace-pre-wrap ${
                 msg.role === 'user'
                   ? 'bg-blue-100 text-left self-end ml-auto'
                   : 'bg-gray-200 text-left'
@@ -51,6 +56,7 @@ export default function ChatComponent({ report, chat, setChat }) {
         {loading && (
           <div className="text-sm text-gray-500 italic">Jina is thinking...</div>
         )}
+        <div ref={scrollRef} />
       </div>
 
       <div className="flex gap-2">
@@ -61,6 +67,7 @@ export default function ChatComponent({ report, chat, setChat }) {
           onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
           className="flex-1 p-2 border border-gray-300 shadow rounded"
           placeholder="Type your message..."
+          disabled={loading}
         />
         <button
           onClick={sendMessage}
