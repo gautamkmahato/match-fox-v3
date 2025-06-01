@@ -78,7 +78,7 @@ export default function CallComponent({ interviewId, interviewData, leftUsage })
   // }, [interviewId]);
 
   useEffect(() => {
-    const vapiInstance = new Vapi(process.env.VAPI_KEY);
+    const vapiInstance = new Vapi(process.env.NEXT_PUBLIC_VAPI_KEY);
     vapiRef.current = vapiInstance;
 
     return () => {
