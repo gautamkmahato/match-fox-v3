@@ -10,7 +10,7 @@ const companies = [
   { name: "Figma", logo: "https://logo.clearbit.com/figma.com" },
   { name: "Amazon", logo: "https://logo.clearbit.com/amazon.com" },
   { name: "Meta", logo: "https://logo.clearbit.com/meta.com" },
-  { name: "HappyCo", logo: "https://logo.clearbit.com/happyco.com" },
+  // { name: "HappyCo", logo: "https://logo.clearbit.com/happyco.com" },
   { name: "Google", logo: "https://logo.clearbit.com/google.com" },
   { name: "Apple", logo: "https://logo.clearbit.com/apple.com" },
   { name: "Twitter", logo: "https://logo.clearbit.com/twitter.com" },
