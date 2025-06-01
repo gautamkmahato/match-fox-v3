@@ -225,7 +225,7 @@ export default function Sidebar() {
               <Link
                 href="/dashboard/jobs"
                 className={`flex items-center text-sm space-x-2 p-2 rounded 
-                  ${pathname === '/recruiter/jobs' ? 'bg-gray-400 text-white' : 'text-zinc-800 hover:bg-zinc-200'}`}
+                  ${pathname === '/dashboard/jobs' ? 'bg-gray-400 text-white' : 'text-zinc-800 hover:bg-zinc-200'}`}
               >
                 <BriefcaseBusiness className="w-4 h-4" />
                 <span>Jobs Post</span>

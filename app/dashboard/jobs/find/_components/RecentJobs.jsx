@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const companies = [
+  { name: "All", logo: "https://logo.clearbit.com/all.com" },
   { name: "Figma", logo: "https://logo.clearbit.com/figma.com" },
   { name: "Amazon", logo: "https://logo.clearbit.com/amazon.com" },
   { name: "Meta", logo: "https://logo.clearbit.com/meta.com" },
