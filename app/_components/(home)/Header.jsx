@@ -50,7 +50,7 @@ const Header = () => {
               <Link href="/" className="text-gray-700 transition hover:text-gray-700/75">
                 Home
               </Link>
-              <Link href="/explore" className="text-gray-700 transition hover:text-gray-700/75">
+              <Link href="/" className="text-gray-700 transition hover:text-gray-700/75">
                 Explore
               </Link>
               <Link href="/payment" className="text-gray-700 transition hover:text-gray-700/75">
@@ -61,9 +61,6 @@ const Header = () => {
                   Dashboard
                 </Link>
               </SignedIn>
-              <Link href="/about" className="text-gray-700 transition hover:text-gray-700/75">
-                About
-              </Link>
 
             </div>
           </div>
