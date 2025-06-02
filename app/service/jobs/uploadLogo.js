@@ -9,7 +9,7 @@ export default async function uploadLogo(logoForm) {
       const errData = await response.json(); // ✅ capture server error
       return {
         state: false,
-        error: errData?.error || 'Failed to upload logo',
+        error: 'Failed to upload logo',
         message: 'Response Error uploadLogo',
       };
     }

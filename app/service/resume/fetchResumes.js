@@ -14,7 +14,7 @@ const fetchResumes = async () => {
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result?.error || 'Failed to fetch Resume list');
+      throw new Error('Failed to fetch Resume list');
     }
 
     if (!result?.data) {

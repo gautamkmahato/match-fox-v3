@@ -21,7 +21,7 @@ export default async function createNewJobs(formData) {
         if (!response.ok) {
             return {
                 state: false,
-                error: `${errData.message} || 'Failed to create job'`,
+                error: `Failed to create job`,
                 message: 'Response Error createJob',
             }
         }

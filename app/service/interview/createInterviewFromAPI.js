@@ -23,7 +23,7 @@ export default async function createInterviewFromAPI(formData, questions) {
     if (!response.ok) {
       return {
         state: false,
-        error: `${errData.message} || 'Failed to create Interview'`,
+        error: `Failed to create Interview`,
         message: 'Response Error fetchInterviewReport',
       }
     }

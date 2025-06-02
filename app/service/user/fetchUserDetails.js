@@ -12,7 +12,7 @@ const fetchUserDetails = async () => {
     });
 
     if (!response.ok) {
-      throw new Error(result?.error || 'Failed to fetch interview list');
+      throw new Error('Failed to fetch interview list');
     }
 
     const result = await response.json();
