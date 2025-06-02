@@ -284,8 +284,8 @@ export default function CandidateProfile() {
 
           {/* Personal Informations (again, as per image) */}
           <Card title="Personal Informations">
-            <InfoRow icon={<Phone />} label="Turkey Number" value="+90 (545) 493 00 00" />
-            <InfoRow icon={<Mail />} label="Mail Address" value="jerome.bell@example.com" />
+            <InfoRow icon={<Phone />} label="Turkey Number" value="+91 (545) 493 00 00" />
+            <InfoRow icon={<Mail />} label="Mail Address" value="gautam.mahato@gmail.com" />
           </Card>
 
           {/* Resume (again, as per image) */}
