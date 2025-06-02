@@ -21,8 +21,9 @@ export default function JobAttemptDetails({
                 console.log("Error: ", result?.error)
                 toast.error(`Error: ${result?.error}`)
             }
+            // use this if want to filter for completed only
             const completedResult = result?.data?.filter((job) => job?.interview_attempts?.status === 'completed')
-            setCandidatesData(completedResult)
+            setCandidatesData(result?.data)
         } catch (error) {
             console.log("Job attempt fetch error: ", error)
             toast.error(`Job attempt Error: ${error}`)
