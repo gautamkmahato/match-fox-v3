@@ -434,7 +434,7 @@ export default function LandingPage() {
               className="relative"
             >
               <img
-                src="/placeholder.svg?height=400&width=500"
+                src="/call.png"
                 alt="Candidate using interview platform"
                 className="rounded-2xl shadow-lg"
               />
@@ -466,7 +466,7 @@ export default function LandingPage() {
               className="relative order-2 lg:order-1"
             >
               <img
-                src="/placeholder.svg?height=400&width=500"
+                src="/dashboard.jpg"
                 alt="Recruiter dashboard"
                 className="rounded-2xl shadow-lg"
               />
@@ -548,7 +548,7 @@ export default function LandingPage() {
               className="lg:col-span-2"
             >
               <img
-                src="/placeholder.svg?height=500&width=700"
+                src="/resume.png"
                 alt="AI Resume Builder Interface"
                 className="rounded-2xl shadow-lg w-full"
               />
