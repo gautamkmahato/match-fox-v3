@@ -640,7 +640,7 @@ export default function LandingPage() {
               className="relative"
             >
               <img
-                src="/placeholder.svg?height=400&width=500"
+                src="/chrome.png"
                 alt="Chrome extension in action"
                 className="rounded-2xl shadow-2xl"
               />
