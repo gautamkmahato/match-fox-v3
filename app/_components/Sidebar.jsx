@@ -98,7 +98,7 @@ export default function Sidebar() {
             {showUserTypes && (
               <div className="space-y-1">
                 <div 
-                  className={`flex items-center space-x-2 p-2 rounded-lg cursor-pointer ${userType === 'CANDIDATE' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+                  className={`flex items-center space-x-2 p-2 rounded-lg cursor-pointer ${userType === 'CANDIDATE' ? 'bg-white' : 'hover:bg-gray-100'}`}
                   onClick={() => {
                     setUserType('CANDIDATE')
                     setShowUserTypes(false)
@@ -108,7 +108,7 @@ export default function Sidebar() {
                   <span className="text-sm text-gray-700">Candidate</span>
                 </div>
                 <div 
-                  className={`flex items-center space-x-2 p-2 rounded-lg cursor-pointer ${userType === 'RECRUITER' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+                  className={`flex items-center space-x-2 p-2 rounded-lg cursor-pointer ${userType === 'RECRUITER' ? 'bg-white' : 'hover:bg-gray-50'}`}
                   onClick={() => {
                     setUserType('RECRUITER')
                     setShowUserTypes(false)
@@ -136,7 +136,7 @@ export default function Sidebar() {
               <Link
                 href="/dashboard/interview"
                 className={`flex items-center text-sm space-x-2 p-2 rounded 
-                  ${pathname === '/dashboard/interviews' ? 'bg-gray-400 text-white' : 'text-zinc-800 hover:bg-zinc-200'}`}
+                  ${pathname === '/dashboard/interview' ? 'bg-gray-400 text-white' : 'text-zinc-800 hover:bg-zinc-200'}`}
               >
                 <Video className="w-4 h-4" />
                 <span>Interviews</span>

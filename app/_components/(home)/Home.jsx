@@ -1,5 +1,6 @@
 
 import FeatureCards from "./FeatureCards";
+import Hero from "./Hero";
 import HeroSection from "./HeroSection";
 import PricingPlans from "./PricingPlans";
 import ProductShowcase from "./ProductShowcase";

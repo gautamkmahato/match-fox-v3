@@ -38,7 +38,7 @@ export default function JobList() {
     if(loading){
         return(
             <>
-                <LoadingOverlay text="Loading Jobs..." />
+                <LoadingOverlay text="Loading..." />
             </>
         )
     }

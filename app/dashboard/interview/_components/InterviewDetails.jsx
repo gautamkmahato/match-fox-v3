@@ -7,6 +7,7 @@ import { CalendarDays, Share2, MapPin, Video, Copy, TicketCheck, Timer, User, Lu
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import CompanyLogo from "../../report/_components/CompanyLogo";
 
 export default function InterviewDetails({ interviewId }) {
   const statusColor = {
@@ -70,11 +71,7 @@ export default function InterviewDetails({ interviewId }) {
         <div className="flex justify-between items-start">
           <div className="flex gap-2 space-y-1">
             {interview?.company_logo && (
-              <img
-                src={interview.company_logo}
-                alt="Company Logo"
-                className="w-12 h-12 rounded-full"
-              />
+              <CompanyLogo logo={interview.company_logo} company={interview.interview_name} text="text-2xl" />
             )}
 
             <div>
@@ -146,7 +143,7 @@ export default function InterviewDetails({ interviewId }) {
         <div>
           <Accordion
             header="Job Description"
-            jobDescription={interview?.job_description}
+            description={interview?.job_description}
           />
         </div>
       </div>

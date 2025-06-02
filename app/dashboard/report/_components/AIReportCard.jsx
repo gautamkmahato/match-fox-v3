@@ -51,32 +51,36 @@ export default function AIReportCard({
       </div>
 
       {/* Candidate Info */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between border-t border-gray-100 pt-4 mb-6 gap-4">
-        <div className='border border-gray-100 shadow px-12 py-4'>
-          <p className="text-gray-500 text-sm">Candidate</p>
-          <p className="font-semibold text-md truncate">
-            {userName?.toUpperCase()}
-          </p>
-        </div>
-        <div className="text-center border border-gray-100 shadow px-12 py-4">
-          <p className="text-gray-500 text-sm">Score</p>
-          <p className="text-2xl font-bold text-teal-600">{overallScore}/10</p>
-        </div>
-        <div className="text-center border border-gray-100 shadow px-12 py-4">
-          <p className="text-gray-500 text-sm">Performance</p>
-          <div
-            className={`inline-flex items-center px-3 py-1 rounded-full text-white text-sm font-medium ${performance?.status ? 'bg-teal-500' : 'bg-red-500'
-              }`}
-          >
-            {performance?.status ? (
-              <ThumbsUp size={16} className="mr-1" />
-            ) : (
-              <ThumbsDown size={16} className="mr-1" />
-            )}
-            {performance?.tag || 'N/A'}
-          </div>
-        </div>
-      </div>
+<div className="grid grid-cols-1 md:grid-cols-3 border-t border-gray-50 pt-4 mb-6 gap-4">
+  <div className="border border-gray-50 text-center shadow-sm px-12 py-4">
+    <p className="text-gray-500 text-sm">Candidate</p>
+    <p className="font-semibold text-md truncate">
+      {userName?.toUpperCase()}
+    </p>
+  </div>
+
+  <div className="text-center border border-gray-50 shadow-sm px-12 py-4">
+    <p className="text-gray-500 text-sm">Score</p>
+    <p className="text-2xl font-bold text-teal-600">{overallScore}/10</p>
+  </div>
+
+  <div className="text-center border border-gray-50 shadow-sm px-12 py-4">
+    <p className="text-gray-500 text-sm">Performance</p>
+    <div
+      className={`inline-flex items-center px-3 py-1 rounded-full text-white text-sm font-medium ${
+        performance?.status ? 'bg-teal-500' : 'bg-red-500'
+      }`}
+    >
+      {performance?.status ? (
+        <ThumbsUp size={16} className="mr-1" />
+      ) : (
+        <ThumbsDown size={16} className="mr-1" />
+      )}
+      {performance?.tag || 'N/A'}
+    </div>
+  </div>
+</div>
+
 
       {/* Skills Assessment */}
       <div>
@@ -87,7 +91,7 @@ export default function AIReportCard({
             return (
               <div
                 key={key}
-                className="bg-gray-50 px-4 py-2 rounded-xl border border-gray-100 shadow-sm flex items-center justify-between"
+                className="bg-gray-50 px-4 py-2 rounded-xl border border-gray-50 shadow-sm flex items-center justify-between"
               >
                 <span className="text-sm font-medium text-gray-700">{label}</span>
                 <span className="text-teal-600 font-bold">{score}/10</span>

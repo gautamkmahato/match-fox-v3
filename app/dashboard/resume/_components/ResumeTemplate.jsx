@@ -3,12 +3,14 @@
 
 import saveResume from "@/app/service/resume/saveResume";
 import { Download, Loader, Loader2, Save } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 const ResumeTemplate = ({ resume }) => {
   const [downloading, setDownloading] = useState(false);
   const [saving, setSaving] = useState(false);
+
+  
   const resumeRef = useRef(null);
 
   const {
@@ -20,46 +22,46 @@ const ResumeTemplate = ({ resume }) => {
     extra_curricular_activities,
   } = resume;
 
-  const htmlContent = `
-<html>
+  const htmlContent = `<html>
   <head>
     <style>
       body {
         background: white;
-        font-family: Arial, sans-serif;
-        padding: 40px;
+        font-family: Arial, sans-serif; /* A clear, widely readable font */
+        padding: 0.75in; /* Reduced margins to fit more content, common for resumes */
         color: #333;
-        max-width: 794px;
+        max-width: 7.5in; /* Standard paper width minus margins (8.5 - 2*0.75) */
         margin: auto;
       }
       h1 {
-        font-size: 18px;
+        font-size: 18pt; /* Slightly larger for emphasis */
         font-weight: bold;
         color: #2b2b2b;
-        margin-bottom: 4px;
+        margin-bottom: 2pt; /* Reduced spacing */
         text-align: center;
       }
       h2 {
-        font-size: 15px;
+        font-size: 13pt; /* Smaller for section titles */
         font-weight: 600;
-        padding-bottom: 4px;
-        margin-bottom: 8px;
-        margin-top: 20px;
+        padding-bottom: 2pt;
+        margin-bottom: 6pt; /* Adjusted spacing */
+        margin-top: 10pt; /* Reduced top margin */
         color: #333;
       }
       h3 {
-        font-size: 13px;
-        font-weight: 500;
+        font-size: 10.5pt; /* Consistent with body text, but bold for distinction */
+        font-weight: 600; /* Slightly bolder for subheadings */
         margin: 0;
         color: #222;
       }
       p, li, span {
-        font-size: 11px;
+        font-size: 10pt; /* Standard readable font size for body content */
+        line-height: 1.2; /* Slightly reduced line height for compactness */
         color: #444;
         margin: 0;
       }
       .section {
-        margin-bottom: 8px;
+        margin-bottom: 10pt; /* Reduced spacing between sections */
       }
 
       .header-contact,
@@ -67,11 +69,11 @@ const ResumeTemplate = ({ resume }) => {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 8px;
-        font-size: 11px;
+        gap: 6pt; /* Reduced gap */
+        font-size: 9.5pt; /* Smaller for contact details */
         color: #666;
-        margin-top: 4px;
-        margin-bottom: 8px;
+        margin-top: 2pt; /* Reduced spacing */
+        margin-bottom: 6pt; /* Reduced spacing */
       }
       .header-contact span,
       .header-links a {
@@ -79,16 +81,23 @@ const ResumeTemplate = ({ resume }) => {
         color: #1a73e8;
       }
       ul {
-        padding-left: 16px;
-        margin-top: 5px;
+        padding-left: 14pt; /* Slightly reduced padding */
+        margin-top: 4pt; /* Reduced top margin for lists */
+        margin-bottom: 4pt; /* Added bottom margin for lists */
       }
       ul li {
-        margin-bottom: 4px;
+        margin-bottom: 2pt; /* Reduced spacing between list items */
       }
       .flex-between {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: baseline; /* Aligns text baselines */
+        margin-bottom: 2pt; /* Added small margin for better spacing */
+      }
+      hr {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 8pt 0; /* Reduced margin around horizontal rules */
       }
     </style>
   </head>
@@ -107,10 +116,10 @@ const ResumeTemplate = ({ resume }) => {
           ${user_info.location ? `| <span>${user_info.location}</span>` : ""}
         </div>
       </header>
+      <hr />
 
       <section class="section">
         <h2>Work Experience</h2>
-        <br />
         ${work_experience
       .map(
         (job) => `
@@ -129,6 +138,7 @@ const ResumeTemplate = ({ resume }) => {
       .join("")}
       </section>
 
+      <hr />
       <section class="section">
         <h2>Skills</h2>
         <ul>
@@ -140,40 +150,42 @@ const ResumeTemplate = ({ resume }) => {
       .join("")}
         </ul>
       </section>
+      <hr />
 
       <section class="section">
-  <h2>Projects</h2>
-  ${projects
+        <h2>Projects</h2>
+        ${projects
       .map(
         (project) => `
-    <div>
-      <div class="flex-between">
-        <h3>${project.name}</h3>
-        ${(project.link && project.link)
-            ? `<a href="${project.link}" target="_blank" rel="noopener noreferrer" style="font-size: 11px; color: #1a73e8;">Link</a>`
-            : `<a href="#" target="_blank" rel="noopener noreferrer" style="font-size: 11px; color: #1a73e8; font-weight: bold; ">Link</a>`
+          <div>
+            <div class="flex-between">
+              <h3>${project.name}</h3>
+              ${(project.link && project.link)
+            ? `<a href="${project.link}" target="_blank" rel="noopener noreferrer" style="font-size: 10pt; color: #1a73e8;">Link</a>`
+            : `<a href="#" target="_blank" rel="noopener noreferrer" style="font-size: 10pt; color: #1a73e8; font-weight: bold; ">Link</a>`
           }
-      </div>
-      <ul>
-        ${project.description
+            </div>
+            <ul>
+              ${project.description
             .split(". ")
-            .map((desc) => desc.trim() && `<li>${desc}</li>`)
+            .filter((desc) => desc.trim()) // Filter out empty strings from split
+            .map((desc) => `<li>${desc.trim()}</li>`)
             .join("")}
-      </ul>
-    </div>
-  `
+            </ul>
+          </div>
+        `
       )
       .join("")}
-</section>
-
-
-      <section class="section">
-        <h2>Education</h2>
-        <p><strong>${education.degree}</strong></p>
-        <p>${education.university}</p>
-        <p>${education.years} | CGPA: ${education.cgpa}</p>
       </section>
 
+      <hr />
+      <section class="section">
+        <h2>Education</h2>
+        <p style="margin-bottom: 2pt;"><strong>${education.degree}</strong></p>
+        <p style="margin-bottom: 2pt;">${education.university}</p>
+        <p>${education.years} | CGPA: ${education.cgpa}</p>
+      </section>
+      <hr />
       <section class="section">
         <h2>Extra Curricular Activities</h2>
         <ul>
@@ -183,7 +195,7 @@ const ResumeTemplate = ({ resume }) => {
     </div>
   </body>
 </html>
-  `;
+`
 
   const handleDownloadPDF = async () => {
     try {
@@ -234,6 +246,8 @@ const ResumeTemplate = ({ resume }) => {
       setSaving(false);
     }
   }
+
+  
 
 
   return (

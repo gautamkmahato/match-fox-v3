@@ -62,7 +62,7 @@ export default function JobComponent() {
           jobs.map((job, index) => (
             <div key={index}> 
               <JobCard 
-                id={job?.id}
+                id={job?.id} 
                 companyLogo={job?.company_logo}
                 companyName={job?.company}
                 employmentType={job?.employment_type}

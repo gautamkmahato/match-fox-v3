@@ -3,7 +3,6 @@ import { currentUser } from '@clerk/nextjs/server';
 import supabase from '@/lib/supabase/client';
 import { isRateLimited } from '@/lib/utils/rateLimiter';
 import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
-import generateUuid from '@/lib/utils/generateUuid';
 
 
 

@@ -71,15 +71,15 @@ export default function PricingPlans() {
   ]
 
   return (
-    <div className="bg-gray-50 py-16 px-4">
+    <div className="bg-white py-16 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">
+          <h2 className="lg:text-3xl text-xl font-bold mb-4">
             Choose the Perfect Plan for
             <br />
             Your Interview Needs
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-500 max-w-2xl mx-auto text-md">
             Our Basic Plan is ideal for startups and small businesses looking to optimize their hiring process.
           </p>
 

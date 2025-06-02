@@ -76,11 +76,11 @@ Keep each point short and specific to the candidate's performance.
 ---
 
 #### **Final Verdict (Internal Use)**
-Give score out of 10 and give recommendation (YES or NO)
+Give score out of 100 and give recommendation (YES or NO)
 > \`\`\`json
 > {
 >   "recommendation": "YES" // or "NO",
->   "score": "8"  // give score out of 10
+>   "score": "85"  // give score out of 100
 > }
 > \`\`\`
 

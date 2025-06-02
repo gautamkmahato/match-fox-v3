@@ -4,7 +4,7 @@ import supabase from '@/lib/supabase/client';
 import { ratelimit } from '@/lib/ratelimiter/rateLimiter';
 
 
-export async function GET(req) {
+export async function GET(req, context) {
   try {
     const ip = req.headers.get('x-forwarded-for') || 'anonymous';
 
@@ -33,23 +33,33 @@ export async function GET(req) {
       return NextResponse.json({ state: false, error: 'User not found in database', message: "Failed" }, { status: 403 });
     }
 
-    // Step 5: Fetch all interviews  
+    // Step 5: Fetch all reports with interview details and user details  
 
-    let { data: interviews, error } = await supabase
-      .from('interviews')
-      .select('*')
-      .eq('user_id', userId)
-      .eq('type', 'INTERVIEW')
-      .order("created_date", { ascending: false }); // Sort by latest
+    const { data, error } = await supabase
+  .from('ai_reports')
+  .select(`
+    *,
+    interview_attempts (
+      *,
+      interviews (
+      *,
+      users(*)
+      )
+    )
+  `)
+  .order('created_at', { ascending: false });
+
+const reports = data?.filter(report => report.interview_attempts?.user_id === userId);
 
 
+    console.log("========== Reports ===========", reports);
     console.log(error)
 
     if (error) {
-      return NextResponse.json({ state: false, error: 'Failed to fetch interviews', message: "Failed" }, { status: 500 });
+      return NextResponse.json({ state: false, error: 'Failed to fetch all reports', message: "Failed" }, { status: 500 });
     }
 
-    return NextResponse.json({ state: true, data: interviews, message: "Success" }, { status: 200 });
+    return NextResponse.json({ state: true, data: reports, message: "Success" }, { status: 200 });
 
   } catch (err) {
     console.error('Unexpected error:', err);

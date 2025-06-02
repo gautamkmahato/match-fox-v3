@@ -19,7 +19,7 @@ const Header = () => {
 
   return (
     <nav className="text-gray-500">
-      <div className="bg-gray-50 max-w-4xl mx-auto px-4 sm:px-6 lg:px-4 border-2 border-gray-50 rounded-full shadow">
+      <div className="bg-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-4  rounded-full shadow">
         <div className="flex items-center justify-between h-16">
           {/* Mobile Menu Button */}
           <div className="flex items-center sm:hidden">
@@ -57,7 +57,7 @@ const Header = () => {
                 Payment
               </Link>
               <SignedIn>
-                <Link href="/dashboard" className="text-gray-700 transition hover:text-gray-700/75">
+                <Link href="/dashboard/candidate" className="text-gray-700 transition hover:text-gray-700/75">
                   Dashboard
                 </Link>
               </SignedIn>
@@ -97,7 +97,7 @@ const Header = () => {
           </Link>
 
           <SignedIn>
-            <Link href="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
+            <Link href="/dashboard/candidate" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700">
               Dashboard
             </Link>
           </SignedIn>

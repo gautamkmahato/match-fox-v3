@@ -6,7 +6,7 @@ const InterviewCard = ({ id, name, duration, logo, date, status, position, type,
   console.log(date)
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-md shadow-gray-200 transition hover:shadow-lg flex items-center gap-4">
-      <CompanyLogo logo={logo} company={name?.charAt(0).toUpperCase()} />
+      <CompanyLogo logo={logo} company={name?.charAt(0).toUpperCase()} text="text-2xl" />
       
       <div className="flex-1">
         <h3 className="flex items-center justify-between font-semibold text-gray-800">
