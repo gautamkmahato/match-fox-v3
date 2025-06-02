@@ -3,7 +3,7 @@
 const fetchUserDetails = async () => {
 
   try {
-    const response = await fetch(`http://localhost:3000/api/user/full-details`, {
+    const response = await fetch(`${process.env.NEXT_APP_PRODUCTION_HOSTNAME}/api/user/full-details`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

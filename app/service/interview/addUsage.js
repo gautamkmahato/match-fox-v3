@@ -1,12 +1,11 @@
 
 const addUsage = async () => {
- 
-  try {
+  try { 
     const input = {
         message: "Updating usage"
     };
 
-    const response = await fetch(`${process.env.NEXT_APP_HOSTNAME}/api/interview/add-usage`, {
+    const response = await fetch(`${process.env.NEXT_APP_PRODUCTION_HOSTNAME}/api/interview/add-usage`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
