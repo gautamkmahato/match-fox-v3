@@ -61,7 +61,7 @@ export default function AIReportCard({
 
   <div className="text-center border border-gray-50 shadow-sm px-12 py-4">
     <p className="text-gray-500 text-sm">Score</p>
-    <p className="text-2xl font-bold text-teal-600">{overallScore}/10</p>
+    <p className="text-2xl font-bold text-teal-600">{overallScore}/100</p>
   </div>
 
   <div className="text-center border border-gray-50 shadow-sm px-12 py-4">
@@ -94,7 +94,7 @@ export default function AIReportCard({
                 className="bg-gray-50 px-4 py-2 rounded-xl border border-gray-50 shadow-sm flex items-center justify-between"
               >
                 <span className="text-sm font-medium text-gray-700">{label}</span>
-                <span className="text-teal-600 font-bold">{score}/10</span>
+                <span className="text-teal-600 font-bold">{score}/100</span>
               </div>
             );
           })}

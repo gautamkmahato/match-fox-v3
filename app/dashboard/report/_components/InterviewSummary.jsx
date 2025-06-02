@@ -56,7 +56,7 @@ export default function InterviewSummary({
         <div className="flex flex-col items-start sm:items-center border border-gray-100 p-4 shadow-lg rounded-xl">
           <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">Overall Score</p>
           <p className="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">
-            {overallScore}<span className="text-xl">/10</span>
+            {overallScore}<span className="text-xl">/100</span>
           </p>
         </div>
         <div className="flex flex-col items-start sm:items-center border border-gray-100 p-4 shadow-lg rounded-xl">
@@ -92,7 +92,7 @@ export default function InterviewSummary({
                 className="flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-gray-100 dark:border-zinc-700 shadow-sm hover:shadow-md transition-shadow duration-200"
               >
                 <span className="text-base text-gray-700 dark:text-gray-300 font-medium">{label}</span>
-                <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">{score}/10</span>
+                <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">{score}/100</span>
               </div>
             );
           })}

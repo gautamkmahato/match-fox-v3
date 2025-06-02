@@ -51,7 +51,7 @@ export default function QuestionsWiseFeedback({ feedbackData }) {
                   <div className="flex items-center mt-2 sm:mt-0 sm:ml-auto">
                     <Star size={18} className={`${getScoreColor(item.score)} mr-1 flex-shrink-0`} />
                     <span className={`text-md font-bold ${getScoreColor(item.score)} flex-shrink-0`}>
-                      {item.score}/10
+                      {item.score}/100
                     </span>
                   </div>
                 </div>

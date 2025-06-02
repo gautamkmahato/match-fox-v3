@@ -176,7 +176,7 @@ export default function Page() {
                 <div className="flex-shrink-0 text-right">
                   <h3 className="text-2xl font-bold text-teal-600">
                     {report?.score}
-                    <span className="text-base text-gray-700">/10</span>
+                    <span className="text-base text-gray-700">/100</span>
                   </h3>
                 </div>
               </div>
