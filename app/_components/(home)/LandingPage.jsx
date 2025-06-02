@@ -250,7 +250,7 @@ export default function LandingPage() {
             >
               <span className="block font-bold text-gray-800 text-3xl md:text-5xl lg:text-6xl dark:text-neutral-200">
                 Supercharge your Interview preparation
-                <span className="bg-clip-text bg-gradient-to-tl mt-4 from-blue-600 to-violet-600 text-transparent"> With AI</span>
+                <span className="bg-clip-text bg-gradient-to-tl mt-4 from-indigo-600 to-violet-600 text-transparent"> With AI</span>
               </span>
             </motion.h1>
           </div>
@@ -280,7 +280,7 @@ export default function LandingPage() {
           >
             <Link
               href="/dashboard/interview"
-              className="flex gap-2 items-center px-4 py-2.5 sm:px-5 sm:py-3 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 rounded-md shadow-lg hover:shadow-xl w-full sm:w-auto transition-all"
+              className="flex gap-2 items-center px-4 py-2.5 sm:px-5 sm:py-3 text-sm font-semibold text-white bg-indigo-700 hover:bg-indigo-800 dark:bg-indigo-500 dark:hover:bg-indigo-600 rounded-md shadow-lg hover:shadow-xl w-full sm:w-auto transition-all"
               aria-label="Start a free AI-powered interview"
             >
               Start Free Interview
