@@ -6,32 +6,30 @@ import { SquaresIntersect } from "lucide-react";
 import CreateInterviewForm from "../_components/CreateInterviewForm";
 import { useEffect, useState } from "react";
 
-
-
 export default function CreateInterviewPage() {
-
   const [jobDescription, setJobDescription] = useState();
 
-
   useEffect(() => {
-    // Let the opener know we're ready
+    // Notify parent window that this window is ready
     if (window.opener) {
       window.opener.postMessage({ type: 'READY_FOR_JOB' }, '*');
     }
 
     const handleMessage = (event) => {
-      if (event.data?.job_description) {
+      // Security: Check origin if using in production
+      if (typeof event.data?.job_description === 'string') {
         const job = event.data.job_description;
         localStorage.setItem('job_description', job);
-        console.log('✅ Job Description Received:', job);
-
-        // You can redirect here if needed
         setJobDescription(job);
       }
     };
 
     window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
+
+    return () => {
+      // Cleanup: Prevent memory leaks
+      window.removeEventListener('message', handleMessage);
+    };
   }, []);
 
   return (
@@ -44,7 +42,6 @@ export default function CreateInterviewPage() {
         Please fill in the details below to generate customize mock interview
       </p>
       <CreateInterviewForm jobDescription={jobDescription} />
-      {/* <ContactForm /> */}
     </main>
   );
 }

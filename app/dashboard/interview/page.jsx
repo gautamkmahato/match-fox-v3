@@ -26,7 +26,7 @@ export default function InterviewDashboardPage() {
             if (!isMounted) return;
 
             if (!result?.state) {
-                console.error('Error fetching interviews:', error);
+                //console.error('Error fetching interviews:', error);
                 setError(error);
             } else {
                 setInterviews(result?.data);

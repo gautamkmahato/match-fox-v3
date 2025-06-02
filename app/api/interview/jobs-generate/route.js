@@ -95,7 +95,7 @@ Do not add any explanations or extra text, just return the JSON.
     // Queue the Gemini API call
     const result = await geminiQueue.add(() =>
       ai.models.generateContentStream({
-        model: 'gemini-2.0-flash',
+        model: 'gemini-1.5-flash',
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
       })
     );

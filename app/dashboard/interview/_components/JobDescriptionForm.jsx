@@ -44,6 +44,7 @@ export default function JobDescriptionForm({ onSubmit, initialData = {}, jobData
       const apiResult = await generateJobDetails(jobData || jobDescription);
       console.log("api results: ", apiResult)
       const cleanedResult = cleanCodeBlock(apiResult);
+      console.log("cleaned", cleanedResult)
 
       // Merge data from job inputs and extracted fields
       const mergedResult = {

@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.mjs';
 
 
-export default function PdfTextExtractor({ onSubmit, setStep, step, buttonText="Next Step" }) {
+export default function PdfTextExtractor({ onSubmit, setStep, step }) {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -110,7 +110,7 @@ export default function PdfTextExtractor({ onSubmit, setStep, step, buttonText="
                 Loading
               </>
             ) : (
-              {buttonText}
+              "Next Step"
             )}
             {!loading ? <ArrowRight className="w-4 h-4" /> : <></>}
           </button>
