@@ -55,17 +55,17 @@ export default function UserProfileUpdate() {
             },
         };
 
-        console.log("Form Data Submitted:", formData);
+        // console.log("Form Data Submitted:", formData);
         const result = await updateUserDetails(formData);
 
         if(!result?.state){
-            console.log("Failed to update the user");
+            // console.log("Failed to update the user");
             toast.error("Failed to update the user");
         }
-        console.log("Successfully updated the user", result?.data);
+        // console.log("Successfully updated the user", result?.data);
 
         } catch (error){
-            console.log("Error: ", error);
+            // console.log("Error: ", error);
             toast.error("Error: ", error);
         } finally{
             setLoading(false);

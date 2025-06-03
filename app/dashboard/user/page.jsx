@@ -44,19 +44,19 @@ export default function CandidateProfile() {
   const getUser = async () =>{
     try{
         const result = await fetchUserDetails();
-        console.log(result);
+        // console.log(result);
         if(!result?.state){
-            console.log("Failed to fetch user data");
+            // console.log("Failed to fetch user data");
             toast.error("Failed to fetch user data");
             return;
         }
-        console.log(result?.data);
+        // console.log(result?.data);
         setUserData(result?.data);
     } catch(error){
-        console.log("Fetch Error: ", error);
+        // console.log("Fetch Error: ", error);
         toast.error("Fetch Error: ", error);
     } finally{
-        console.log("User data fetched successfully")
+        // console.log("User data fetched successfully")
     }
   }
 
@@ -65,17 +65,17 @@ export default function CandidateProfile() {
         const result = await fetchUserResume();
 
         if(!result.state){
-            console.log("Unable to fetch Resume");
+            // console.log("Unable to fetch Resume");
             toast.error("Unable to fetch Resume");
             return;
         }
-        console.log("Resume", result?.data);
+        // console.log("Resume", result?.data);
         setResume(result?.data);
     } catch(error){
-        console.log("Fetch Error: ", error);
+        // console.log("Fetch Error: ", error);
         toast.error("Fetch Error: ", error);
     } finally{
-        console.log("Succssfully fetch resume")
+        // console.log("Succssfully fetch resume")
     }
   }
 
@@ -85,20 +85,20 @@ export default function CandidateProfile() {
     const result = await fetchUserAttemptDetails();
 
     if (!result.state) {
-      console.log("Unable to fetch interview attempt details");
+      // console.log("Unable to fetch interview attempt details");
       toast.error("Unable to fetch interview attempt details");
       return;
     }
 
     const limitedResults = result?.data?.slice(0, 3); // 👈 show only top 3
-    console.log("interview attempt details", limitedResults);
+    // console.log("interview attempt details", limitedResults);
 
     setInterviewAttemptDetails(limitedResults);
   } catch (error) {
-    console.log("Fetch Error: ", error);
+    // console.log("Fetch Error: ", error);
     toast.error("Fetch Error: ", error);
   } finally {
-    console.log("Successfully fetched interview attempt details");
+    // console.log("Successfully fetched interview attempt details");
   }
     };
 

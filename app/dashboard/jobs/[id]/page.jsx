@@ -7,7 +7,7 @@ export default async function page({ params }) {
     const param = await params;
     const interviewId = param.id;
 
-    console.log(interviewId)
+    // console.log(interviewId)
 
     return(
         <>

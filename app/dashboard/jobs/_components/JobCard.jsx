@@ -22,7 +22,7 @@ export default function JobCard({
 
   const pathname = usePathname();
 
-  console.log("company name", companyLogo);
+  // console.log("company name", companyLogo);
 
   return (
     <div className={`rounded-xl`}>

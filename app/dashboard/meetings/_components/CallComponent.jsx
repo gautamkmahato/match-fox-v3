@@ -96,7 +96,7 @@ export default function CallComponent({ interviewId, interviewData, leftUsage })
     const vapi = vapiRef.current;
     if (!vapi || callStarted) return;
 
-    console.log("user name", user?.firstName)
+    // console.log("user name", user?.firstName)
 
     const assistantOptions = {
       name: "AI Recruiter",
@@ -663,7 +663,7 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
       setCallStarted(true);
       toast.success("Call started with AI Recruiter");
     } catch (err) {
-      console.error("Failed to start call:", err);
+      // console.error("Failed to start call:", err);
       toast.error("Failed to start call");
       setVapiError("Failed to start call");
     } finally {
@@ -679,7 +679,7 @@ Avoid repeating the same sentence (like “Want a hint?”) multiple times—var
       toast("Call ended");
     });
     vapi.on("error", (e) => {
-      console.error(e);
+      // console.error(e);
       toast.error("Call error occurred");
       setVapiError("Error during call");
       setCallStarted(false);

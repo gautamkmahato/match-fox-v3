@@ -41,7 +41,7 @@ export default function CreateInterviewForm({ jobDescription }) {
       toast.error("Something went wrong please enter data again");
       return;
     }
-    console.log(remaining_minutes)
+    // console.log(remaining_minutes)
 
     if (remaining_minutes < duration * 60) {
       toast.error("Limit exceeded. Please upgrade your plan.");
@@ -61,7 +61,7 @@ export default function CreateInterviewForm({ jobDescription }) {
   };
 
   const handlePdfUpload = async (pdfData) => {
-    console.log("PDF File data: ", pdfData)
+    // console.log("PDF File data: ", pdfData)
     setResume(pdfData);
     setStep(3);
   }
@@ -76,7 +76,7 @@ export default function CreateInterviewForm({ jobDescription }) {
     setLoading(true);
     setError("");
 
-    console.log("jobDetails", jobDetails)
+    // console.log("jobDetails", jobDetails)
 
     try {
       // Step 1: Generate questions from Gemini API
@@ -87,12 +87,12 @@ export default function CreateInterviewForm({ jobDescription }) {
         return;
       }
 
-      console.log(genResult)
+      // console.log(genResult)
 
       // Step 2: Clean the result (if needed, depending on Gemini output)
       const questions = extractJsonBlock(genResult.data);
-      console.log("Cleaned :", questions);
-      console.log("Cleaned Questions:", JSON.parse(questions));
+      // console.log("Cleaned :", questions);
+      // console.log("Cleaned Questions:", JSON.parse(questions));
 
       // Step 3: Create interview with generated questions
       const createResult = await createInterviewFromAPI(jobDetails, JSON.parse(questions));
@@ -103,12 +103,12 @@ export default function CreateInterviewForm({ jobDescription }) {
       }
 
       if (createResult.state) {
-        console.log("Interview created successfully:", createResult);
+        // console.log("Interview created successfully:", createResult);
         setInterviewData(createResult?.data[0])
         setOpen(true); // Trigger success modal or state
       }
     } catch (err) {
-      console.error("Error in handleFinalSubmit:", err);
+      // console.error("Error in handleFinalSubmit:", err);
       setError(err.message || "An unexpected error occurred.");
     } finally {
       setLoading(false);

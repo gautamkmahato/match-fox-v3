@@ -40,12 +40,12 @@ export default function JobInputs({ onSubmit, initialData = {} }) {
       const response = await fetch("/api/interview/check-usage");
       const result = await response.json();
 
-      console.log("check usage", result)
+      // console.log("check usage", result)
 
       const status = result?.state ?? false;
 
-      console.log(typeof duration)
-      console.log(typeof duration)
+      // console.log(typeof duration)
+      // console.log(typeof duration)
       const remaining_minutes = result?.data.remaining_minutes
       onSubmit(
         companyName.trim(),

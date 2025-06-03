@@ -18,13 +18,13 @@ export default function JobList() {
             setLoading(true);
             const result = await fetchAllJobsWithUser();
             if(!result?.state){
-                console.log("Error: ", result?.error);
+                // console.log("Error: ", result?.error);
                 toast.error(`Error: ${result?.error}`);
             }
-            console.log("result jobs", result?.data);
+            // console.log("result jobs", result?.data);
             setJobs(result?.data);
         } catch(error){
-            console.log("Job fetch error: ", error);
+            // console.log("Job fetch error: ", error);
             toast.error(`Job Error: ${error}`);
         } finally{
             setLoading(false);

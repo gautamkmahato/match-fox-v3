@@ -19,7 +19,7 @@ export default function JobComponent() {
       const filteredJobs = allJobs.filter(
         (job) => job?.company?.trim()?.toUpperCase() === company?.trim()?.toUpperCase()
       );
-      console.log(filteredJobs)
+      //console.log(filteredJobs)
       setJobs(filteredJobs);
     }
   };

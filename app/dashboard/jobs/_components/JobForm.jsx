@@ -45,7 +45,7 @@ export default function JobForm() {
 
   const { user } = useUser();
 
-  console.log(user)
+  // console.log(user)
 
   const router = useRouter();
 
@@ -87,7 +87,7 @@ export default function JobForm() {
         toast.error("Something went wrong");
         return;
       }
-      console.log(usage)
+      // console.log(usage)
 
       if (usage?.remaining_minutes < duration*60) {
         toast.error("Limit exceeded. Please upgrade your plan.");
@@ -104,10 +104,10 @@ export default function JobForm() {
         const logoUploadRes = await uploadLogo(logoForm);
 
         if (!logoUploadRes?.state) {
-          console.log("Logo upload failed", logoUploadRes.error);
+          // console.log("Logo upload failed", logoUploadRes.error);
           toast.error("Logo upload failed");
         } else {
-          console.log("logoUploadRes", logoUploadRes);
+          // console.log("logoUploadRes", logoUploadRes);
           logoUrl = logoUploadRes.data.url;  // ✅ fixed: result.data.url
         }
       }
@@ -139,17 +139,17 @@ export default function JobForm() {
         questions: questions
       };
 
-      console.log(formData)
+      // console.log(formData)
 
       // ✅ Submit to backend
       const result = await createNewJobs(formData);
 
       if (!result.state) {
-        console.log("Error in creating jobs");
+        // console.log("Error in creating jobs");
         toast("Error in creating jobs")
       }
 
-      console.log("Jobs created successfully!", result);
+      // console.log("Jobs created successfully!", result);
 
       toast("Jobs created successfully!");
 
@@ -171,7 +171,7 @@ export default function JobForm() {
       setExperience("")
 
     } catch (error) {
-      console.error("Submit error:", error);
+      // console.error("Submit error:", error);
       toast.error(error.message || "Something went wrong. Please try again.")
     } finally{
       setLoading(false);
@@ -184,17 +184,17 @@ export default function JobForm() {
       const result = await generateQuestions(jobDescription, companyName, interviewStyle, position, difficultyLevel, experience);
 
     if(!result?.state){
-      console.log("Error in generating questions");
+      // console.log("Error in generating questions");
       toast.error("Error in generating questions");
     }
-    console.log("generate question: ", result);
+    // console.log("generate question: ", result);
     // Step 2: Clean the result (if needed, depending on Gemini output)
     const questions = extractJsonBlock(result.data);
-    console.log("Cleaned :", questions);
-    console.log("Cleaned Questions:", JSON.parse(questions));
+    // console.log("Cleaned :", questions);
+    // console.log("Cleaned Questions:", JSON.parse(questions));
     return JSON.parse(questions);
     } catch(error){
-      console.log("Error in creating questions: ", error);
+      // console.log("Error in creating questions: ", error);
       toast.error(`Error: ${error}`)
     } 
   }

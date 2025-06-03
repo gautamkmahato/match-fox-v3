@@ -52,7 +52,7 @@ export default function PdfTextExtractor({ onSubmit, setStep, step }) {
         setContent(fullText);
       } catch (err) {
         setError('Failed to extract PDF content');
-        console.error(err);
+        // console.error(err);
       } finally {
         setLoading(false);
       }

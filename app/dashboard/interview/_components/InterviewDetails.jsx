@@ -37,7 +37,7 @@ export default function InterviewDetails({ interviewId }) {
           setError("Something went wrong")
         }
 
-        console.log(result);
+        // console.log(result);
         setInterview(result.data);
       } catch (err) {
         setError(err.message);

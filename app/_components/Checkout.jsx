@@ -8,7 +8,7 @@ export default function Checkout() {
 
   const { user } = useUser();
 
-  console.log(user)
+  // console.log(user)
 
 
   const handlePayment = async () => {
@@ -28,7 +28,7 @@ export default function Checkout() {
 
   const result = await res.json();
 
-  console.log("result: ", result);
+  // console.log("result: ", result);
 
   if (!result.data?.id || !result?.state) {
     alert("Failed to create order");

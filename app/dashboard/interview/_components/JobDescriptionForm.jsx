@@ -42,9 +42,9 @@ export default function JobDescriptionForm({ onSubmit, initialData = {}, jobData
     try {
       // Generate extracted job info
       const apiResult = await generateJobDetails(jobData || jobDescription);
-      console.log("api results: ", apiResult)
+      // console.log("api results: ", apiResult)
       const cleanedResult = cleanCodeBlock(apiResult);
-      console.log("cleaned", cleanedResult)
+      // console.log("cleaned", cleanedResult)
 
       // Merge data from job inputs and extracted fields
       const mergedResult = {
@@ -58,13 +58,13 @@ export default function JobDescriptionForm({ onSubmit, initialData = {}, jobData
         job_description: jobData || jobDescription,
       };
 
-      console.log("Final Merged Job Details:", mergedResult);
+      // console.log("Final Merged Job Details:", mergedResult);
 
       if (onSubmit) {
         onSubmit(mergedResult);
       }
     } catch (err) {
-      console.error("Job Extraction Error:", err);
+      // console.error("Job Extraction Error:", err);
       setError(err.message || "Failed to extract job details.");
     } finally {
       setLoading(false);

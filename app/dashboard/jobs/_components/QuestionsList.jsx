@@ -4,7 +4,7 @@ import { toast } from "sonner";
 export default function QuestionsList({ questions }) {
 
     if(!questions){
-        console.log("No Questions available");
+        // console.log("No Questions available");
         return;
     }
 

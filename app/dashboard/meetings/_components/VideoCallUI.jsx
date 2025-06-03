@@ -58,7 +58,7 @@ export default function VideoCallUI({
   const isMounted = useRef(true);
 
   if (!interviewId || !interviewData) {
-    console.error("VideoCallUI: Missing required props interviewId or interviewData", { interviewId, interviewData });
+    // console.error("VideoCallUI: Missing required props interviewId or interviewData", { interviewId, interviewData });
     toast("Invalid interviewId or interviewData. Please try again.");
     // Optionally, if you want to redirect or show a specific error page:
     // useRouter().push('/error-page');
@@ -126,12 +126,12 @@ export default function VideoCallUI({
         return;
       }
 
-      console.log("======== call time ========", callTime);
+      // console.log("======== call time ========", callTime);
       const status = await deriveStatus(interviewData?.duration, interviewData?.current_duration, callTime);
       const updateInterviewDB = await updateInterviewDuration(callTime, interviewId, status)
 
       if (!updateInterviewDB.state) {
-        console.log("Error: ", updateInterviewDB.error);
+        // console.log("Error: ", updateInterviewDB.error);
         toast.error("Error: ", updateInterviewDB.error);
       }
       setLoadingMessage("Saving Report...");
@@ -172,7 +172,7 @@ export default function VideoCallUI({
 
       toast.success("Report submitted successfully");
     } catch (err) {
-      console.error("Unexpected error in handleEndCall:", err);
+      // console.error("Unexpected error in handleEndCall:", err);
       toast.error("Unexpected error occurred during end call");
       setLoading(false)
     } finally {
@@ -191,7 +191,7 @@ export default function VideoCallUI({
       toast.error(result.error);
       return false;
     }
-    console.log(`Usage upadted for ${callTime} seconds in DB`)
+    // console.log(`Usage upadted for ${callTime} seconds in DB`)
     toast(`interview completed after (${Math.floor(parseInt(interviewData?.duration) / 60)} seconds)`);
     return true;
   };
@@ -218,7 +218,7 @@ export default function VideoCallUI({
    */
   useEffect(() => {
     if (onErrorCall) {
-      console.log("inside useEffect")
+      // console.log("inside useEffect")
       handleEndCall();
     }
   }, [onErrorCall]);
@@ -228,7 +228,7 @@ export default function VideoCallUI({
    */
 
   useEffect(() => {
-    console.log("leftUsage: ", leftUsage);
+    // console.log("leftUsage: ", leftUsage);
     if(leftUsage <= 0){
       toast("Credit limit exceeded");
       setLimitCheck(true);
@@ -238,15 +238,15 @@ export default function VideoCallUI({
     const durationLeft = Number(interviewData?.duration) - Number(interviewData?.current_duration);
     const threshold = leftUsage > durationLeft ? durationLeft : leftUsage;
 
-    console.log("durationLeft", durationLeft);
-    console.log("threshold", threshold);
+    // console.log("durationLeft", durationLeft);
+    // console.log("threshold", threshold);
 
     if (isNaN(durationLeft) || isNaN(leftUsage) || leftUsage <= 0) return;
 
     if (!callStatus) return;
 
     if (callTime === threshold) {
-      console.log("Times up !!!");
+      // console.log("Times up !!!");
       handleEndCall();
     }
 

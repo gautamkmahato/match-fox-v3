@@ -19,13 +19,13 @@ export default function ReportComponent({ id }) {
                 setLoading(true);
                 const result = await fetchReportDetails(id);
                 if(!result?.state){
-                    console.log("Error: ", result?.error);
+                    // console.log("Error: ", result?.error);
                     toast.error("Error in fetching report card");
                 }
-                console.log(result?.data);
+                // console.log(result?.data);
                 setReportDetails(result?.data);
             } catch(err){
-                console.log(err); 
+                // console.log(err); 
             } finally{
                 setLoading(false);
                 toast.info("Successfully fetched the report");

@@ -3,7 +3,7 @@ import Link from "next/link";
 import CompanyLogo from "../../report/_components/CompanyLogo";
 
 const InterviewCard = ({ id, name, duration, logo, date, status, position, type, }) => {
-  console.log(date)
+  // console.log(date)
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-md shadow-gray-200 transition hover:shadow-lg flex items-center gap-4">
       <CompanyLogo logo={logo} company={name?.charAt(0).toUpperCase()} text="text-2xl" />

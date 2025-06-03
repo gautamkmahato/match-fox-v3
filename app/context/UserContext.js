@@ -39,7 +39,7 @@ export function UserProvider({ children }) {
       setUser(result.data);
       localStorage.setItem('user', JSON.stringify(result.data)); // Save to localStorage
     } catch (err) {
-      console.error('user fetch error:', err);
+      // console.error('user fetch error:', err);
       setError(err.message || 'Something went wrong');
       setUser(null);
       localStorage.removeItem('user');

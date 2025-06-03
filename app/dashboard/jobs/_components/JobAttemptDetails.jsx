@@ -18,14 +18,14 @@ export default function JobAttemptDetails({
             setLoading(true)
             const result = await fetchInteviewAttemptDetails(interviewId)
             if (!result?.state) {
-                console.log("Error: ", result?.error)
+                // console.log("Error: ", result?.error)
                 toast.error(`Error: ${result?.error}`)
             }
             // use this if want to filter for completed only
             const completedResult = result?.data?.filter((job) => job?.interview_attempts?.status === 'completed')
             setCandidatesData(result?.data)
         } catch (error) {
-            console.log("Job attempt fetch error: ", error)
+            // console.log("Job attempt fetch error: ", error)
             toast.error(`Job attempt Error: ${error}`)
         } finally {
             setLoading(false)

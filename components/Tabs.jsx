@@ -28,7 +28,7 @@ export default function Tabs({ content, code, reportDetails }) {
       }
     }
   } catch (err) {
-    console.error('❌ Failed to parse chat:', err)
+    //console.error('❌ Failed to parse chat:', err)
   }
 
   const [chat, setChat] = useState(finalConversation)

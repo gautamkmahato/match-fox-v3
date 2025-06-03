@@ -21,7 +21,7 @@ export default function JobDetailsComponent({ interviewId }) {
             const result = await fetchJobDetails(interviewId);
 
             if (!result?.state){
-                console.log(data.error || "Failed to fetch");
+                // console.log(data.error || "Failed to fetch");
                 toast.error(data.error || "Failed to fetch");
             }
 
@@ -30,10 +30,10 @@ export default function JobDetailsComponent({ interviewId }) {
                 toast.error("Something went wrong");
             }
 
-            console.log(result);
+            // console.log(result);
             setJob(result?.data);
         } catch (err) {
-            console.log(err.message);
+            // console.log(err.message);
             toast.error(err.message);
         } finally {
             setLoading(false);

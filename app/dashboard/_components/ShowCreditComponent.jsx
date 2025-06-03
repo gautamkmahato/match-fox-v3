@@ -18,10 +18,10 @@ export default function ShowCreditComponent(){
       if(!result?.state){
         toast.error("Error in fetching Credits")
       }
-      console.log(result?.data)
+      // console.log(result?.data)
       setUsage(result?.data);
     } catch(error){
-      console.log("Usage fetch error: ", error);
+      // console.log("Usage fetch error: ", error);
       toast.error("Usage fetch error")
     } finally{
         setLoading(false)

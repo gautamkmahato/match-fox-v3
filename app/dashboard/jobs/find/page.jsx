@@ -19,7 +19,7 @@ export default function JobComponent() {
       const filteredJobs = allJobs.filter(
         (job) => job?.company?.trim()?.toUpperCase() === company?.trim()?.toUpperCase()
       );
-      console.log(filteredJobs)
+      // console.log(filteredJobs)
       setJobs(filteredJobs);
     }
   };
@@ -29,16 +29,16 @@ export default function JobComponent() {
       setLoading(true);
       const result = await fetchAllJobs();
       if (!result?.state) {
-        console.log("Error: ", result?.error);
+        // console.log("Error: ", result?.error);
         toast.error(`Error: ${result?.error}`);
         return;
       }
 
-      console.log("result jobs", result?.data);
+      // console.log("result jobs", result?.data);
       setAllJobs(result?.data); // set full list
       setJobs(result?.data);    // set initial display list
     } catch (error) {
-      console.log("Job fetch error: ", error);
+      // console.log("Job fetch error: ", error);
       toast.error(`Job Error: ${error}`);
     } finally {
       setLoading(false);

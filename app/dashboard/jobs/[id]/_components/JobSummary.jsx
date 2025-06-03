@@ -39,14 +39,14 @@ export default function JobSummary({
       const result = await fetchUserResume();
       
       if (!result?.state) {
-        console.log("Unable to fetch Resume");
+        // console.log("Unable to fetch Resume");
         toast.error("Unable to fetch Resume");
         return;
       }
       
       setResumeData(result?.data);
     } catch (error) {
-      console.log("Fetch Error: ", error);
+      // console.log("Fetch Error: ", error);
       toast.error(`Fetch Error: ${error.message}`);
     } finally {
       setLoadingResume(false);

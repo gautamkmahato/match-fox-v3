@@ -32,7 +32,7 @@ export default function InterviewPage({ interviewId }) {
         setLoadingMessage("Fetching Interview Details...");
         const response = await fetch(`/api/interview/validate/${interviewId}`)
         const result = await response.json();
-        console.log('Validation result:', result);
+        // console.log('Validation result:', result);
 
                 toast.success("Interview details loaded");
 
@@ -55,7 +55,7 @@ export default function InterviewPage({ interviewId }) {
         }
 
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         setError('Something went wrong validating user');
       } finally {
         setLoading(false);
