@@ -6,6 +6,7 @@ export default function page() {
     <>
       {/* <Home /> */}
       <LandingPage />
+      {/* <HeroSection /> */}
     </>
   );
 }

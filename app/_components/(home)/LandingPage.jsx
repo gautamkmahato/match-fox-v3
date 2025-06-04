@@ -25,6 +25,7 @@ import FeatureCards from "./FeatureCards"
 import WhySection from "./WhySection"
 import PricingPlans from "./PricingPlans"
 import SiteFooter from "./SiteFooter"
+import HowItWorksSection from "./HowItWorksSection"
 
 const features = [
   {
@@ -159,6 +160,12 @@ export default function LandingPage() {
 
         <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10">
 
+          {/* Background gradient blur effect */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute bottom-1/4 left-1/2 transform -translate-x-1/2 w-72 h-72 bg-indigo-500 rounded-full mix-blend-screen filter blur-3xl opacity-25 animate-pulse"></div>
+      </div>
           {/* Floating Cards */}
           <FloatingCard
             className="absolute left-10 top-1/4 bg-white p-4 rounded-xl shadow-lg border border-gray-100"
@@ -220,6 +227,8 @@ export default function LandingPage() {
             </div>
           </FloatingCard>
 
+          
+
           <div className="flex justify-center">
             <motion.h1
               className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-white sm:mb-6"
@@ -236,10 +245,6 @@ export default function LandingPage() {
               </a>
             </motion.h1>
           </div>
-
-
-
-
 
           <div className="max-w-2xl text-center mx-auto">
             <motion.h1
@@ -301,6 +306,7 @@ export default function LandingPage() {
       </div>
 
       <WhySection />
+      <HowItWorksSection />
 
       {/* Features Overview */}
       {/* <section id="features" className="py-20 bg-white">
