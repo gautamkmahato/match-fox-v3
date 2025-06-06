@@ -352,7 +352,7 @@ export default function LandingPage() {
       <FeatureCards />
 
       {/* How It Works */}
-      <section id="how-it-works" className="py-8 bg-white">
+      {/* <section id="how-it-works" className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -391,7 +391,7 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* For Candidates */}
       <section className="py-20 bg-white">
@@ -403,7 +403,7 @@ export default function LandingPage() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="lg:text-4xl md:text-4xl text-xl font-bold text-gray-800 mb-2">Perfect for Job Seekers</h2>
+              <h2 className="lg:text-3xl md:text-3xl text-xl font-bold text-gray-800 mb-2">Perfect for Job Seekers</h2>
               <p className="text-md text-gray-600 mb-4">
                 Whether you're a fresh graduate or experienced professional, our platform helps you prepare for any
                 interview scenario.
@@ -519,7 +519,7 @@ export default function LandingPage() {
                     className="flex items-center space-x-3"
                   >
                     <CheckCircle className="w-5 h-5 text-blue-600" />
-                    <span className="text-gray-700">{benefit}</span>
+                    <span className="text-gray-700 text-sm">{benefit}</span>
                   </motion.div>
                 ))}
               </div>

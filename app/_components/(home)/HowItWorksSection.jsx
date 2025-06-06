@@ -40,11 +40,11 @@ const HowItWorksSection = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+          <h2 className="lg:text-3xl text-xl md:text-3xl font-bold text-slate-800 mb-4">
             How It Works
           </h2>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Get started in minutes with our simple 4-step process
+          <p className="text-md text-slate-600 max-w-2xl mx-auto">
+              Get started in minutes and transform your interview skills with our simple 4-step process.
           </p>
         </motion.div>
 
