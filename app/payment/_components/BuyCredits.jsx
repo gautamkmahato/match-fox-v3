@@ -141,9 +141,9 @@ export default function BuyCredits() {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       amount: result.data.amount,
       currency: result.data.currency,
-      name: "Cron Labs",
+      name: "Hirenom",
       clerk_id: user?.id,
-      description: "Test Transaction",
+      description: `Hirenom Transaction for amount ${result.data.amount}`,
       order_id: result.data.id,
       handler: async function (response) {
         const verifyRes = await fetch("/api/verify-payment", {
@@ -162,9 +162,9 @@ export default function BuyCredits() {
         }
       },
       prefill: {
-        name: "John Doe",
-        email: "john@example.com",
-        contact: "9999999999",
+        name: user?.firstName || "John Doe",
+        email: user?.emailAddresses[0]?.emailAddress || "john@example.com",
+        contact: "9999999999",  // change the contact later
       },
       theme: { color: "#3399cc" },
     };

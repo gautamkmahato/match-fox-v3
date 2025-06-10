@@ -48,6 +48,7 @@ export default async function savePayment(paymentData) {
       .select();
 
     if (insertError) {
+      console.log("insertError =====================", insertError)
       if (insertError.code === '23505') {
         console.log('⚠️ Payment already exists (duplicate webhook)');
         return;

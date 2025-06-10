@@ -26,7 +26,7 @@ export default function CreateInterviewForm({ jobDescription }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [limitReached, setLimitReached] = useState(false);
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const [questions, setQuestions] = useState(false);
   const [interviewData, setInterviewData] = useState();
   const [resume, setResume] = useState();

@@ -12,6 +12,7 @@
   "dependencies": {
     "@clerk/nextjs": "^6.19.4",
     "@google/genai": "^0.15.0",
+    "@paypal/checkout-server-sdk": "^1.0.3",
     "@splinetool/react-spline": "^4.0.0",
     "@supabase/supabase-js": "^2.49.5",
     "@upstash/ratelimit": "^2.0.5",

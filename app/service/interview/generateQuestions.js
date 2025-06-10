@@ -3,7 +3,7 @@ import { flattenCommaArray } from "@/lib/utils/helper";
 const generateQuestions = async (interviewDetails, resume) => {
   try {
     const input = {
-      ...interviewDetails,
+      ...interviewDetails, 
       skills_required: flattenCommaArray(interviewDetails?.["Skills"]),
       tech_stack: flattenCommaArray(interviewDetails?.["Tech Stack"]),
       resume: resume 

@@ -33,7 +33,7 @@ export async function POST(req) {
       receipt: `receipt_order_${Math.random() * 1000}`,
       notes: {
         clerk_id: clerk_id,
-        description: "Razorpay Test Transaction",
+        description: "Razorpay Transaction for Hirenom",
         credits: credits,
         plan: plan,
       },
