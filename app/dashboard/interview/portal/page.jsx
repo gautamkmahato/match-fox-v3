@@ -151,7 +151,7 @@ export default function CreateInterviewFromPortal() {
   if(loading){
     return(
       <>
-        <LoadingOverlay text="Loading..." />
+        <LoadingOverlay text="Loading Interview..." />
       </>
     )
   }
