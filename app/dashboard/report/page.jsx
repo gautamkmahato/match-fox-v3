@@ -44,7 +44,7 @@ export default function Page() {
       .map((r) => parseInt(r.score))
       .filter((s) => !isNaN(s));
     if (scores.length === 0) return 'N/A';
-    return `${Math.max(...scores)}%`;
+    return `${Math.max(...scores)}/100`;
   }, [reports]);
 
   const performanceMetrics = [

@@ -29,7 +29,7 @@ export async function POST(req) {
     
     const options = {
       amount: amount * 100, // amount in paise
-      currency: "USD",
+      currency: "INR",
       receipt: `receipt_order_${Math.random() * 1000}`,
       notes: {
         clerk_id: clerk_id,

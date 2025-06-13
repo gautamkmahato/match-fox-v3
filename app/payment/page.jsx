@@ -8,9 +8,9 @@ export default function page() {
     return (
         <>
             <Header />
-            {/* <BuyCredits /> */}
+            <BuyCredits />
             {/* <Checkout /> */}
-            <PayPalButton amount="10.00" />
+            {/* <PayPalButton amount="10.00" /> */}
 
         </>
     )
