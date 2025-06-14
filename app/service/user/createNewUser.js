@@ -3,7 +3,7 @@
 export default async function createNewUser(inputData){
     console.log("input data from create user: ", inputData)
     try{
-        const response = await fetch(`https://www.hirenom.com/api/user/create`, {
+        const response = await fetch(`https://www.hirenom.space/api/user/create`, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json' 
