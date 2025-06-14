@@ -121,7 +121,8 @@ export async function POST(req) {
 
     console.log('✅ Creating user:', input)
 
-    const result = await createNewUser(input)
+    const result = await createNewUser(input);
+    console.log("Result: ", result)
     if (!result?.state) {
       console.error('❌ Failed to create user in DB')
       return new Response('Error saving user', { status: 500 })
