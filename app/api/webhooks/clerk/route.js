@@ -80,7 +80,7 @@ import { verifyWebhook } from '@clerk/nextjs/webhooks'
 
 
 export async function POST(req) {
-  const SIGNING_SECRET = process.env.SIGNING_SECRET
+  const SIGNING_SECRET = process.env.CLERK_WEBHOOK_SIGNING_SECRET
 
   if (!SIGNING_SECRET) {
     return new Response('Missing Clerk signing secret', { status: 500 })
