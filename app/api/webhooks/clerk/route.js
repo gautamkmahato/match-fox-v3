@@ -77,9 +77,7 @@ import { verifyWebhook } from '@clerk/nextjs/webhooks'
 // }
 
 
-import { Webhook } from 'svix'
-import { headers } from 'next/headers'
-import createNewUser from '@/app/service/user/createNewUser'
+
 
 export async function POST(req) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET
