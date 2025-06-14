@@ -77,42 +77,59 @@ import { verifyWebhook } from '@clerk/nextjs/webhooks'
 // }
 
 
+import { Webhook } from 'svix'
+import { headers } from 'next/headers'
+import createNewUser from '@/app/service/user/createNewUser'
+
 export async function POST(req) {
+  const SIGNING_SECRET = process.env.SIGNING_SECRET
+
+  if (!SIGNING_SECRET) {
+    return new Response('Missing Clerk signing secret', { status: 500 })
+  }
+
+  const payload = await req.text() // 👈 get raw body
+  const headerPayload = headers()
+
+  const svix_id = headerPayload.get('svix-id') ?? ''
+  const svix_timestamp = headerPayload.get('svix-timestamp') ?? ''
+  const svix_signature = headerPayload.get('svix-signature') ?? ''
+
+  const wh = new Webhook(SIGNING_SECRET)
+
+  let evt
   try {
-    const evt = await verifyWebhook(req)
+    evt = wh.verify(payload, {
+      'svix-id': svix_id,
+      'svix-timestamp': svix_timestamp,
+      'svix-signature': svix_signature,
+    })
+  } catch (err) {
+    console.error('❌ Webhook signature verification failed:', err)
+    return new Response('Invalid webhook signature', { status: 400 })
+  }
 
-    // Do something with payload
-    // For this guide, log payload to console
-    const { id } = evt.data
-    const eventType = evt.type
-    console.log(`Received webhook with ID ${id} and event type of ${eventType}`)
-    console.log('Webhook payload:', evt.data)
+  const eventType = evt.type
+  const data = evt.data
 
-    // Handle specific event types
-    if (evt.type === 'user.created') {
-      console.log('New user created:', evt.data?.id)
-      // Handle user creation
-      const input = {
-        clerk_id: evt.data?.id,
-        email: evt.data?.email_addresses[0]?.email_address,
-        name: evt.data?.first_name + " " + evt.data?.last_name,
-        username: evt.data?.username, 
-        img_url: evt.data?.image_url
-      }
-      console.log(input);
-
-      // save user to the DB
-      const result = await createNewUser(input);
-      if(!result?.state){
-        return new Response('Error in creating user', { status: 500 })
-      }
-      console.log(result?.data);
-
+  if (eventType === 'user.created') {
+    const input = {
+      clerk_id: data.id,
+      email: data.email_addresses?.[0]?.email_address,
+      name: `${data.first_name ?? ''} ${data.last_name ?? ''}`.trim(),
+      username: data.username,
+      img_url: data.image_url,
     }
 
-    return new Response('Webhook received Successfully', { status: 200 })
-  } catch (err) {
-    console.error('Error verifying webhook:', err)
-    return new Response('Error verifying webhook', { status: 400 })
+    console.log('✅ Creating user:', input)
+
+    const result = await createNewUser(input)
+    if (!result?.state) {
+      console.error('❌ Failed to create user in DB')
+      return new Response('Error saving user', { status: 500 })
+    }
+    console.log('✅ User created:', result?.data)
   }
+
+  return new Response('Webhook processed', { status: 200 })
 }
