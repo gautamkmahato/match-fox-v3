@@ -107,8 +107,8 @@ export default function CallComponent({ interviewId, interviewData, leftUsage })
         language: "en-US",
       },
       voice: {
-        provider: "openai",
-        voiceId: "alloy",
+        provider: "vapi",
+        voiceId: "Neha",
         fallbackPlan: {
           voices: [
             { provider: "cartesia", voiceId: "248be419-c632-4f23-adf1-5324ed7dbf1d" },

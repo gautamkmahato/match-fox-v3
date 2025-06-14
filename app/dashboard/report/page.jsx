@@ -35,7 +35,7 @@ export default function Page() {
       .filter((s) => !isNaN(s));
     if (scores.length === 0) return 'N/A';
     const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
-    return `${Math.round(avg)}%`;
+    return `${Math.round(avg)}/100`;
   }, [reports]);
 
   const highScore = useMemo(() => {

@@ -1,90 +1,84 @@
-import React from 'react';
+
+
+'use client';
+
+import { Upload, Smile, Sparkles, Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Upload, Mic, BarChart3, Trophy } from 'lucide-react';
+import Image from 'next/image';
 
 const steps = [
   {
-    icon: Upload,
-    title: "Upload Job Description",
-    description: "Paste or upload any job posting from popular job sites",
-    color: "from-blue-500 to-cyan-500"
+    step: 'Step 1',
+    title: 'Upload Job Description',
+    description: 'Paste or upload any job posting from popular job sites',
+    icon: <Upload className="w-8 h-8 text-indigo-500" />,
   },
   {
-    icon: Mic,
-    title: "Start Voice Interview",
-    description: "Begin your AI-powered mock interview with real-time voice interaction",
-    color: "from-purple-500 to-pink-500"
+    step: 'Step 2',
+    title: 'Start Voice Interview',
+    description: 'Begin your AI-powered mock interview with real-time voice interaction',
+    icon: <Smile className="w-8 h-8 text-indigo-500" />,
   },
   {
-    icon: BarChart3,
-    title: "Get Detailed Feedback",
-    description: "Receive comprehensive analysis and improvement suggestions",
-    color: "from-green-500 to-emerald-500"
+    step: 'Step 3',
+    title: 'Get Detailed Feedback',
+    description: 'Receive comprehensive analysis and improvement suggestions',
+    icon: <Sparkles className="w-8 h-8 text-indigo-500" />,
   },
   {
-    icon: Trophy,
-    title: "Ace the Real Interview",
-    description: "Apply your learnings and land your dream job with confidence",
-    color: "from-orange-500 to-red-500"
-  }
+    step: 'Step 4',
+    title: 'Ace the Real Interview',
+    description: 'Apply your learnings and land your dream job with confidence',
+    icon: <Share2 className="w-8 h-8 text-indigo-500" />,
+  },
 ];
 
-const HowItWorksSection = () => {
+export default function HowFaceswapWorks() {
   return (
-    <section className="py-20 px-6">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+    <section className="bg-gradient-to-b from-white to-gray-50 py-20 px-4">
+      <div className="max-w-6xl mx-auto text-center">
+        <motion.span
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-block bg-indigo-100 text-indigo-600 text-xs px-3 py-1 rounded-full mb-4"
         >
-          <h2 className="lg:text-3xl text-xl md:text-3xl font-bold text-slate-800 mb-4">
-            How It Works
-          </h2>
-          <p className="text-md text-slate-600 max-w-2xl mx-auto">
-              Get started in minutes and transform your interview skills with our simple 4-step process.
-          </p>
-        </motion.div>
+          How it works
+        </motion.span>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
+        >
+          How Our <span className="text-indigo-700">AI Interview</span> Works
+        </motion.h2>
+
+        <p className="text-gray-500 max-w-2xl mx-auto text-md mb-12">
+          Our AI mock interview process is simple, fast, and produces amazing results in just a few easy steps.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              className="relative text-center"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
               viewport={{ once: true }}
+              className="bg-white border border-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
             >
-              <div className="relative">
-                <div className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center mb-6 shadow-lg`}>
-                  <step.icon className="h-10 w-10 text-white" />
-                </div>
-                
-                {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-slate-300 to-transparent"></div>
-                )}
-                
-                <div className="absolute -top-2 -left-2 w-6 h-6 bg-white rounded-full border-2 border-slate-200 flex items-center justify-center text-sm font-semibold text-slate-600">
-                  {index + 1}
-                </div>
+              <div className="mb-4 flex items-center justify-center">
+                {step.icon}
               </div>
-              
-              <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                {step.title}
-              </h3>
-              
-              <p className="text-slate-600">
-                {step.description}
-              </p>
+              <h3 className="text-sm text-indigo-700 font-semibold mb-1">{step.step}</h3>
+              <h4 className="text-lg font-medium text-gray-900 mb-2">{step.title}</h4>
+              <p className="text-sm text-gray-600 leading-relaxed">{step.description}</p>
             </motion.div>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default HowItWorksSection;
+}

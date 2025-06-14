@@ -84,7 +84,8 @@ export default function WhySection() {
   };
 
   return (
-    <section className="bg-gradient-to-br max-w-7xl mx-auto text-white py-16 px-4">
+    <section className="bg-gradient-to-b from-gray-50 to-white">
+      <div className=" max-w-7xl mx-auto text-white pt-24 pb-12 px-4">
       <motion.div
         className="container mx-auto"
         initial="hidden"
@@ -212,6 +213,7 @@ export default function WhySection() {
           </div>
         </div>
       </motion.div>
+    </div>
     </section>
   );
 }

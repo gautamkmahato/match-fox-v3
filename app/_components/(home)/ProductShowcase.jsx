@@ -1,12 +1,12 @@
 import { PlayCircle } from 'lucide-react'; // Icon for the demo button
 import Image from 'next/image';
-import thumb from '../../../public/thumb.jpg'
+import thumb from '../../../public/call.png'
 
 
 
 const ProductShowcase = () => {
   return (
-    <section className="bg-gray-50 mt-4 relative z-0">
+    <section className="bg-gradient-to-b from-white to-gray-50 py-12 relative z-0">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Replace this div with the actual Image component */}
         <div className="bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-200 relative">

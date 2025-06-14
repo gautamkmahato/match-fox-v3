@@ -18,6 +18,7 @@ import {
   MessageSquare,
   Brain,
   Shield,
+  ActivitySquare,
 } from "lucide-react"
 import Header from "./Header"
 import Link from "next/link"
@@ -26,6 +27,9 @@ import WhySection from "./WhySection"
 import PricingPlans from "./PricingPlans"
 import SiteFooter from "./SiteFooter"
 import HowItWorksSection from "./HowItWorksSection"
+import FaqSection from "./FaqSection"
+import ProductShowcase from "./ProductShowcase"
+import AdvanceFeatures from "./AdvanceFeatures"
 
 const features = [
   {
@@ -305,8 +309,13 @@ export default function LandingPage() {
         </div>
       </div>
 
+      
+
+      <ProductShowcase />
       <WhySection />
       <HowItWorksSection />
+
+      <AdvanceFeatures />
 
       {/* Features Overview */}
       {/* <section id="features" className="py-20 bg-white">
@@ -349,7 +358,7 @@ export default function LandingPage() {
         </div>
       </section> */}
 
-      <FeatureCards />
+      {/* <FeatureCards /> */}
 
       {/* How It Works */}
       {/* <section id="how-it-works" className="py-8 bg-white">
@@ -394,7 +403,7 @@ export default function LandingPage() {
       </section> */}
 
       {/* For Candidates */}
-      <section className="py-20 bg-white">
+      {/* <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -458,10 +467,10 @@ export default function LandingPage() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* For Recruiters */}
-      <section className="py-20">
+      {/* <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -526,10 +535,10 @@ export default function LandingPage() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* AI Resume Builder */}
-      <section className="py-20 bg-white">
+      <section className="bg-gradient-to-b from-white to-gray-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -538,10 +547,9 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-3xl text-xl font-bold text-gray-800 mb-2">AI-Powered Resume Builder</h2>
+            <h2 className="text-3xl md:text-3xl font-bold text-gray-800 mb-2">AI-Powered Mock Interview</h2>
             <p className="text-md text-gray-600 max-w-3xl mx-auto">
-              Create professional, ATS-optimized resumes that get noticed by recruiters and pass through automated
-              screening systems.
+              Practice real interview scenarios with AI-driven mock sessions, personalized feedback, and performance analytics.
             </p>
           </motion.div>
 
@@ -554,7 +562,7 @@ export default function LandingPage() {
               className="lg:col-span-2"
             >
               <img
-                src="/resume.png"
+                src="/call.png"
                 alt="AI Resume Builder Interface"
                 className="rounded-2xl shadow-lg w-full"
               />
@@ -568,24 +576,29 @@ export default function LandingPage() {
               className="space-y-6"
             >
               <div className="bg-gray-50 p-6 rounded-xl border border-gray-50 shadow-sm">
-                <FileText className="w-6 h-6 text-blue-600 mb-2" />
-                <h3 className="text-lg font-semibold text-gray-900">Smart Content Generation</h3>
+                <Mic className="w-6 h-6 text-blue-600 mb-2" />
+                <h3 className="text-lg font-semibold text-gray-900">Realistic Interview Simulation</h3>
                 <p className="text-gray-600 text-sm">
-                  AI analyzes job descriptions and suggests relevant skills and experiences.
+                  Practice technical and behavioral questions in a real-time AI-driven environment.
                 </p>
               </div>
 
               <div className="bg-gray-50 p-6 rounded-xl border border-gray-50 shadow-sm">
-                <Shield className="w-6 h-6 text-green-600 mb-2" />
-                <h3 className="text-lg font-semibold text-gray-900">ATS Optimization</h3>
-                <p className="text-gray-600 text-sm">Ensures your resume passes through Applicant Tracking Systems.</p>
+                <ActivitySquare className="w-6 h-6 text-green-600 mb-2" />
+                <h3 className="text-lg font-semibold text-gray-900">Instant Performance Feedback</h3>
+                <p className="text-gray-600 text-sm">
+                  Get real-time insights on clarity, confidence, and relevance of your answers.
+                </p>
               </div>
 
               <div className="bg-gray-50 p-6 rounded-xl border border-gray-50 shadow-sm">
-                <Zap className="w-6 h-6 text-purple-600 mb-2" />
-                <h3 className="text-lg font-semibold text-gray-900">Instant Updates</h3>
-                <p className="text-gray-600 text-sm">Quickly customize your resume for different job applications.</p>
+                <Brain className="w-6 h-6 text-purple-600 mb-2" />
+                <h3 className="text-lg font-semibold text-gray-900">AI-Powered Questioning</h3>
+                <p className="text-gray-600 text-sm">
+                  Intelligent AI adapts questions based on your previous responses and skill level.
+                </p>
               </div>
+
             </motion.div>
           </div>
         </div>
@@ -656,7 +669,7 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-12 bg-white">
+      <section className="bg-gradient-to-b from-white to-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -704,6 +717,8 @@ export default function LandingPage() {
       </section>
 
       <PricingPlans />
+
+      <FaqSection />
 
       {/* CTA Section */}
       <section id="pricing" className="py-20 bg-white">
