@@ -6,7 +6,7 @@ export default async function updateUserDetails(formData){
 
     try{
         // const response = await fetch(`${process.env.NEXT_APP_PRODUCTION_HOSTNAME}/api/user/create`, {
-        const response = await fetch(`https://www.hirenom.space/api/user/update`, {
+        const response = await fetch(`https://www.hirenom.com/api/user/update`, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json' 

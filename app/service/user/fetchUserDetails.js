@@ -3,7 +3,7 @@
 const fetchUserDetails = async () => {
 
   try {
-    const response = await fetch(`https://www.hirenom.space/api/user/full-details`, {
+    const response = await fetch(`https://www.hirenom.com/api/user/full-details`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
