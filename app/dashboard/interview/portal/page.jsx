@@ -10,7 +10,7 @@ import { cleanCodeBlock, extractJsonBlock } from "@/lib/utils/cleanCodeBlock";
 import { Check, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from '../../../../public/match-fox-4.png';
+import logo from '../../../../public/match-fox-5.jpg';
 import Image from "next/image";
 
 export default function CreateInterviewFromPortal() {
