@@ -1,5 +1,9 @@
+import Header from "@/app/_components/(home)/Header";
+
 export default function TermsAndConditionsPage() {
   return (
+    <>
+    <Header />
     <main className="max-w-3xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">Terms & Conditions</h1>
       <p className="mb-4">
@@ -9,5 +13,6 @@ export default function TermsAndConditionsPage() {
         Misuse of the platform may lead to account suspension or termination without notice.
       </p>
     </main>
+    </>
   );
 }

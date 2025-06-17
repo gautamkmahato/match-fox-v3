@@ -1,5 +1,9 @@
+import Header from "@/app/_components/(home)/Header";
+
 export default function CancellationRefundPage() {
   return (
+    <>
+    <Header />
     <main className="max-w-3xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">Cancellation & Refund Policy</h1>
       <p className="mb-4">
@@ -9,5 +13,6 @@ export default function CancellationRefundPage() {
         We aim to process refunds, if applicable, within 5-7 business days after verification.
       </p>
     </main>
+    </>
   );
 }
