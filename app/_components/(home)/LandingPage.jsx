@@ -758,7 +758,7 @@ export default function LandingPage() {
               <h3 className="text-2xl font-bold mb-4">Hirenom</h3>
               <p className="text-gray-400 mb-6 max-w-md text-sm">
                 Empowering professionals to succeed in their career journey through AI-powered interview preparation and
-                job matching.
+                job matching..
               </p>
               <div className="flex space-x-4">
                 <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors cursor-pointer">
