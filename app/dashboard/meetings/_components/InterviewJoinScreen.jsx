@@ -10,7 +10,7 @@ import {
   SquareDot
 } from 'lucide-react';
 import Image from 'next/image';
-import logo from '../.../../../../../public/match-fox-4.png';
+import logo from '../.../../../../../public/match-fox-5.jpg';
 
 export default function InterviewJoinScreen({ onJoinInterview, interviewData }) {
   const [checkingPermissions, setCheckingPermissions] = useState(false);
