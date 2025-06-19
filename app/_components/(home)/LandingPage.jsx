@@ -808,17 +808,17 @@ export default function LandingPage() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Careers
+                  <a href="/terms-and-conditions" className="hover:text-white transition-colors">
+                    Terms & Conditions
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a href="/contact" className="hover:text-white transition-colors">
                     Contact
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a href="/privacy-policy" className="hover:text-white transition-colors">
                     Privacy Policy
                   </a>
                 </li>
