@@ -244,7 +244,7 @@ export default function BuyCredits() {
                 </div>
 
                 <p className="text-3xl font-bold text-gray-800 mb-6">
-                  {plan.price[selectedCycle]} / {selectedCycle}
+                  ₹{plan.price[selectedCycle]} / {selectedCycle}
                 </p>
 
                 <ul className="text-sm space-y-2 mb-6">

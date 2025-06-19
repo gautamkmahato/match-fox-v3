@@ -34,8 +34,8 @@ export default function PricingPlans() {
       highlighted: false,
     },
     {
-      name: "Basic Plan",
-      price: { monthly: 10, yearly: 99 },
+      name: "Basic Plan", 
+      price: { monthly: 499, yearly: 4999 },
       description: "Quickly prepare for Interview",
       features: {
         monthly: [
@@ -59,7 +59,7 @@ export default function PricingPlans() {
     },
     {
       name: "Professional Plan",
-      price: { monthly: 25, yearly: 249 },
+      price: { monthly: 1250, yearly: 14000 },
       description: "Best for interview preparation",
       features: {
         monthly: [
@@ -83,7 +83,7 @@ export default function PricingPlans() {
     },
     {
       name: "Enterprise Plan",
-      price: { monthly: 99, yearly: 999 },
+      price: { monthly: 4999, yearly: 49999 },
       description: "For Large Organizations",
       features: {
         monthly: [
@@ -183,7 +183,7 @@ export default function PricingPlans() {
               </div>
               <div className="p-6">
                 <div className="mb-4">
-                  <span className="text-3xl font-bold">${plan.price[billingCycle]}</span>
+                  <span className="text-3xl font-bold">₹{plan.price[billingCycle]}</span>
                   <span className="text-gray-500">/{billingCycle}</span>
                 </div>
                 <p className="text-sm text-gray-600 mb-6">{plan.description}</p>
