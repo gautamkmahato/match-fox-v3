@@ -10,7 +10,7 @@ export default function ContactPage() {
       <ul className="list-disc pl-6">
         <li>Email: gkmbusiness74@gmail.com</li>
         <li>Phone: +91-834-0605124</li>
-        <li>Address: India</li>
+        <li>Address: Vill Krishnapur, Seraikella, India</li>
       </ul>
     </main>
     </>
