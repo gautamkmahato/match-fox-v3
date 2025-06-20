@@ -16,10 +16,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+
 export const metadata = {
-  title: "Hirenom",
-  description: "AI powered mock interview platform",
+  title: "Hirenom – AI Mock Interview Platform",
+  description: "AI powered mock interview platform, resume builder & LinkedIn optimization.",
+  robots: "index, follow", // ✅ This is the fix!
 };
+
 
 
 <Script src="https://checkout.razorpay.com/v1/checkout.js" />
