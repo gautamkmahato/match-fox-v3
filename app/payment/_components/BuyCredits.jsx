@@ -126,60 +126,62 @@ export default function BuyCredits() {
   const handlePayment = async () => {
     if (!user?.id) return alert("User not found");
 
-    setLoading(true);
+    alert("Waiting for PayU confirmation")
 
-    const res = await fetch("/api/checkout/razorpay", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        amount: selectedPrice,
-        clerk_id: user?.id,
-        credits: selectedCredits,
-        plan: selectedPlan,
-      })
-    });
+    // setLoading(true);
 
-    const result = await res.json();
+    // const res = await fetch("/api/checkout/razorpay", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     amount: selectedPrice,
+    //     clerk_id: user?.id,
+    //     credits: selectedCredits,
+    //     plan: selectedPlan,
+    //   })
+    // });
 
-    if (!result.data?.id || !result?.state) {
-      alert("Failed to create order");
-      setLoading(false);
-      return;
-    }
+    // const result = await res.json();
 
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      amount: result.data.amount,
-      currency: result.data.currency,
-      name: "Hirenom",
-      clerk_id: user?.id,
-      description: `Hirenom Transaction for amount ${result.data.amount}`,
-      order_id: result.data.id,
-      handler: async function (response) {
-        const verifyRes = await fetch("/api/verify-payment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(response),
-        });
+    // if (!result.data?.id || !result?.state) {
+    //   alert("Failed to create order");
+    //   setLoading(false);
+    //   return;
+    // }
 
-        const verify = await verifyRes.json();
-        if (verify.state) {
-          alert("✅ Payment Successful");
-        } else {
-          alert("❌ Payment verification failed");
-        }
-      },
-      prefill: {
-        name: user?.firstName || "John Doe",
-        email: user?.emailAddresses[0]?.emailAddress || "john@example.com",
-        contact: "9999999999",
-      },
-      theme: { color: "#3399cc" },
-    };
+    // const options = {
+    //   key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+    //   amount: result.data.amount,
+    //   currency: result.data.currency,
+    //   name: "Hirenom",
+    //   clerk_id: user?.id,
+    //   description: `Hirenom Transaction for amount ${result.data.amount}`,
+    //   order_id: result.data.id,
+    //   handler: async function (response) {
+    //     const verifyRes = await fetch("/api/verify-payment", {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify(response),
+    //     });
 
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-    setLoading(false);
+    //     const verify = await verifyRes.json();
+    //     if (verify.state) {
+    //       alert("✅ Payment Successful");
+    //     } else {
+    //       alert("❌ Payment verification failed");
+    //     }
+    //   },
+    //   prefill: {
+    //     name: user?.firstName || "John Doe",
+    //     email: user?.emailAddresses[0]?.emailAddress || "john@example.com",
+    //     contact: "9999999999",
+    //   },
+    //   theme: { color: "#3399cc" },
+    // };
+
+    // const rzp = new window.Razorpay(options);
+    // rzp.open();
+    // setLoading(false);
   };
 
   const handleSelection = (credits, priceObj, cycle) => {
