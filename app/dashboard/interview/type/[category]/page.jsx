@@ -30,7 +30,7 @@ export default function SubCategoryPage({ params }) {
         {items.map(sub => (
           <Link
             key={sub}
-            href={`/interview/type/${category}/${sub.toLowerCase()}`}
+            href={`/dashboard/interview/type/${category}/${sub.toLowerCase()}`}
             className="border rounded-2xl p-6 shadow hover:shadow-lg transition"
           >
             <div className="text-xl font-semibold">{sub}</div>

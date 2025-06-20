@@ -97,7 +97,7 @@ export default function PdfTextExtractor({ onSubmit, setStep, step }) {
           )}
         </div>
 
-        <div className="flex justify-between items-center">
+        {step && <div className="flex justify-between items-center">
           <button onClick={() => setStep(step - 1)} className="flex gap-1 items-center cursor-pointer hover:text-gray-800 text-[#636366] text-sm font-medium">
             <ArrowLeft className="w-4 h-4" />
             Back
@@ -114,7 +114,7 @@ export default function PdfTextExtractor({ onSubmit, setStep, step }) {
             )}
             {!loading ? <ArrowRight className="w-4 h-4" /> : <></>}
           </button>
-        </div>
+        </div>}
         
       </form>
     </div>

@@ -19,19 +19,7 @@ export async function POST(req) {
   }
 
   // Extract JSON body
-  const {
-    job_description,
-    company,
-    interview_style,
-    position,
-    difficulty_level,
-    experience,
-    resume,
-    skills_required,
-    tech_stack,
-  } = await req.json();
-
-  console.log("🧠 Generating for:", company, interview_style, position);
+  const { type, resume, } = await req.json();
 
   // Wrap Gemini API call in queue
   try {
@@ -41,61 +29,35 @@ export async function POST(req) {
         contents: [
           {
             role: 'user',
-            parts: [ 
+            parts: [
               {
                 text: `
-You are an AI interview assistant. Based on the following job input
-and candidate's resume, generate **10 diverse technical interview questions** in JSON format.
 
-## Follow the below steps to generate the questions
-** Note: ** If resume is not given then skip Step 1
+You are an IIM Ahmedabad admissions panelist conducting a mock interview for an MBA aspirant. 
+IIM-A is known for its case-based pedagogy, academic rigor, and strong preference for analytical thinking and structured responses.
+Your role is to generate 10 questions and it should be **realistic, college-specific and feel real interview** for the user.
 
-### Step 1:
-First extract the following information from the given resume ${resume}
+Generate 10 questions in JSON format based on the above data and user's resume.
 
-- work experience (string)
-- skills (comma separated string)
-- projects experience (string)
+## Resume
+${resume}
 
-Step 2:
-Now combine the data extracted from resume and given input job details,
-generate 10 questions, make sure the question should match the resume and job details
+Generate a 10 question mock interview simulating the IIM-A interview style in JSON format.
+Base your questions on the user's profile, their academic/work history, and their B-school of choice.
 
-** Note: ** If resume is not given then skip Step 1
 
-**Job Input Details:**
-- company: ${company}
-- interview style: ${interview_style}
-- difficulty level: ${difficulty_level}
-- position: ${position}
-- job description: ${job_description}
-- experience: ${experience}
-- skills_required: ${skills_required}
-- tech_stack: ${tech_stack}
+Focus on:
+- Structured thinking
+- Real-world problem-solving
+- Academic depth
+- Justification of career goals
+- Decision-making skills
 
----
 
-**Output Guidelines:**
-- Format output as JSON object with keys like "Question 1", "Question 2", ..., "Question 10"
-- Only return the JSON (no extra text)
-- Do not include answers
+Format each question in simple language. Don’t dump multiple questions at once. Maintain realism and timing.
 
----
+Provide the output in JSON format.
 
-**Examples of question types to include:**
-- Conceptual
-- Practical
-- Code analysis
-- Debugging
-- Best practices
-- Performance
-- Advanced cases
-- Comparisons
-- Common mistakes
-- Design/system thinking
-
----
-Return only valid JSON.
 `,
               },
             ],
