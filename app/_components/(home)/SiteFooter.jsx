@@ -66,6 +66,11 @@ export default function SiteFooter() {
                     Privacy Policy
                   </a>
                 </li>
+                <li>
+                  <a href="/cancellation-refund" className="hover:text-white transition-colors">
+                    Refund Policy
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

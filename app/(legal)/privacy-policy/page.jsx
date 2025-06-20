@@ -67,7 +67,7 @@ export default function PrivacyPolicyPage() {
           <li>You can uninstall the extension at any time.</li>
           <li>
             If you have questions about your data or privacy, please contact us
-            at <a href="hirenom.com" className="text-blue-600 underline">@hirenom.com</a>.
+            at <a href="hirenom.com" className="text-blue-600 underline">gkmbusiness74@gmail.com</a>.
           </li>
         </ul>
       </section>
