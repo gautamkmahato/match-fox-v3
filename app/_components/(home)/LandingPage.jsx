@@ -760,7 +760,7 @@ export default function LandingPage() {
                 Empowering professionals to succeed in their career journey through AI-powered interview preparation and
                 job matching.
               </p>
-              <div className="flex space-x-4">
+              {/* <div className="flex space-x-4">
                 <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors cursor-pointer">
                   <span className="text-sm font-bold">f</span>
                 </div>
@@ -770,7 +770,7 @@ export default function LandingPage() {
                 <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors cursor-pointer">
                   <span className="text-sm font-bold">in</span>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div>
