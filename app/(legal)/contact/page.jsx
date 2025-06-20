@@ -1,4 +1,5 @@
 import Header from "@/app/_components/(home)/Header";
+import SiteFooter from "@/app/_components/(home)/SiteFooter";
 
 export default function ContactPage() {
   return (
@@ -14,6 +15,7 @@ export default function ContactPage() {
         <li>Address: Vill Krishnapur, Seraikella Kharsawan, 833101, Jharkhand, India</li>
       </ul>
     </main>
+    <SiteFooter />
     </>
   );
 }

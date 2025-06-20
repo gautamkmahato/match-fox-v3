@@ -787,11 +787,6 @@ export default function LandingPage() {
                   </a>
                 </li>
                 <li>
-                  <a href="/dashboard" className="hover:text-white transition-colors">
-                    Job Explorer
-                  </a>
-                </li>
-                <li>
                   <a href="https://chromewebstore.google.com/detail/hirenom/fpcmfhopkmoaimhelpjolkkhocfohgkk" className="hover:text-white transition-colors">
                     Chrome Extension
                   </a>
@@ -803,7 +798,7 @@ export default function LandingPage() {
               <h4 className="text-lg font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a href="/about" className="hover:text-white transition-colors">
                     About Us
                   </a>
                 </li>

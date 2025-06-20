@@ -1,4 +1,5 @@
 import Header from "@/app/_components/(home)/Header";
+import SiteFooter from "@/app/_components/(home)/SiteFooter";
 
 export default function CancellationRefundPage() {
   return (
@@ -13,6 +14,7 @@ export default function CancellationRefundPage() {
         We aim to process refunds, if applicable, within 5-7 business days after verification.
       </p>
     </main>
+    <SiteFooter />
     </>
   );
 }

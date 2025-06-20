@@ -1,4 +1,5 @@
 import Header from "@/app/_components/(home)/Header";
+import SiteFooter from "@/app/_components/(home)/SiteFooter";
 
 export default function TermsAndConditionsPage() {
   return (
@@ -13,6 +14,7 @@ export default function TermsAndConditionsPage() {
         Misuse of the platform may lead to account suspension or termination without notice.
       </p>
     </main>
+    <SiteFooter />
     </>
   );
 }

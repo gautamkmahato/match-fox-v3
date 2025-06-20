@@ -1,4 +1,5 @@
 import Header from "@/app/_components/(home)/Header";
+import SiteFooter from "@/app/_components/(home)/SiteFooter";
 
 export default function ShippingPage() {
   return (
@@ -13,6 +14,7 @@ export default function ShippingPage() {
         For any issues with access, please contact support within 24 hours of purchase.
       </p>
     </main>
+    <SiteFooter />
     </>
   );
 }
