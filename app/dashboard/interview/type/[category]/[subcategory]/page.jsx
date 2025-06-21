@@ -11,14 +11,8 @@ import ResumeTextExtractor from '../../_components/ResumeTextExtractor';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import { Sparkles, ChevronRight, Zap, Play, BarChart3, CheckCircle, Upload, FileText } from 'lucide-react';
 
-const subCategories = {
-  mba: ['IIM', 'XLRI', 'FMS'],
-  gmat: ['Duke', 'Harvard', 'Stanford'],
-  technical: ['Frontend', 'Backend', 'DevOps'],
-  hr: ['Entry-level', 'Managerial', 'Leadership'],
-  sat: ['Reading', 'Math', 'Writing'],
-  csat: ['Service', 'Support', 'Feedback'],
-};
+
+
 
 export default function SubCategoryPage({ params }) {
     const [jobDescription, setJobDescription] = useState();
