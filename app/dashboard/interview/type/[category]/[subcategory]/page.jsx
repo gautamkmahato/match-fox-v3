@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import PdfTextExtractor from '../../../_components/PdfTextExtractor';
 import generateQuestions from '@/app/service/portal/generateQuestions';
 import { extractJsonBlock } from '@/lib/utils/cleanCodeBlock';
 import createInterviewFromAPI from '@/app/service/portal/createInterviewFromAPI';
 import Modal from '@/components/Modal';
+import ResumeTextExtractor from '../../_components/ResumeTextExtractor';
 
 
 const subCategories = {
@@ -51,6 +51,7 @@ export default function SubCategoryPage({ params }) {
     } 
 
     const handlePdfUpload = async (pdfData) => {
+        console.log(pdfData);
         setResume(pdfData);
     }
 
@@ -157,7 +158,7 @@ export default function SubCategoryPage({ params }) {
         <h1 className="text-2xl font-bold capitalize mb-6">{subcategory} Subcategories</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <div>
-                <PdfTextExtractor onSubmit={handlePdfUpload} />
+                <ResumeTextExtractor onSubmit={handlePdfUpload} />
             </div>
         </div>
         <button onClick={handleFinalSubmit}>Create</button>
