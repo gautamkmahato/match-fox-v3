@@ -23,9 +23,9 @@ export default function CancellationRefundPage() {
               💳 <strong>Duplicate or Failed Transactions:</strong> In the event of duplicate payments or technical errors, please contact our support team with your payment details. We’ll be happy to assist.
             </p>
             <p>
-              Once if the refund is approved by GAUTAM KUMAR MAHATO, it will take 7-10 days for process and credited to the original mode of payment            </p>
+              Once if the refund is approved by HIRENOM, it will take 7-10 days for process and credited to the original mode of payment            </p>
             <p>
-              📧 For support, contact us at <a href="mailto:gkmbusiness74@gmail.com" className="text-blue-600 underline">gkmbusiness74@gmail.com.com</a>
+              📧 For support, contact us at <a href="mailto:gkmbusiness74@gmail.com" className="text-blue-600 underline">gkmbusiness74@gmail.com</a>
             </p>
           </div>
         </div>

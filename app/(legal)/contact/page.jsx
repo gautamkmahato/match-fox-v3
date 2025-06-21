@@ -16,7 +16,7 @@ export default function ContactPage() {
           <div className="space-y-4 text-gray-800">
             <div>
               <span className="font-semibold text-blue-600">Name:</span>
-              <p>Gautam Mahato</p>
+              <p>Hirenom</p>
             </div>
 
             <div>
@@ -31,8 +31,8 @@ export default function ContactPage() {
             <div>
               <span className="font-semibold text-blue-600">Phone:</span>
               <p>
-                <a href="tel:+918340605124" className="text-blue-500 underline">
-                  +91-834-0605124
+                <a href="tel:+91-9990605100" className="text-blue-500 underline">
+                  +91-999-060-5100
                 </a>
               </p>
             </div>
@@ -40,7 +40,7 @@ export default function ContactPage() {
             <div>
               <span className="font-semibold text-blue-600">Address:</span>
               <p>
-                Vill Krishnapur, Seraikella Kharsawan,<br />
+                Seraikella<br />
                 Jharkhand – 833101, India
               </p>
             </div>
