@@ -9,9 +9,11 @@ const categories = [
     description: 'Prepare for top B-Schools with real case-style mock interviews.',
     image: 'https://logo.clearbit.com/hbs.edu',
     avatars: [
-      'https://logo.clearbit.com/iimahd.ernet.in',
-      'https://logo.clearbit.com/wharton.upenn.edu',
-      'https://logo.clearbit.com/insead.edu',
+       'https://logo.clearbit.com/iima.ac.in',              // IIM Ahmedabad
+  'https://logo.clearbit.com/iimb.ac.in',              // IIM Bangalore
+  'https://logo.clearbit.com/iimcal.ac.in',            // IIM Calcutta
+  'https://logo.clearbit.com/xlri.ac.in',              // XLRI Jamshedpur
+  'https://logo.clearbit.com/fms.edu',                 // FMS Delhi
     ],
     icon: Trophy,
     color: 'from-purple-500 to-pink-500',
@@ -27,6 +29,8 @@ const categories = [
       'https://logo.clearbit.com/google.com',
       'https://logo.clearbit.com/amazon.com',
       'https://logo.clearbit.com/microsoft.com',
+      'https://logo.clearbit.com/apple.com',
+      'https://logo.clearbit.com/netflix.com',
     ],
     icon: Brain,
     color: 'from-blue-500 to-cyan-500',
@@ -42,6 +46,8 @@ const categories = [
       'https://logo.clearbit.com/accenture.com',
       'https://logo.clearbit.com/pwc.com',
       'https://logo.clearbit.com/wipro.com',
+      'https://logo.clearbit.com/ey.com',
+      'https://logo.clearbit.com/kpmg.com',
     ],
     icon: Users,
     color: 'from-green-500 to-emerald-500',
@@ -54,9 +60,11 @@ const categories = [
     description: 'Master GMAT interview prep with adaptive mock formats.',
     image: 'https://logo.clearbit.com/mba.com',
     avatars: [
-      'https://logo.clearbit.com/insead.edu',
+      'https://logo.clearbit.com/duke.edu',
       'https://logo.clearbit.com/columbia.edu',
-      'https://logo.clearbit.com/chicagobooth.edu',
+      'https://logo.clearbit.com/northeastern.edu',
+      'https://logo.clearbit.com/harvard.edu',
+      'https://logo.clearbit.com/cornell.edu',
     ],
     icon: Target,
     color: 'from-indigo-500 to-purple-500',
@@ -165,7 +173,7 @@ export default function InterviewCategory() {
                         </div>
                       ))}
                     </div>
-                    <div className={`px-4 py-2 rounded-full bg-gradient-to-r ${cat.color} text-white text-sm font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0`}>
+                    <div className={`px-4 py-2 cursor-pointer rounded-full bg-gradient-to-r ${cat.color} text-white text-sm font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0`}>
                       
                       <Link
                         href={`/dashboard/interview/type/${cat.slug}`}
