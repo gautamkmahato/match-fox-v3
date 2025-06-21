@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
-import { ArrowLeft, UploadCloud, LoaderCircle } from 'lucide-react';
+import { ArrowLeft, UploadCloud, LoaderCircle, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.mjs';
@@ -86,7 +86,7 @@ export default function ResumeTextExtractor({ onSubmit, setStep, step }) {
     }
   };
 
-  const handlePdfSubmit = (e) => {
+  const handlePdfSubmit = async (e) => {
     e.preventDefault();
     if (!content) {
       setError('Please upload a valid resume before submitting.');
@@ -104,7 +104,7 @@ export default function ResumeTextExtractor({ onSubmit, setStep, step }) {
   }, [content, hasNotified]);
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 px-8 py-8 bg-white rounded-2xl shadow-lg border border-gray-200">
+    <div className="max-w-2xl mx-auto px-8 py-2 bg-white ">
       <form onSubmit={handlePdfSubmit}>
         <label
           htmlFor="file-upload"
@@ -136,16 +136,17 @@ export default function ResumeTextExtractor({ onSubmit, setStep, step }) {
           )}
         </div>
 
-        <div className="flex justify-between items-center mt-10">
-          <button
-            type="submit"
-            className="flex gap-1 items-center cursor-pointer hover:text-gray-800 text-[#636366] text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={!content || loading}
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Submit
-          </button>
-        </div>
+        <div className="flex justify-between items-center w-full mt-10">
+  <button
+    type="submit"
+    className="w-full bg-[#462eb4] hover:shadow-2xl text-white px-5 py-3 rounded-md text-sm font-medium flex justify-center items-center gap-1 cursor-pointer transition duration-300 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed"
+    disabled={!content || loading}
+  >
+    Submit
+    {/* <ArrowRight className="w-4 h-4" /> */}
+  </button>
+</div>
+
       </form>
     </div>
   );

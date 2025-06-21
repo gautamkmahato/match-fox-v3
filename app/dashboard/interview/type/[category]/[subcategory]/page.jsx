@@ -8,6 +8,7 @@ import { extractJsonBlock } from '@/lib/utils/cleanCodeBlock';
 import createInterviewFromAPI from '@/app/service/portal/createInterviewFromAPI';
 import Modal from '@/components/Modal';
 import ResumeTextExtractor from '../../_components/ResumeTextExtractor';
+import LoadingOverlay from '@/components/LoadingOverlay';
 
 
 const subCategories = {
@@ -53,6 +54,7 @@ export default function SubCategoryPage({ params }) {
     const handlePdfUpload = async (pdfData) => {
         console.log(pdfData);
         setResume(pdfData);
+        setResumeStatus(true);
     }
 
     const getQuestions = async () => {
@@ -148,50 +150,68 @@ export default function SubCategoryPage({ params }) {
     if(loading){
         return(
             <>
-                <h1>Loading...</h1>
+                <LoadingOverlay text="Creating Interview..." />
             </>
         )
     }
 
     return (
-        <div className="p-6">
-        <h1 className="text-2xl font-bold capitalize mb-6">{subcategory} Subcategories</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div>
-                <ResumeTextExtractor onSubmit={handlePdfUpload} />
-            </div>
-        </div>
-        <button onClick={handleFinalSubmit}>Create</button>
-        {/** Modal Section */}
-              <Modal isOpen={open} onClose={handleModalClose} width="max-w-lg">
-                <div className="text-center space-y-8">
-                  <h2 className="text-xl font-semibold text-gray-700">Interview Created Successfully!</h2>
-                  <p className="text-gray-500">What would you like to do next?</p>
-                  <div className="flex justify-center gap-4 mt-6">
-                    <button
-                      onClick={handleStartInterview}
-                      disabled={loadingStart}
-                      className="bg-[#462eb4] text-sm shadow-lg cursor-pointer text-white px-4 py-2 rounded-md hover:bg-indigo-900 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
-                    >
-                      {loadingStart && (
-                        <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                      )}
-                      Start the Interview
-                    </button>
-        
-                    <button
-                      onClick={handleGoToDashboard}
-                      disabled={loadingDashboard}
-                      className="bg-gray-200 text-sm shadow-lg cursor-pointer font-medium text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
-                    >
-                      {loadingDashboard && (
-                        <span className="w-4 h-4 border-2 border-gray-800 border-t-transparent rounded-full animate-spin"></span>
-                      )}
-                      Go to Dashboard
-                    </button>
-                  </div>
-                </div>
-              </Modal>
-        </div>
+        <div className="bg-white px-6 py-12 mt-8 rounded-2xl shadow max-w-2xl mx-auto">
+  <div className='px-8'>
+    <h1 className="text-lg sm:text-xl font-bold capitalize mb-8 text-gray-800 text-center sm:text-left">
+    Create Interview / {subcategory.toUpperCase()}
+  </h1>
+  </div>
+
+  <div className="flex flex-col items-center justify-center">
+    {/* Resume Uploader */}
+    <div className="w-full">
+      <ResumeTextExtractor onSubmit={handlePdfUpload} />
+    </div>
+
+    {/* Action Section */}
+    {resumeStatus && <div className="w-full px-8 flex flex-col items-center justify-center gap-6">
+      <button
+        onClick={handleFinalSubmit}
+        className="w-full bg-[#462eb4] hover:bg-[#3b24a2] text-white px-6 py-3 rounded-lg text-sm font-medium flex justify-center items-center gap-2 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed"
+      >
+        Create Interview
+      </button>
+    </div>}
+  </div>
+
+  {/* Modal */}
+  <Modal isOpen={open} onClose={handleModalClose} width="max-w-lg">
+    <div className="text-center p-6 sm:p-10 space-y-6">
+      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">Interview Created Successfully!</h2>
+      <p className="text-gray-500">What would you like to do next?</p>
+
+      <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+        <button
+          onClick={handleStartInterview}
+          disabled={loadingStart}
+          className="bg-[#462eb4] hover:bg-indigo-900 text-white text-sm px-5 py-2.5 rounded-md flex items-center justify-center gap-2 font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {loadingStart && (
+            <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+          )}
+          Start Interview
+        </button>
+
+        <button
+          onClick={handleGoToDashboard}
+          disabled={loadingDashboard}
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm px-5 py-2.5 rounded-md flex items-center justify-center gap-2 font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {loadingDashboard && (
+            <span className="w-4 h-4 border-2 border-gray-800 border-t-transparent rounded-full animate-spin"></span>
+          )}
+          Go to Dashboard
+        </button>
+      </div>
+    </div>
+  </Modal>
+</div>
+
     );
 }
