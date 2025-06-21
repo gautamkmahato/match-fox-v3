@@ -157,7 +157,7 @@ export default function SubCategoryPage({ params }) {
                 {/* Main Card */}
                 <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-3xl shadow-2xl shadow-violet-500/10 overflow-hidden">
                     {/* Header Section */}
-                    <div className="relative bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 px-8 py-12">
+                    <div className="relative bg-gradient-to-r from-[#462eb4] via-indigo-600 to-indigo-600 px-8 py-12">
                         {/* Animated background elements */}
                         <div className="absolute inset-0 overflow-hidden">
                             <div className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
@@ -167,7 +167,7 @@ export default function SubCategoryPage({ params }) {
                         <div className="relative z-10">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
-                                    <Sparkles className="text-white" size={24} />
+                                    <Sparkles className="text-white" size={48} />
                                 </div>
                                 <div>
                                     <h1 className="text-2xl sm:text-3xl font-bold text-white">
