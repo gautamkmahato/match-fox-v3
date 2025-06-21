@@ -1,6 +1,7 @@
 import { Video, BarChart2, FileSearch, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AdvanceFeatures() {
   const features = [
@@ -79,13 +80,17 @@ export default function AdvanceFeatures() {
                 ))}
               </div>
 
-              <motion.button
+              {/* <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-gradient-to-r from-indigo-800 to-indigo-500 text-white px-9 py-3 rounded-full font-semibold hover:shadow-xl transition-shadow"
               >
                 Try Now
-              </motion.button>
+              </motion.button> */}
+              <Link href="/dashboard"
+              className="bg-gradient-to-r from-indigo-800 to-indigo-500 text-white px-9 py-3 rounded-full font-semibold hover:shadow-xl transition-shadow">
+                Try Now
+              </Link>
             </motion.div>
 
             <motion.div

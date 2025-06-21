@@ -95,21 +95,21 @@ const works = [
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
+    name: "Ram Narayan",
     role: "Software Engineer at Google",
     content:
       "The AI interviews felt so realistic! I practiced for weeks and landed my dream job at Google. The feedback was incredibly detailed and helpful.",
     rating: 5,
   },
   {
-    name: "Michael Chen",
+    name: "Rahul Sharma",
     role: "Product Manager at Microsoft",
     content:
       "As a recruiter, this platform has revolutionized our hiring process. We can screen candidates efficiently while maintaining quality standards.",
     rating: 5,
   },
   {
-    name: "Emily Rodriguez",
+    name: "Nikhil Kumar",
     role: "Data Scientist at Netflix",
     content:
       "The Chrome extension is a game-changer! I could practice for specific jobs directly from LinkedIn. Got hired within 2 weeks of using it.",
@@ -605,7 +605,7 @@ export default function LandingPage() {
       </section>
 
       {/* Chrome Extension */}
-      <section className="py-20 bg-gradient-to-r from-indigo-900 to-indigo-600">
+      {/* <section className="py-20 bg-gradient-to-r from-indigo-900 to-indigo-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -666,7 +666,7 @@ export default function LandingPage() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Testimonials */}
       <section className="bg-gradient-to-b from-white to-gray-50 py-12">
@@ -700,11 +700,11 @@ export default function LandingPage() {
                 </div>
                 <p className="text-gray-700 text-sm mb-4">"{testimonial.content}"</p>
                 <div className="flex items-center">
-                  <img
+                  {/* <img
                     src={`/placeholder.svg?height=40&width=40`}
                     alt={testimonial.name}
                     className="w-6 h-6 rounded-full mr-3"
-                  />
+                  /> */}
                   <div>
                     <p className="font-semibold text-gray-800 text-sm">{testimonial.name}</p>
                     <p className="text-xs text-gray-500">{testimonial.role}</p>
@@ -786,11 +786,11 @@ export default function LandingPage() {
                     Resume Builder
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a href="https://chromewebstore.google.com/detail/hirenom/fpcmfhopkmoaimhelpjolkkhocfohgkk" className="hover:text-white transition-colors">
                     Chrome Extension
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
 
