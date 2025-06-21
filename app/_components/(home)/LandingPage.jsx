@@ -736,13 +736,13 @@ export default function LandingPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="bg-indigo-700 text-white px-8 py-4 rounded-lg text-sm font-semibold hover:bg-indigo-800 transition-colors flex items-center space-x-2 cursor-pointer">
+              <Link href="/dashboard" className="bg-indigo-700 text-white px-8 py-4 rounded-lg text-sm font-semibold hover:bg-indigo-800 transition-colors flex items-center space-x-2 cursor-pointer">
                 <span>Start Free Trial</span>
                 <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors cursor-pointer">
+              </Link>
+              <Link href="/contact" className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors cursor-pointer">
                 Schedule Demo
-              </button>
+              </Link>
             </div>
 
             <p className="text-sm text-gray-500 mt-4">No credit card required • 30-day free trial • Cancel anytime</p>
