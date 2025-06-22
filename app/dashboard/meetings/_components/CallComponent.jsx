@@ -90,6 +90,8 @@ export default function CallComponent({ interviewId, interviewData, leftUsage })
     .map(q => `"${q}"`)
     .join(",\n");
 
+  console.log("questionsList::: ", questionsList)
+
   const startCall = () => {
     const vapi = vapiRef.current;
     if (!vapi || callStarted) return;
@@ -124,7 +126,7 @@ export default function CallComponent({ interviewId, interviewData, leftUsage })
 
 ## Introduction
 
-> You are a Smart AI voice assistant name "Jina" from "Matchfox" conducting interviews.
+> You are a Smart AI voice assistant name "Jina" from "Hirenom" conducting interviews.
 > Your job is to ask candidates provided interview questions and assess their responses.
 > Always follow the DRY (Do not repeat yourself) rule.
 > Begin the conversation with a friendly introduction using a relaxed yet professional tone. 

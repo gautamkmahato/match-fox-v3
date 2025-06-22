@@ -7,6 +7,7 @@ import InterviewJoinScreen from "./InterviewJoinScreen";
 import { toast } from "sonner";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { UsageContext } from "@/app/context/usageContext";
+import InterviewCallComponent from "./InterviewCallComponent";
 
 export default function InterviewPage({ interviewId }) {
   const [loading, setLoading] = useState(true);
@@ -135,7 +136,11 @@ export default function InterviewPage({ interviewId }) {
     }
  
   if (showCallComponent) {
-    return <CallComponent interviewId={interviewId} interviewData={interviewData} leftUsage={usage} />;
+    if(interviewData?.type === "ADMISSION"){
+      return <InterviewCallComponent interviewId={interviewId} interviewData={interviewData} leftUsage={usage} />;
+    } else{
+      return <CallComponent interviewId={interviewId} interviewData={interviewData} leftUsage={usage} />;
+    }
   }  
 
   if (!interviewAccess) {

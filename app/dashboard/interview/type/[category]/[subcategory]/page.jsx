@@ -114,13 +114,15 @@ export default function SubCategoryPage({ params }) {
             }
             // For other data
             const mergedResult = {
+                interview_name: category,
+                company: subcategory,
                 duration: '30',
                 interview_time: new Date().toISOString(),
-                status: 'open'
+                status: 'open',
+                type: 'ADMISSION'
             };
 
-            const result = await handleInterviewCreate(mergedResult, questions, college_interview_data);
-            console.log("result::: ", result);
+            await handleInterviewCreate(mergedResult, questions, college_interview_data);
         } catch (err) {
         console.error("Error in handleFinalSubmit:", err);
         } finally {

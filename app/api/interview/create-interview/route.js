@@ -135,7 +135,7 @@ export async function POST(req) {
           "difficulty_level": formData?.difficulty_level || 'Not Available',
           "experience": formData?.experience || 'Not Available',
           "questions": questions || 'Not Available',
-          "type": "INTERVIEW",
+          "type": formData?.type || "INTERVIEW",
           "college_interview": college_interview_data || null
         }
       ])
