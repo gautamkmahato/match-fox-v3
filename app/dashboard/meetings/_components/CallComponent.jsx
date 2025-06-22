@@ -3,12 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import VideoCallUI from "./VideoCallUI";
 import { SignedIn, useUser } from "@clerk/nextjs";
-import fetchInterviewDetails from "@/app/service/interview/fetchInteviewDetails";
 import Vapi from "@vapi-ai/web";
 import { toast } from 'sonner';
 import LoadingOverlay from "@/components/LoadingOverlay";
 import getRandomGreeting from "@/lib/utils/getRandomGreeting";
-import chatPrompt from "@/lib/utils/prompts/chatPrompt";
 import CameraComponent from "./CameraComponent";
 
 export default function CallComponent({ interviewId, interviewData, leftUsage }) {

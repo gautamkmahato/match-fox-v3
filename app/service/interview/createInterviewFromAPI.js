@@ -3,10 +3,11 @@
  */
 
 
-export default async function createInterviewFromAPI(formData, questions) {
+export default async function createInterviewFromAPI(formData, questions, college_interview_data) {
   const input = {
     formData: formData,
-    questions: questions
+    questions: questions,
+    college_interview_data
   }
   console.log("create interview data", input)
 

@@ -5,11 +5,11 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import generateQuestions from '@/app/service/portal/generateQuestions';
 import { extractJsonBlock } from '@/lib/utils/cleanCodeBlock';
-import createInterviewFromAPI from '@/app/service/portal/createInterviewFromAPI';
 import Modal from '@/components/Modal';
 import ResumeTextExtractor from '../../_components/ResumeTextExtractor';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import { Sparkles, ChevronRight, Zap, Play, BarChart3, CheckCircle, Upload, FileText } from 'lucide-react';
+import createInterviewFromAPI from '@/app/service/interview/createInterviewFromAPI';
 
 
 
@@ -78,11 +78,11 @@ export default function SubCategoryPage({ params }) {
         }
     }
 
-    const handleInterviewCreate = async (mergedResult, questions) => {
-        try {
+    const handleInterviewCreate = async (mergedResult, questions, college_interview_data) => {
+        try { 
           setCreateInterviewFromAPIStatus(true);
           // Step 3: Create interview with generated questions
-          const createResult = await createInterviewFromAPI(mergedResult, questions);
+          const createResult = await createInterviewFromAPI(mergedResult, questions, college_interview_data);
     
           if (!createResult.state || createResult?.error) {
             console.log(createResult?.error || "Something went wrong while creating the interview.");
@@ -106,13 +106,20 @@ export default function SubCategoryPage({ params }) {
 
         try {
             const questions = await getQuestions();
-            const mergedResult = {
+            const college_interview_data = {
                 name: category,
                 program_name: subcategory,
                 resume: resume,
                 status: 'in-progress'
             }
-            const result = await handleInterviewCreate(mergedResult, questions);
+            // For other data
+            const mergedResult = {
+                duration: '30',
+                interview_time: new Date().toISOString(),
+                status: 'open'
+            };
+
+            const result = await handleInterviewCreate(mergedResult, questions, college_interview_data);
             console.log("result::: ", result);
         } catch (err) {
         console.error("Error in handleFinalSubmit:", err);

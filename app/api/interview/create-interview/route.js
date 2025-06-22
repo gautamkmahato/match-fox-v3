@@ -85,7 +85,7 @@ export async function POST(req) {
     }
 
     // 4. Validate request body
-    const { formData, questions } = await req.json();
+    const { formData, questions, college_interview_data } = await req.json();
     // const parsed = InterviewSchema.safeParse(body);
     // console.log(parsed.error)
     // if (!parsed.success) {
@@ -130,12 +130,13 @@ export async function POST(req) {
           "interview_style": formData?.interview_style || 'Not Available',
           "job_description": formData?.job_description || 'Not Available',
           "interview_link": formData?.interview_link || 'Not Available',
-          "expiry_date": formData?.expiry_date || "2027-06-15T23:59:59Z",
+          "expiry_date": formData?.expiry_date || "2030-06-15T23:59:59Z", 
           "user_id": userId,
           "difficulty_level": formData?.difficulty_level || 'Not Available',
           "experience": formData?.experience || 'Not Available',
           "questions": questions || 'Not Available',
           "type": "INTERVIEW",
+          "college_interview": college_interview_data || null
         }
       ])
       .select();

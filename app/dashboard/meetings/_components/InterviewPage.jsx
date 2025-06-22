@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import CallComponent from "./CallComponent";
 import InterviewJoinScreen from "./InterviewJoinScreen";
-import fetchInterviewDetails from "@/app/service/interview/fetchInteviewDetails";
 import { toast } from "sonner";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { UsageContext } from "@/app/context/usageContext";
