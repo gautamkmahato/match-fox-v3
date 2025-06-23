@@ -272,7 +272,7 @@ export default function SubCategoryPage({ params }) {
 
             {/* Enhanced Modal */}
             <Modal isOpen={open} onClose={handleModalClose} width="max-w-lg">
-                <div className="relative bg-white rounded-3xl overflow-hidden">
+                <div className="relative bg-white rounded-xl px-8 py-12 overflow-hidden">
                     {/* Success Header */}
                     <div className="bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-6">
                         <div className="flex items-center gap-4">
@@ -294,7 +294,7 @@ export default function SubCategoryPage({ params }) {
                             <button
                                 onClick={handleStartInterview}
                                 disabled={loadingStart}
-                                className="group relative overflow-hidden bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white px-6 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                                className="group relative overflow-hidden bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white px-6 py-3.5 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                                 
@@ -311,7 +311,7 @@ export default function SubCategoryPage({ params }) {
                             <button
                                 onClick={handleGoToDashboard}
                                 disabled={loadingDashboard}
-                                className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-6 py-4 rounded-xl font-medium transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3 border border-gray-200"
+                                className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3.5 rounded-lg font-medium transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3 border border-gray-200"
                             >
                                 {loadingDashboard ? (
                                     <div className="w-5 h-5 border-2 border-gray-800 border-t-transparent rounded-full animate-spin"></div>
