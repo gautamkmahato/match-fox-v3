@@ -69,8 +69,8 @@ export default function InterviewCallComponent({ interviewId, interviewData, lef
   }, []);
 
 
-  const questionsList = Object.values(interviewData?.questions?.question)
-    .map(q => `"${q}"`)
+  const questionsList = Object.values(interviewData?.questions)
+    .map(q => `"${q?.question}"`)
     .join(",\n");
 
   console.log("questionsList::: ", questionsList)
