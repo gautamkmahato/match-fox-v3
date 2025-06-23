@@ -31,6 +31,8 @@ export default function InterviewCallComponent({ interviewId, interviewData, lef
   // console.log("interview data:", interviewData);
   // console.log("user name", user?.firstName)
 
+  console.log(interviewId, interviewData, leftUsage);
+
   if (!interviewData) {
     return (
       <>
