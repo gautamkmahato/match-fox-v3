@@ -124,7 +124,7 @@ export default function InterviewCategory() {
 
       {/* Categories Grid */}
       <div className="px-6 pb-20 pt-10 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-8">
           {categories.map((cat, index) => {
             const IconComponent = cat.icon;
             return (

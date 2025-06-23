@@ -40,8 +40,7 @@ export default function ContactPage() {
             <div>
               <span className="font-semibold text-blue-600">Address:</span>
               <p>
-                Seraikella<br />
-                Jharkhand – 833101, India
+                Bengaluru, India
               </p>
             </div>
           </div>
