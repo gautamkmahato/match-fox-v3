@@ -137,8 +137,10 @@ export default function InterviewPage({ interviewId }) {
  
   if (showCallComponent) {
     if(interviewData?.type === "ADMISSION"){
+      console.log("admission component")
       return <InterviewCallComponent interviewId={interviewId} interviewData={interviewData} leftUsage={usage} />;
     } else{
+      console.log("normal component")
       return <CallComponent interviewId={interviewId} interviewData={interviewData} leftUsage={usage} />;
     }
   }  
