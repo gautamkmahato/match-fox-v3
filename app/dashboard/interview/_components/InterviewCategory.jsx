@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Users, Trophy, Brain, BookOpen, Target, Zap } from 'lucide-react';
+import { ArrowRight, Users, Trophy, Brain, BookOpen, Target, Zap, History } from 'lucide-react';
 
 const categories = [
   {
@@ -107,19 +107,64 @@ export default function InterviewCategory() {
   return (
     <div className="min-h-screen rounded-2xl bg-gradient-to-br from-slate-50 via-white to-blue-50">
       {/* Header Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
-        <div className="relative px-6 pt-16 pb-12 max-w-7xl mx-auto">
+      <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-950 to-indigo-950">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.3),transparent_50%)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(59,130,246,0.2),transparent_50%)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/5"></div>
+        
+        {/* Floating elements */}
+        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-32 right-20 w-1 h-1 bg-purple-400 rounded-full animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 left-1/4 w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse delay-500"></div>
+        <div className="absolute top-10 left-50 w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-52 right-50 w-2 h-2 bg-purple-400 rounded-full animate-pulse delay-1000"></div>
+        <div className="absolute bottom-30 left-1/3 w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse delay-500"></div>
+        
+        <div className="relative px-6 pt-10 pb-16 max-w-7xl mx-auto">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 bg-clip-text text-transparent mb-6">
-              Choose Your Path
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white/90 text-sm font-medium mb-4">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              AI-Powered Interview Platform
+            </div>
+            
+            <h1 className="text-xl md:text-xl lg:text-5xl font-bold text-white mb-2 tracking-tight">
+              Choose Your { }
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Path
+              </span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Unlock your potential with AI-powered mock interviews tailored to your career goals. 
-              <span className="text-indigo-600 font-semibold"> Start your journey to success today.</span>
+            
+            <p className="text-md text-slate-300 max-w-2xl mx-auto leading-relaxed mb-6 font-light">
+              Master your next interview with AI-powered practice sessions designed for 
+              <span className="text-blue-400 font-medium"> real success</span>
             </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link href="/dashboard/interview/list">
+                <button className="group relative px-6 py-3 cursor-pointer bg-white text-slate-900 font-semibold rounded-2xl shadow-2xl hover:shadow-white/25 transition-all duration-500 transform hover:scale-105 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600  opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative flex items-center gap-3 group-hover:text-white transition-colors duration-500">
+                    <History className="w-5 h-5" />
+                    View Interview List
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
+                </button>
+              </Link>
+              
+              <div className="flex items-center gap-4 text-slate-400 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-xs">✓</span>
+                  </div>
+                  <span>10K+ Success Stories</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        
+        {/* Bottom gradient fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-indigo-800 to-transparent"></div>
       </div>
 
       {/* Categories Grid */}

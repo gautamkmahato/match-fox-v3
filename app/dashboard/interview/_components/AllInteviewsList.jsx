@@ -13,10 +13,11 @@ export default function AllInteviewsList({ interviews }) {
                         <div
                             key={interview.id}
                             className="w-full sm:w-[90%] md:w-[70%] lg:w-[47%] xl:w-[47%] max-w-[500px]"
-                        >
+                        > 
                             <InterviewCard
                                 id={interview.id}
                                 name={interview.interview_name}
+                                company={interview.company}
                                 duration={Math.floor(interview.duration/60)}
                                 logo={interview.company_logo}
                                 date={interview.created_date}
