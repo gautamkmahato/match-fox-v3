@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req) {
   const { amount, merchantOrderId, userId } = await req.json();
 
-  const tokenRes = await fetch(`${process.env.YOUR_DOMAIN}/api/phonepe/token`);
+  const tokenRes = await fetch(`${process.env.NEXT_APP_PRODUCTION_HOSTNAME}/api/phonepe/token`);
   const tokenData = await tokenRes.json();
 
   if (!tokenData?.access_token || !tokenData?.token_type) {
@@ -32,7 +32,7 @@ export async function POST(req) {
       type: "PG_CHECKOUT",
       message: "Redirecting to PhonePe",
       merchantUrls: {
-        redirectUrl: `${process.env.YOUR_DOMAIN}/payment/success`,
+        redirectUrl: `${process.env.NEXT_APP_PRODUCTION_HOSTNAME}/payment/success`,
       },
     },
   };
