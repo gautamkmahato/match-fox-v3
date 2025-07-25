@@ -38,7 +38,7 @@ const plans = [
     name: "Basic Plan",
     tagline: "Kickstart your interview prep",
     credits: { monthly: 9000, yearly: 108000 },
-    price: { monthly: 499, yearly: 4999 },
+    price: { monthly: 799, yearly: 8999 },
     displayPrice: { monthly: 10, yearly: 100 },
     features: {
       monthly: [
@@ -65,7 +65,7 @@ const plans = [
     name: "Professional Plan",
     tagline: "Best for regular practice",
     credits: { monthly: 27000, yearly: 324000 },
-    price: { monthly: 1250, yearly: 14000 },
+    price: { monthly: 1999, yearly: 22999 },
     displayPrice: { monthly: 25, yearly: 250 },
     features: {
       monthly: [
@@ -93,7 +93,7 @@ const plans = [
     tagline: "For teams and organizations",
     credits: { monthly: 120000, yearly: 1440000 },
     price: { monthly: 4999, yearly: 49999 },
-    displayPrice: { monthly: 250, yearly: 2500 },
+    displayPrice: { monthly: 19999, yearly: 229999 },
     features: {
       monthly: [
         "2000 Min Mock Interview",
