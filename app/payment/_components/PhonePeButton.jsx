@@ -18,7 +18,7 @@ export default function PhonePeButton() {
     })
 
     const data = await res.json()
-    console.log("🟣 PG_CHECKOUT result:", data)
+    console.log("PG_CHECKOUT result:", data)
 
     if (data?.fullResponse?.redirectUrl) {
       window.location.href = data.fullResponse.redirectUrl;

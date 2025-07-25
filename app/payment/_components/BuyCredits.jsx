@@ -130,32 +130,32 @@ export default function BuyCredits() {
   const handlePayment = async () => {
     if (!user?.id) return alert("User not found");
 
-    try{
+    try {
       setLoading(true)
 
-    const res = await fetch('/api/phonepe/initiate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        amount: Number(selectedPrice),
-        merchantOrderId: 'order-' + Date.now(),
-        userId: user?.id,
-      }),
-    })
+      const res = await fetch('/api/phonepe/initiate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: Number(selectedPrice),
+          merchantOrderId: 'order-' + Date.now(),
+          userId: user?.id,
+        }),
+      })
 
-    const data = await res.json()
-    console.log("PG_CHECKOUT result:", data)
+      const data = await res.json()
+      // console.log("PG_CHECKOUT result:", data)
 
-    if (data?.fullResponse?.redirectUrl) {
-      window.location.href = data.fullResponse.redirectUrl;
-    } else {
-      alert("Payment initiation failed: " + (data.fullResponse?.message || "Unknown error"))
-    }
+      if (data?.fullResponse?.redirectUrl) {
+        window.location.href = data.fullResponse.redirectUrl;
+      } else {
+        alert("Payment initiation failed: " + (data.fullResponse?.message || "Unknown error"))
+      }
 
-   } catch(err){
-    console.log(err)
-    } finally{
-            setLoading(false);
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setLoading(false);
     }
 
   };

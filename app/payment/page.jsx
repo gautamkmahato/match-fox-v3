@@ -13,7 +13,7 @@ export default function page() {
             <BuyCredits />
             {/* <Checkout /> */}
             {/* <PayPalButton amount="10.00" /> */}
-            <PhonePeButton />
+            {/* <PhonePeButton /> */}
             <SiteFooter />
 
         </>
