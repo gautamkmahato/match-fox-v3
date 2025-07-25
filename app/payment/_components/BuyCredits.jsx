@@ -126,62 +126,34 @@ export default function BuyCredits() {
   const handlePayment = async () => {
     if (!user?.id) return alert("User not found");
 
-    alert("Waiting for PayU confirmation")
+    try{
+      setLoading(true)
 
-    // setLoading(true);
+    const res = await fetch('/api/phonepe/initiate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount: Number(selectedPrice),
+        merchantOrderId: 'order-' + Date.now(),
+        userId: user?.id,
+      }),
+    })
 
-    // const res = await fetch("/api/checkout/razorpay", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     amount: selectedPrice,
-    //     clerk_id: user?.id,
-    //     credits: selectedCredits,
-    //     plan: selectedPlan,
-    //   })
-    // });
+    const data = await res.json()
+    console.log("PG_CHECKOUT result:", data)
 
-    // const result = await res.json();
+    if (data?.fullResponse?.redirectUrl) {
+      window.location.href = data.fullResponse.redirectUrl;
+    } else {
+      alert("Payment initiation failed: " + (data.fullResponse?.message || "Unknown error"))
+    }
 
-    // if (!result.data?.id || !result?.state) {
-    //   alert("Failed to create order");
-    //   setLoading(false);
-    //   return;
-    // }
+   } catch(err){
+    console.log(err)
+    } finally{
+            setLoading(false);
+    }
 
-    // const options = {
-    //   key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-    //   amount: result.data.amount,
-    //   currency: result.data.currency,
-    //   name: "Hirenom",
-    //   clerk_id: user?.id,
-    //   description: `Hirenom Transaction for amount ${result.data.amount}`,
-    //   order_id: result.data.id,
-    //   handler: async function (response) {
-    //     const verifyRes = await fetch("/api/verify-payment", {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify(response),
-    //     });
-
-    //     const verify = await verifyRes.json();
-    //     if (verify.state) {
-    //       alert("✅ Payment Successful");
-    //     } else {
-    //       alert("❌ Payment verification failed");
-    //     }
-    //   },
-    //   prefill: {
-    //     name: user?.firstName || "John Doe",
-    //     email: user?.emailAddresses[0]?.emailAddress || "john@example.com",
-    //     contact: "9999999999",
-    //   },
-    //   theme: { color: "#3399cc" },
-    // };
-
-    // const rzp = new window.Razorpay(options);
-    // rzp.open();
-    // setLoading(false);
   };
 
   const handleSelection = (credits, priceObj, cycle) => {
