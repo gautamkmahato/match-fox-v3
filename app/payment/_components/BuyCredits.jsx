@@ -14,6 +14,7 @@ const plans = [
     tagline: "Give AI interviews a try",
     credits: { monthly: 0, yearly: 0 },
     price: { monthly: 0, yearly: 0 },
+    displayPrice: { monthly: 0, yearly: 0 },
     features: {
       monthly: [
         "5 Min Mock Interview",
@@ -38,6 +39,7 @@ const plans = [
     tagline: "Kickstart your interview prep",
     credits: { monthly: 9000, yearly: 108000 },
     price: { monthly: 499, yearly: 4999 },
+    displayPrice: { monthly: 10, yearly: 100 },
     features: {
       monthly: [
         "150 Min Mock Interview",
@@ -64,6 +66,7 @@ const plans = [
     tagline: "Best for regular practice",
     credits: { monthly: 27000, yearly: 324000 },
     price: { monthly: 1250, yearly: 14000 },
+    displayPrice: { monthly: 25, yearly: 250 },
     features: {
       monthly: [
         "450 Min Mock Interview",
@@ -90,6 +93,7 @@ const plans = [
     tagline: "For teams and organizations",
     credits: { monthly: 120000, yearly: 1440000 },
     price: { monthly: 4999, yearly: 49999 },
+    displayPrice: { monthly: 250, yearly: 2500 },
     features: {
       monthly: [
         "2000 Min Mock Interview",
@@ -218,7 +222,7 @@ export default function BuyCredits() {
                 </div>
 
                 <p className="text-3xl font-bold text-gray-800 mb-6">
-                  ₹{plan.price[selectedCycle]} / {selectedCycle}
+                  ${plan.displayPrice[selectedCycle]} / {selectedCycle}
                 </p>
 
                 <ul className="text-sm space-y-2 mb-6">
