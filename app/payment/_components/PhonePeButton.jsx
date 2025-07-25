@@ -20,8 +20,8 @@ export default function PhonePeButton() {
     const data = await res.json()
     console.log("🟣 PG_CHECKOUT result:", data)
 
-    if (data?.redirectUrl) {
-      window.location.href = data.redirectUrl
+    if (data?.fullResponse?.redirectUrl) {
+      window.location.href = data.fullResponse.redirectUrl;
     } else {
       alert("Payment initiation failed: " + (data.fullResponse?.message || "Unknown error"))
     }

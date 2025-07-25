@@ -1,12 +1,22 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
-
-const isProtectedRoute = createRouteMatcher(['/auth(.*)', '/session/:path*', '/payment(.*)', '/dashboard(.*)']);
+const isProtectedRoute = createRouteMatcher([
+  '/auth(.*)',
+  '/session/:path*',
+  '/payment(.*)',
+  '/dashboard(.*)',
+]);
 
 export default clerkMiddleware(async (auth, req) => {
-  if (isProtectedRoute(req)) await auth.protect()
-}) 
+  if (isProtectedRoute(req)) await auth.protect();
 
+  // Always attach security headers
+  const res = NextResponse.next();
+  res.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+  return res;
+});
 
 export const config = {
   matcher: [
@@ -15,4 +25,4 @@ export const config = {
     // Always run for API routes
     '/(api|trpc)(.*)',
   ],
-}
+};
