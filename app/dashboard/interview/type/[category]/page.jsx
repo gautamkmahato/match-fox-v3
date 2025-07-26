@@ -172,31 +172,31 @@ export default function SubCategoryPage({ params }) {
           </div>
 
           {/* Title Section */}
-          <div className="flex items-center gap-6 mb-8">
-            <div className={`p-4 rounded-3xl bg-gradient-to-br ${config.color} shadow-lg`}>
+          <div className="flex items-center gap-4 mb-8">
+            <div className={`p-4 rounded-xl bg-gradient-to-br ${config.color} shadow-lg`}>
               <IconComponent className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+              <h1 className="text-4xl md:text-4xl font-bold text-gray-900">
                 {config.title}
               </h1>
-              <p className="text-xl text-gray-600">{config.description}</p>
+              <p className="text-lg text-gray-600">{config.description}</p>
             </div>
           </div>
 
           {/* Stats */}
           <div className="flex flex-wrap gap-6 mb-8">
             <div className="flex items-center gap-2 bg-white/80 backdrop-blur-lg rounded-xl px-4 py-2 border border-white/20">
-              <CheckCircle className="w-5 h-5 text-green-500" />
-              <span className="text-gray-700 font-medium">{items.length} Specializations</span>
+              <CheckCircle className="w-4 h-4 text-indigo-700" />
+              <span className="text-gray-700 text-sm font-medium">{items.length} Specializations</span>
             </div>
             <div className="flex items-center gap-2 bg-white/80 backdrop-blur-lg rounded-xl px-4 py-2 border border-white/20">
-              <Users className="w-5 h-5 text-blue-500" />
-              <span className="text-gray-700 font-medium">AI-Powered Mocks</span>
+              <Users className="w-4 h-4 text-indigo-700" />
+              <span className="text-gray-700 text-sm font-medium">AI-Powered Mocks</span>
             </div>
             <div className="flex items-center gap-2 bg-white/80 backdrop-blur-lg rounded-xl px-4 py-2 border border-white/20">
-              <Star className="w-5 h-5 text-yellow-500" />
-              <span className="text-gray-700 font-medium">Personalized Feedback</span>
+              <Star className="w-4 h-4 text-indigo-700" />
+              <span className="text-gray-700 text-sm font-medium">Personalized Feedback</span>
             </div>
           </div>
         </div>
@@ -218,14 +218,14 @@ export default function SubCategoryPage({ params }) {
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    <h3 className={`text-lg font-bold text-gray-900 mb-2 group-hover:${config.color} transition-colors`}>
                       {item.name}
                     </h3>
                     <div className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium border ${getDifficultyColor(item.difficulty)}`}>
                       {item.difficulty}
                     </div>
                   </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400 group-hover:translate-x-1 group-hover:text-blue-500 transition-all duration-300" />
+                  <ChevronRight className={`w-5 h-5 text-gray-400 group-hover:translate-x-1 group-hover:${config.color} transition-all duration-300`} />
                 </div>
 
                 {/* Stats */}

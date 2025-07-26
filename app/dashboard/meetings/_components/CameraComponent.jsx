@@ -29,12 +29,12 @@ const CameraComponent = ({ isVisible }) => {
       if (stream) {
         stream.getTracks().forEach(track => {
           track.stop(); // Ensure each track is stopped
-          console.log(`Stopped ${track.kind} track`);
+          // console.log(`Stopped ${track.kind} track`);
         });
       } else if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => {
           track.stop();
-          console.log(`Stopped ${track.kind} track (fallback)`);
+          // console.log(`Stopped ${track.kind} track (fallback)`);
         });
       }
     };

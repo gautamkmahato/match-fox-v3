@@ -169,7 +169,7 @@ export default function InterviewCategory() {
 
       {/* Categories Grid */}
       <div className="px-6 pb-20 pt-10 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-2 gap-8">
           {categories.map((cat, index) => {
             const IconComponent = cat.icon;
             return (
@@ -180,14 +180,14 @@ export default function InterviewCategory() {
                   animationDelay: `${index * 100}ms`
                 }}
               >
-                <div className={`relative ${cat.bgColor} rounded-3xl p-8 border border-white/20 backdrop-blur-lg transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 overflow-hidden`}>
+                <div className={`${cat.bgColor} rounded-xl p-8 border border-gray-100 shadow transition-all duration-500 hover:shadow hover:shadow-blue-500/25`}>
                   {/* Gradient Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${cat.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}></div>
+                  <div className={`bg-gradient-to-br ${cat.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}></div>
                   
                   {/* Header */}
                   <div className="relative z-10 flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-4">
-                      <div className={`p-3 rounded-2xl bg-gradient-to-br ${cat.color} shadow-lg`}>
+                    <div className="flex items-center gap-2">
+                      <div className={`p-3 rounded-lg bg-gradient-to-br ${cat.color} shadow-lg`}>
                         <IconComponent className="w-6 h-6 text-white" />
                       </div>
                       <div>
@@ -204,7 +204,7 @@ export default function InterviewCategory() {
                   </p>
                   
                   {/* Avatars */}
-                  <div className="relative z-10 flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center -space-x-3">
                       {cat.avatars.map((src, idx) => (
                         <div key={idx} className="relative">
@@ -218,7 +218,7 @@ export default function InterviewCategory() {
                         </div>
                       ))}
                     </div>
-                    <div className={`px-4 py-2 cursor-pointer rounded-full bg-gradient-to-r ${cat.color} text-white text-sm font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0`}>
+                    <div className={`px-4 py-2 cursor-pointer hover:shadow-lg rounded-lg bg-gradient-to-r ${cat.color} text-white text-sm font-semibold shadow`}>
                       
                       <Link
                         href={`/dashboard/interview/type/${cat.slug}`}

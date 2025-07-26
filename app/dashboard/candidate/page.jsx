@@ -58,14 +58,14 @@ export default function Dashboard() {
         if (!reportRes?.state) {
           toast.error('Failed to fetch reports');
         } else if (isMounted) {
-          console.log(reportRes.data);
+          // console.log(reportRes.data);
           setReports(reportRes.data || []);
 
           // To get Top score reports
           setTopScoreReports(reportRes?.data.sort(SortScores).slice(0,3))
         }
       } catch (err) {
-        console.error('Dashboard fetch error:', err);
+        // console.error('Dashboard fetch error:', err);
         toast.error('Something went wrong while loading dashboard.');
       } finally {
         if (isMounted) setLoading(false);

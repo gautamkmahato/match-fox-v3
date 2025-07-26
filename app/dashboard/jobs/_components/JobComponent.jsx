@@ -29,12 +29,12 @@ export default function JobComponent() {
       setLoading(true);
       const result = await fetchAllJobs();
       if (!result?.state) {
-        console.log("Error: ", result?.error);
+        // console.log("Error: ", result?.error);
         toast.error(`Error: ${result?.error}`);
         return;
       }
 
-      console.log("result jobs", result?.data);
+      // console.log("result jobs", result?.data);
       setAllJobs(result?.data); // set full list
       setJobs(result?.data);    // set initial display list
     } catch (error) {

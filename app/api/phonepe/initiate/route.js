@@ -32,7 +32,7 @@ export async function POST(req) {
       type: "PG_CHECKOUT",
       message: "Redirecting to PhonePe",
       merchantUrls: {
-        redirectUrl: `${process.env.NEXT_APP_PRODUCTION_HOSTNAME}/payment/success`,
+        redirectUrl: `${process.env.NEXT_APP_PRODUCTION_HOSTNAME}/dashboard/candidate`,
       },
     },
   };

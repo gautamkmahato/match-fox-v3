@@ -8,11 +8,6 @@ import {
   Trophy,
   BookOpenCheck,
 } from 'lucide-react';
-import fetchUsage from '../service/interview/fetchUsage';
-import { toast } from 'sonner';
-import { useState } from 'react';
-import ShowCreditComponent from './_components/ShowCreditComponent';
-import InterviewList from './_components/InterviewList';
 import Link from 'next/link';
 import JobList from './jobs/_components/JobList';
 
@@ -76,7 +71,6 @@ export const performanceMetrics = [
 
 
 export default function Dashboard() {
-
 
   const recentInterviews = interviewList.slice(0, 3);
 

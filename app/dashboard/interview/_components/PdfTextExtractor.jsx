@@ -49,7 +49,7 @@ export default function PdfTextExtractor({ onSubmit, setStep, step }) {
           fullText += strings.join(' ') + '\n\n';
         }
  
-        console.log(fullText);
+        // console.log(fullText);
         setContent(fullText);
       } catch (err) {
         setError('Failed to extract PDF content');

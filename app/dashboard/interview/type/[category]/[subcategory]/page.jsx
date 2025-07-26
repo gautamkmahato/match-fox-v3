@@ -42,7 +42,7 @@ export default function SubCategoryPage({ params }) {
     } 
 
     const handlePdfUpload = async (pdfData) => {
-        console.log(pdfData);
+        // console.log(pdfData);
         setResume(pdfData);
         setResumeStatus(true);
     }
@@ -61,13 +61,13 @@ export default function SubCategoryPage({ params }) {
                 return;
             }
 
-            console.log("genResult::: ", genResult);
+            // console.log("genResult::: ", genResult);
 
             // Step 2: Clean the result (if needed, depending on Gemini output)
             const questions = extractJsonBlock(genResult.data);
             const cleaned = `[${questions.trim()}]`;
             const parsedQuestions = JSON.parse(cleaned);
-            console.log("Cleaned Questions::: ", parsedQuestions);
+            // console.log("Cleaned Questions::: ", parsedQuestions);
 
             return parsedQuestions;
 
@@ -85,12 +85,12 @@ export default function SubCategoryPage({ params }) {
           const createResult = await createInterviewFromAPI(mergedResult, questions, college_interview_data);
     
           if (!createResult.state || createResult?.error) {
-            console.log(createResult?.error || "Something went wrong while creating the interview.");
+            // console.log(createResult?.error || "Something went wrong while creating the interview.");
             return;
           }
     
           if (createResult.state) {
-            console.log("Interview created successfully:", createResult);
+            // console.log("Interview created successfully:", createResult);
             setInterviewData(createResult?.data[0])
             setOpen(true); // Trigger success modal or state
           }

@@ -37,9 +37,9 @@ export default function CreateInterviewFromPortal() {
       // Generate extracted job info
       setGenerateJobDetailStatus(true);
       const apiResult = await generateJobDetails(job);
-      console.log("api results: ", apiResult)
+      // console.log("api results: ", apiResult)
       const cleanedResult = cleanCodeBlock(apiResult);
-      console.log("cleaned", cleanedResult)
+      // console.log("cleaned", cleanedResult)
 
       // Merge data from job inputs and extracted fields
       const mergedResult = {
@@ -53,7 +53,7 @@ export default function CreateInterviewFromPortal() {
         job_description: job,
       };
 
-      console.log("Final Merged Job Details:", mergedResult);
+      // console.log("Final Merged Job Details:", mergedResult);
       setJobDetails(mergedResult);
 
       // if (onSubmit) {
@@ -81,12 +81,12 @@ export default function CreateInterviewFromPortal() {
         return;
       }
 
-      console.log(genResult);
+      // console.log(genResult);
 
       // Step 2: Clean the result (if needed, depending on Gemini output)
       const questions = extractJsonBlock(genResult.data);
-      console.log("Cleaned :", questions);
-      console.log("Cleaned Questions:", JSON.parse(questions));
+      // console.log("Cleaned :", questions);
+      // console.log("Cleaned Questions:", JSON.parse(questions));
       return questions;
     } catch (error) {
       console.log("Error: ", error);
@@ -102,7 +102,7 @@ export default function CreateInterviewFromPortal() {
       const createResult = await createInterviewFromAPI(mergedResult, JSON.parse(questions));
 
       if (!createResult.state || createResult?.error) {
-        console.log(createResult?.error || "Something went wrong while creating the interview.");
+        // console.log(createResult?.error || "Something went wrong while creating the interview.");
         return;
       }
 
@@ -121,7 +121,7 @@ export default function CreateInterviewFromPortal() {
   const handleFinalSubmit = async (mergedResult) => {
     setLoading(true);
 
-    console.log("jobDetails", mergedResult)
+    // console.log("jobDetails", mergedResult)
 
     try {
       const questions = await getQuestions(mergedResult);
