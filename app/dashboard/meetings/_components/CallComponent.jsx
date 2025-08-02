@@ -55,25 +55,6 @@ export default function CallComponent({ interviewId, interviewData, leftUsage })
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages]);
 
-  // useEffect(() => {
-  //   const getDetails = async () => {
-  //     setLoading(true);
-  //     try {
-  //       setLoadingMessage("Fetching Interview Details...");
-  //       const result = await fetchInterviewDetails(interviewId);
-  //       if (!result.state) throw new Error(result.error);
-  //       setInterviewData(result.data);
-  //       toast.success("Interview details loaded");
-  //     } catch (err) {
-  //       toast.error(err.message || 'Failed to load interview');
-  //       setError(err.message || 'Failed to load interview');
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   if (interviewId) getDetails();
-  // }, [interviewId]);
 
   useEffect(() => {
     const vapiInstance = new Vapi(process.env.NEXT_PUBLIC_VAPI_KEY);

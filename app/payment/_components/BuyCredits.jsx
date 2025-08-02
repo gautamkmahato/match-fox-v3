@@ -12,7 +12,7 @@ const plans = [
   {
     name: "Free Plan",
     tagline: "Give AI interviews a try",
-    credits: { monthly: 0, yearly: 0 },
+    credits: { monthly: 300, yearly: 300 },
     price: { monthly: 0, yearly: 0 },
     displayPrice: { monthly: 0, yearly: 0 },
     features: {
@@ -33,13 +33,17 @@ const plans = [
     },
     highlighted: false,
     disabled: true,
+    productId: {
+      monthly: process.env.NEXT_PUBLIC_DODO_PAYMENTS_BASIC_MONTHLY,
+      yearly: process.env.NEXT_PUBLIC_DODO_PAYMENTS_BASIC_MONTHLY
+    }
   },
   {
     name: "Basic Plan",
     tagline: "Kickstart your interview prep",
     credits: { monthly: 9000, yearly: 108000 },
-    price: { monthly: 799, yearly: 8999 },
-    displayPrice: { monthly: 10, yearly: 100 },
+    price: { monthly: 1500, yearly: 15000 },
+    displayPrice: { monthly: 20, yearly: 199 },
     features: {
       monthly: [
         "150 Min Mock Interview",
@@ -60,13 +64,17 @@ const plans = [
     },
     highlighted: false,
     disabled: false,
+    productId: {
+      monthly: process.env.NEXT_PUBLIC_DODO_PAYMENTS_BASIC_MONTHLY,
+      yearly: process.env.NEXT_PUBLIC_DODO_PAYMENTS_BASIC_YEARLY
+    }
   },
   {
     name: "Professional Plan",
     tagline: "Best for regular practice",
     credits: { monthly: 27000, yearly: 324000 },
-    price: { monthly: 1999, yearly: 22999 },
-    displayPrice: { monthly: 25, yearly: 250 },
+    price: { monthly: 3999, yearly: 39999 },
+    displayPrice: { monthly: 49, yearly: 499 },
     features: {
       monthly: [
         "450 Min Mock Interview",
@@ -87,13 +95,17 @@ const plans = [
     },
     highlighted: true,
     disabled: false,
+    productId: {
+      monthly: process.env.NEXT_PUBLIC_DODO_PAYMENTS_PROFESSIONAL_MONTHLY,
+      yearly: process.env.NEXT_PUBLIC_DODO_PAYMENTS_PROFESSIONAL_YEARLY
+    }
   },
   {
     name: "Enterprise Plan",
     tagline: "For teams and organizations",
     credits: { monthly: 120000, yearly: 1440000 },
-    price: { monthly: 4999, yearly: 49999 },
-    displayPrice: { monthly: 19999, yearly: 229999 },
+    price: { monthly: 14999, yearly: 149999 },
+    displayPrice: { monthly: 199, yearly: 1999 },
     features: {
       monthly: [
         "2000 Min Mock Interview",
@@ -114,6 +126,10 @@ const plans = [
     },
     highlighted: false,
     disabled: false,
+    productId: {
+      monthly: process.env.NEXT_PUBLIC_DODO_PAYMENTS_ENTERPRISE_MONTHLY,
+      yearly: process.env.NEXT_PUBLIC_DODO_PAYMENTS_ENTERPRISE_YEARLY
+    }
   },
 ];
 
@@ -124,6 +140,7 @@ export default function BuyCredits() {
   const [selectedPlan, setSelectedPlan] = useState("NA");
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [productId, setProductId] = useState("");
 
   const { user } = useUser();
 
@@ -160,14 +177,80 @@ export default function BuyCredits() {
 
   };
 
-  const handleSelection = (credits, priceObj, cycle) => {
+  const handleSelection = (credits, priceObj, cycle, productObj) => {
     const price = priceObj[cycle];
     const planObj = PLAN_LIMITS[credits];
     const plan = planObj?.name || "NA";
+    const productId = productObj[cycle];
+    console.log(productObj)
+    console.log(productId)
     setSelectedCredits(credits);
     setSelectedPrice(price);
     setSelectedPlan(plan);
+    setProductId(productId);
   };
+
+  const handleCheckout = async () => {
+  setLoading(true);
+
+  if (!productId || typeof productId !== "string" || !productId.startsWith("pdt_")) {
+    alert("Invalid or missing product ID");
+    setLoading(false);
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/dodo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        billing: {
+          city: "Texas",
+          country: "US",
+          state: "Texas",
+          street: "56, hhh",
+          zipcode: "560000",
+        },
+        customer: {
+          email: user?.emailAddresses[0]?.emailAddress || "hirenom.test@gmail.com",
+          name: user?.firstName || "Test User",
+        },
+        metadata: {
+          clerk_id: user?.id ?? "unknown", // Only clerk_id, rest will be handled server-side
+        },
+        payment_link: true,
+        product_id: String(productId),
+        quantity: 1,
+        billing_currency: "USD",
+        return_url: "https://hirenom.com",
+      }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      console.error("Checkout failed:", errorData);
+      alert(`Checkout failed: ${errorData.error || "Unknown error"}`);
+      setLoading(false);
+      return;
+    }
+
+    const result = await res.json();
+    console.log("Redirect URL:", result.url);
+
+    if (result.url) {
+      window.location.href = result.url;
+    } else {
+      alert("No checkout URL received.");
+    }
+
+  } catch (err) {
+    console.error("Error during checkout:", err);
+    alert("Something went wrong. Please try again later.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <>
@@ -192,7 +275,7 @@ export default function BuyCredits() {
               onClick={() => setSelectedCycle("yearly")}
               className={`px-6 py-2 text-sm font-medium rounded-full transition ${selectedCycle === "yearly" ? "bg-[#462eb4] text-white" : "text-gray-700"}`}
             >
-              Yearly (Save 10%)
+              Yearly (Save 20%)
             </button>
           </div>
         </div>
@@ -205,7 +288,7 @@ export default function BuyCredits() {
               <div
                 key={plan.name}
                 onClick={() =>
-                  handleSelection(plan.credits[selectedCycle], plan.price, selectedCycle)
+                  handleSelection(plan.credits[selectedCycle], plan.price, selectedCycle, plan.productId)
                 }
                 className={`p-8 rounded-3xl shadow-xl border transition hover:shadow-2xl cursor-pointer bg-gradient-to-br from-white to-purple-50 ${isSelected ? "ring-4 ring-[#462eb4] border-transparent" : "border-gray-200"} ${plan.highlighted ? "bg-white ring-4 ring-yellow-300" : ""} ${plan.disabled ? "opacity-50 pointer-events-none select-none" : ""}`}
               >
@@ -236,7 +319,7 @@ export default function BuyCredits() {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    handlePayment();
+                    handleCheckout();
                   }}
                   disabled={!isSelected || loading}
                   className={`w-full mt-4 py-2 px-4 rounded-xl font-semibold text-white transition ${isSelected ? "bg-[#462eb4] hover:bg-indigo-700" : "bg-gray-300 cursor-not-allowed"}`}

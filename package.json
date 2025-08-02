@@ -11,15 +11,18 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.19.4",
-    "@google/genai": "^0.15.0",
+    "@dodopayments/nextjs": "^0.1.7",
+    "@google/genai": "^1.11.0",
     "@paypal/checkout-server-sdk": "^1.0.3",
-    "@polar-sh/nextjs": "^0.4.3",
+    "@polar-sh/nextjs": "^0.4.4",
+    "@polar-sh/sdk": "^0.34.8",
     "@splinetool/react-spline": "^4.0.0",
     "@supabase/supabase-js": "^2.49.5",
     "@upstash/ratelimit": "^2.0.5",
     "@upstash/redis": "^1.34.9",
     "@vapi-ai/web": "^2.3.0",
     "axios": "^1.9.0",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "date-fns": "^4.1.0",
     "formidable": "^3.5.4",
@@ -28,7 +31,7 @@
     "lucide-react": "^0.511.0",
     "mammoth": "^1.9.0",
     "nanoid": "^5.1.5",
-    "next": "15.3.2",
+    "next": "^15.4.5",
     "next-sitemap": "^4.2.3",
     "p-queue": "^8.1.0",
     "pdf-parse": "^1.1.1",
@@ -43,7 +46,7 @@
     "tailwind-merge": "^3.3.0",
     "tailwindcss-gradients": "^3.0.0",
     "uuid": "^11.1.0",
-    "zod": "^3.25.3"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -99,7 +99,7 @@ export async function upsertUsage(userId, credits) {
   try {
     const { data, error } = await supabase.rpc('increment_usage', {
       p_user_id: userId,
-      p_minutes: (limits.minutes)*60,
+      p_minutes: (Number(limits.minutes))*60,
       p_reset_time: new Date().toISOString()
     });
 
